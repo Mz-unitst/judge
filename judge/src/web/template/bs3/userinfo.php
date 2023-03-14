@@ -20,7 +20,6 @@
   </head>
 
   <body>
-
     <div class="container">
     <?php include("template/$OJ_TEMPLATE/nav.php");?>	    
       <!-- Main component for a primary marketing message or call to action -->
@@ -35,7 +34,7 @@ echo "<a href=mail.php?to_user=$user>$MSG_MAIL</a>";
 ?>
 </caption>
 <tr ><td width=15%><?php echo $MSG_Number?></td><td width=25% align=center><?php echo $Rank?></td><td width=70% align=center>Solved Problems List</td></tr>
-<tr ><td><?php echo $MSG_SOVLED?><td align=center><a href='status.php?user_id=<?php echo $user?>&jresult=4'><?php echo $AC?></td></a>
+<tr ><td><?php echo $MSG_SOLVED?><td align=center><a href='status.php?user_id=<?php echo $user?>&jresult=4'><?php echo $AC?></td></a>
 <td rowspan=14 align=center>
 <script language='javascript'>
 function p(id,c){
