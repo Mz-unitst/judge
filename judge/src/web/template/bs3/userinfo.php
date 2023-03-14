@@ -34,6 +34,7 @@
     ?>
 </caption>
 <tr ><td width=15%><?php echo $MSG_Number?></td><td width=25% align=center><?php echo $Rank?></td><td width=70% align=center>Solved Problems List</td></tr>
+
 <tr ><td><?php echo $MSG_SOVLED?><td align=center><a href='status.php?user_id=<?php echo $user?>&jresult=4'><?php echo $AC?></td></a>
 <td rowspan=14 align=center>
 <script language='javascript'>
@@ -53,14 +54,16 @@ function p(id,c){
 <div id=submission style="width:600px;height:300px" ></div>
 </td>
 </tr>
+
 <tr ><td><?php echo $MSG_SUBMIT?></td><td align=center><a href='status.php?user_id=<?php echo $user?>'><?php echo $Submit?></a></td></tr>
+
 <?php
 foreach ($view_userstat as $row) {
     //i++;
     echo "<tr ><td>".$jresult[$row[0]]."</td><td align=center><a href=status.php?user_id=$user&jresult=".$row[0]." >".$row[1]."</a></td></tr>";
 }
     //}
-    echo "<tr id=pie ><td>Statistics</td><td><div id='PieDiv' style='position:relative;height:105px;width:120px;'></div></td></tr>";
+    echo "<tr id=pie ><td>Statistics</td><td><div id='PieDiv' style='position:relative;height:205px;width:120px;'></div></td></tr>";
     ?>
 <script type="text/javascript" src="include/wz_jsgraphics.js"></script>
 <script type="text/javascript" src="include/pie.js"></script>
