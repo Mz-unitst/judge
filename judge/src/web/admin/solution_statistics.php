@@ -2,13 +2,13 @@
 require("admin-header.php");
 require_once("../include/set_get_key.php");
 
-if(!(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator']))){
-  echo "<a href='../loginpage.php'>Please Login First!</a>";
-  exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 
-if(isset($OJ_LANG)){
-  require_once("../lang/$OJ_LANG.php");
+if (isset($OJ_LANG)) {
+    require_once("../lang/$OJ_LANG.php");
 }
 ?>
 
@@ -20,82 +20,85 @@ if(isset($OJ_LANG)){
 
 <?php
 $cid=intval($_GET['cid']);
-if(isset($_POST['pids'])||$cid>0){
-
-  $user_ida = explode("\n", trim($_POST['ulist']));
-  $user_ida = array_unique($user_ida);
-  $user_ids="";
-  if(count($user_ida)>0 && strlen($user_ida[0])>0){
-  $len=count($user_ida);	  
-    for($i=0; $i<$len; $i++){
-      if($user_ids) $user_ids.=",";
-      $user_ids.="?";
-      $user_ida[$i]=trim($user_ida[$i]);
+if (isset($_POST['pids'])||$cid>0) {
+    $user_ida = explode("\n", trim($_POST['ulist']));
+    $user_ida = array_unique($user_ida);
+    $user_ids="";
+    if (count($user_ida)>0 && strlen($user_ida[0])>0) {
+        $len=count($user_ida);
+        for ($i=0; $i<$len; $i++) {
+            if ($user_ids) {
+                $user_ids.=",";
+            }
+            $user_ids.="?";
+            $user_ida[$i]=trim($user_ida[$i]);
+        }
     }
-  }
-  //echo implode(",",$user_ida),"<br>";
-  
-	  $sql="select user_id,nick ";
+    //echo implode(",",$user_ida),"<br>";
 
-  if($cid>0){
-	  $pida=array();
-	  $result=pdo_query("select problem_id from contest_problem where contest_id=? order by num",$cid);
-	  foreach($result as $row){
-	  	array_push($pida,$row['problem_id']);
-	  }
+    $sql="select user_id,nick ";
 
-  }else{
-	  $pida=array_unique(explode(',',$_POST['pids']));
-	  $len=count($pida);
-	  for($i=0;$i<$len;$i++){
-		$pida[$i]=intval($pida[$i]);
-	  }
-  }
+    if ($cid>0) {
+        $pida=array();
+        $result=pdo_query("select problem_id from contest_problem where contest_id=? order by num", $cid);
+        foreach ($result as $row) {
+            array_push($pida, $row['problem_id']);
+        }
+    } else {
+        $pida=array_unique(explode(',', $_POST['pids']));
+        $len=count($pida);
+        for ($i=0;$i<$len;$i++) {
+            $pida[$i]=intval($pida[$i]);
+        }
+    }
 
-  $pida=array_unique($pida);
+    $pida=array_unique($pida);
 
-  foreach($pida as $pid){
-  	$sql.=" ,min(case problem_id when $pid then result else 15 end) P$pid";
-  }
-  //$user_ids=implode("','",$user_ida);
-  if(isset($_GET['cid'])){
-	  $sql.=" from solution where contest_id=? group by user_id,nick order by user_id";
-  	  $result = pdo_query($sql,$cid);
-
-  }else{
-	  $sql.=" from solution where user_id in ($user_ids) group by user_id,nick ";
-  	  $result = pdo_query($sql,$user_ida);
-  }
-//  echo $sql;
-?>
+    foreach ($pida as $pid) {
+        $sql.=" ,min(case problem_id when $pid then result else 15 end) P$pid";
+    }
+    //$user_ids=implode("','",$user_ida);
+    if (isset($_GET['cid'])) {
+        $sql.=" from solution where contest_id=? group by user_id,nick order by user_id";
+        $result = pdo_query($sql, $cid);
+    } else {
+        $sql.=" from solution where user_id in ($user_ids) group by user_id,nick ";
+        $result = pdo_query($sql, $user_ida);
+    }
+    //  echo $sql;
+    ?>
 
 
 <center>
   <table width=100% border=1 style="text-align:center;">
     <tr>
     <?php
-      echo "<td>USER_ID</td>";
-      echo "<td>NICK</td>";
-  	foreach($pida as $pid){
-      		echo "<td class='pid' value='$pid'>P".$pid;
-      		echo "</td>";
-	}
-      echo "</tr>";
- // var_dump($result);
-    foreach($result as $row){
-      echo "<tr>";
-      echo "<td>".$row['user_id']."</td>";
-      echo "<td>".$row['nick']."</td>";
-  	foreach($pida as $pid){
-      		echo "<td>";
-      		if($row["P$pid"]==4) echo "<span class='label label-success label-sm' >AC</span>";
-		else if($row["P$pid"]==15) echo "&nbsp;";
-		else echo "<span class='label label-danger label-sm' >WA</span>";
-      		echo "</td>";
-	}
-      echo "</tr>";
+          echo "<td>USER_ID</td>";
+    echo "<td>NICK</td>";
+    foreach ($pida as $pid) {
+        echo "<td class='pid' value='$pid'>P".$pid;
+        echo "</td>";
     }
-  ?>
+    echo "</tr>";
+    // var_dump($result);
+    foreach ($result as $row) {
+        echo "<tr>";
+        echo "<td>".$row['user_id']."</td>";
+        echo "<td>".$row['nick']."</td>";
+        foreach ($pida as $pid) {
+            echo "<td>";
+            if ($row["P$pid"]==4) {
+                echo "<span class='label label-success label-sm' >AC</span>";
+            } elseif ($row["P$pid"]==15) {
+                echo "&nbsp;";
+            } else {
+                echo "<span class='label label-danger label-sm' >WA</span>";
+            }
+            echo "</td>";
+        }
+        echo "</tr>";
+    }
+    ?>
 </table>
 <a href="javascript:history.go(-1);" >Back</a>
 </center>
@@ -117,9 +120,8 @@ if(isset($_POST['pids'])||$cid>0){
 
 </script>
 <?php
-}else{
-
-?>
+} else {
+    ?>
 
 	<center>
 	<form action=solution_statistics.php method='post' class="form-search form-inline">
@@ -137,13 +139,15 @@ if(isset($_POST['pids'])||$cid>0){
 	<form action=solution_statistics.php method='get' class="form-search form-inline">
 	<select name="cid" >
 <?php
-	$sql="select * from contest order by contest_id desc limit 50 ";
-	$result=pdo_query($sql);
-	foreach($result as $row){
-		echo "<option value='".$row['contest_id']."'";
-		if($row['contest_id']==$cid) echo " selected ";
-		echo ">".$row['title']."</option>";
-	}
+    $sql="select * from contest order by contest_id desc limit 50 ";
+$result=pdo_query($sql);
+foreach ($result as $row) {
+    echo "<option value='".$row['contest_id']."'";
+    if ($row['contest_id']==$cid) {
+        echo " selected ";
+    }
+    echo ">".$row['title']."</option>";
+}
 ?>
 	</select>
 	  <button type="submit" class="form-control"><?php echo $MSG_SEARCH?></button>

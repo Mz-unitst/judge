@@ -19,7 +19,7 @@
     <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-<?php if (isset($OJ_MATHJAX)&&$OJ_MATHJAX){?>
+<?php if (isset($OJ_MATHJAX)&&$OJ_MATHJAX) {?>
     <!--以下为了加载公式的使用而既加入-->
 <script>
   MathJax = {
@@ -50,61 +50,59 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<?php
-				if ( $pr_flag ) {
-					echo "<title>$MSG_PROBLEM" . $row[ 'problem_id' ] . "--" . $row[ 'title' ] . "</title>";
-					echo "<center><h3>$id: " . $row[ 'title' ] . "</h3></center>";
-					echo "<div align=right><sub>[$MSG_Creator : <span id='creator'></span>]</sub></div>";
-				} else {
-					//$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-					$id = $row[ 'problem_id' ];
-					echo "<title>$MSG_PROBLEM " . $PID[ $pid ] . ": " . $row[ 'title' ] . " </title>";
-					echo "<center><h3>$MSG_PROBLEM " . $PID[ $pid ] . ": " . $row[ 'title' ] . "</h3><center>";
-					echo "<div align=right><sub>[$MSG_Creator : <span id='creator'></span>]</sub></div>";
-				}
-				echo "<center>";
-				echo "<span class=green>$MSG_Time_Limit : </span><span><span fd='time_limit' pid='".$row['problem_id']."'  >" . $row[ 'time_limit' ] . "</span></span> sec&nbsp;&nbsp;";
-				echo "<span class=green>$MSG_Memory_Limit : </span>" . $row[ 'memory_limit' ] . " MiB";
+                if ($pr_flag) {
+                    echo "<title>$MSG_PROBLEM" . $row[ 'problem_id' ] . "--" . $row[ 'title' ] . "</title>";
+                    echo "<center><h3>$id: " . $row[ 'title' ] . "</h3></center>";
+                    echo "<div align=right><sub>[$MSG_Creator : <span id='creator'></span>]</sub></div>";
+                } else {
+                    //$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    $id = $row[ 'problem_id' ];
+                    echo "<title>$MSG_PROBLEM " . $PID[ $pid ] . ": " . $row[ 'title' ] . " </title>";
+                    echo "<center><h3>$MSG_PROBLEM " . $PID[ $pid ] . ": " . $row[ 'title' ] . "</h3><center>";
+                    echo "<div align=right><sub>[$MSG_Creator : <span id='creator'></span>]</sub></div>";
+                }
+                echo "<center>";
+		echo "<span class=green>$MSG_Time_Limit : </span><span><span fd='time_limit' pid='".$row['problem_id']."'  >" . $row[ 'time_limit' ] . "</span></span> sec&nbsp;&nbsp;";
+		echo "<span class=green>$MSG_Memory_Limit : </span>" . $row[ 'memory_limit' ] . " MiB";
 
-				if ( $row[ 'spj' ] )echo "&nbsp;&nbsp;<span class=red>Special Judge</span>";
-				echo "<br><br>";
-					echo "<div class='btn-group' role='group'>";
-        if($pr_flag){
-					echo "<a id='submit' class='btn btn-info btn-sm' href='submitpage.php?id=$id' role='button'>$MSG_SUBMIT</a>";
-        }else{
-					echo "<a id='submit' class='btn btn-info btn-sm' href='submitpage.php?cid=$cid&pid=$pid&langmask=$langmask' role='button'>$MSG_SUBMIT</a>";
-  					echo "<a class='btn btn-primary btn-sm' role='button' href='contest.php?cid=$cid'>$MSG_PROBLEM$MSG_LIST</a>";
-        }
-				if (isset($OJ_OI_MODE)&&$OJ_OI_MODE) {
-				} else {
-					echo "<a class='btn btn-primary btn-sm' role='button' href=status.php?problem_id=".$row['problem_id']."&jresult=4>$MSG_SOVLED: ".$row['accepted']."</a>";
-					echo "<a class='btn btn-primary btn-sm' role='button' href=status.php?problem_id=".$row['problem_id'].">$MSG_SUBMIT_NUM: ".$row['submit']."</a>";
-					echo "<a class='btn btn-primary btn-sm' role='button' href=problemstatus.php?id=".$row['problem_id'].">$MSG_STATISTICS</a>";
-				}
- 	      echo "<a class='btn btn-danger btn-sm' href='#' onclick='transform()' role='button'>$MSG_SHOW_OFF</a>";
-	      if ( isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'."p".$row['problem_id']])  ) {  //only  the original editor can edit this  problem
-        	require_once("include/set_get_key.php");
- 					echo "<a class='btn btn-success btn-sm' role='button' href=admin/problem_edit.php?id=$id&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">EDIT</a>";
- 					echo "<a class='btn btn-success btn-sm' role='button' href=javascript:phpfm(".$row['problem_id'].")>TESTDATA</a>";
-	      			if( isset($used_in_contests) && count($used_in_contests)>0 ){
-					echo "<hr><br>$MSG_PROBLEM_USED_IN:";
-					foreach($used_in_contests as $contests){
-						echo "<a class='label label-warning' href='contest.php?cid=". $contests[0]."'>".$contests[1]." </a><br>";	
-					
-					}
-					//echo "</div>";
+		if ($row[ 'spj' ]) {
+		    echo "&nbsp;&nbsp;<span class=red>Special Judge</span>";
+		}
+		echo "<br><br>";
+		echo "<div class='btn-group' role='group'>";
+		if ($pr_flag) {
+		    echo "<a id='submit' class='btn btn-info btn-sm' href='submitpage.php?id=$id' role='button'>$MSG_SUBMIT</a>";
+		} else {
+		    echo "<a id='submit' class='btn btn-info btn-sm' href='submitpage.php?cid=$cid&pid=$pid&langmask=$langmask' role='button'>$MSG_SUBMIT</a>";
+		    echo "<a class='btn btn-primary btn-sm' role='button' href='contest.php?cid=$cid'>$MSG_PROBLEM$MSG_LIST</a>";
+		}
+		if (isset($OJ_OI_MODE)&&$OJ_OI_MODE) {
+		} else {
+		    echo "<a class='btn btn-primary btn-sm' role='button' href=status.php?problem_id=".$row['problem_id']."&jresult=4>$MSG_SOVLED: ".$row['accepted']."</a>";
+		    echo "<a class='btn btn-primary btn-sm' role='button' href=status.php?problem_id=".$row['problem_id'].">$MSG_SUBMIT_NUM: ".$row['submit']."</a>";
+		    echo "<a class='btn btn-primary btn-sm' role='button' href=problemstatus.php?id=".$row['problem_id'].">$MSG_STATISTICS</a>";
+		}
+		echo "<a class='btn btn-danger btn-sm' href='#' onclick='transform()' role='button'>$MSG_SHOW_OFF</a>";
+		if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'."p".$row['problem_id']])) {  //only  the original editor can edit this  problem
+		    require_once("include/set_get_key.php");
+		    echo "<a class='btn btn-success btn-sm' role='button' href=admin/problem_edit.php?id=$id&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">EDIT</a>";
+		    echo "<a class='btn btn-success btn-sm' role='button' href=javascript:phpfm(".$row['problem_id'].")>TESTDATA</a>";
+		    if (isset($used_in_contests) && count($used_in_contests)>0) {
+		        echo "<hr><br>$MSG_PROBLEM_USED_IN:";
+		        foreach ($used_in_contests as $contests) {
+		            echo "<a class='label label-warning' href='contest.php?cid=". $contests[0]."'>".$contests[1]." </a><br>";
+		        }
+		        //echo "</div>";
+		    }
+		}
 
-				}
-	      
-	      
-	      }
-                    
-				echo "</div>";
-				echo "</center>";
-				# end of head
-				echo "</div>";
+		echo "</div>";
+		echo "</center>";
+		# end of head
+		echo "</div>";
 
-				echo "<!--StartMarkForVirtualJudge-->";
-				?>
+		echo "<!--StartMarkForVirtualJudge-->";
+		?>
 
 				<div class="panel panel-body">
 					<div class='panel panel-default'>
@@ -118,8 +116,8 @@
 						</div>
 					</div>
 
-					<?php 
-        if($row['input']){?>
+					<?php
+        if ($row['input']) {?>
 					<div class='panel panel-default'>
 						<div class='panel-heading'>
 							<h4>
@@ -131,7 +129,7 @@
 						</div>
 					</div>
 					<?php }
-        if($row['output']){?>
+        if ($row['output']) {?>
 					<div class='panel panel-default'>
 						<div class='panel-heading'>
 							<h4>
@@ -142,13 +140,13 @@
 							<?php echo bbcode_to_html($row['output'])?>
 						</div>
 					</div>
-					<?php }    
-    $sinput=str_replace("<","&lt;",$row['sample_input']);
-    $sinput=str_replace(">","&gt;",$sinput);
-    $soutput=str_replace("<","&lt;",$row['sample_output']);
-    $soutput=str_replace(">","&gt;",$soutput);
+					<?php }
+        $sinput=str_replace("<", "&lt;", $row['sample_input']);
+		$sinput=str_replace(">", "&gt;", $sinput);
+		$soutput=str_replace("<", "&lt;", $row['sample_output']);
+		$soutput=str_replace(">", "&gt;", $soutput);
 
-        if(strlen($sinput)){?>
+		if (strlen($sinput)) {?>
 					<div class='panel panel-default'>
 						<div class='panel-heading'>
 							<h4>
@@ -161,7 +159,7 @@
 					</div>
 					<?php }
 
-        if(strlen($soutput)){?>
+		if (strlen($soutput)) {?>
 					<div class='panel panel-default'>
 						<div class='panel-heading'>
 							<h4>
@@ -174,7 +172,7 @@
 					</div>
 					<?php }
 
-        if($row['hint']){?>
+		if ($row['hint']) {?>
 					<div class='panel panel-default'>
 						<div class='panel-heading'>
 							<h4>
@@ -187,7 +185,7 @@
 					</div>
 					<?php }
 
-        if($pr_flag){?>
+		if ($pr_flag) {?>
 					<div class='panel panel-default'>
 						<div class='panel-heading'>
 							<h4>
@@ -196,14 +194,16 @@
 						</div>
 
 						<div fd="source" style='word-wrap:break-word;' pid=<?php echo $row['problem_id']?> class='panel-body content'>
-							<?php 
-              $cats=explode(" ",$row['source']);
-              foreach($cats as $cat){
-								$hash_num=hexdec(substr(md5($cat),0,7));
-								$label_theme=$color_theme[$hash_num%count($color_theme)];
-								if($label_theme=="") $label_theme="default";
-                echo "<a class='label label-$label_theme' style='display: inline-block;' href='problemset.php?search=".urlencode(htmlentities($cat,ENT_QUOTES,'utf-8'))."'>".htmlentities($cat,ENT_QUOTES,'utf-8')."</a>&nbsp;";
-	            }?>
+							<?php
+		      $cats=explode(" ", $row['source']);
+		    foreach ($cats as $cat) {
+		        $hash_num=hexdec(substr(md5($cat), 0, 7));
+		        $label_theme=$color_theme[$hash_num%count($color_theme)];
+		        if ($label_theme=="") {
+		            $label_theme="default";
+		        }
+		        echo "<a class='label label-$label_theme' style='display: inline-block;' href='problemset.php?search=".urlencode(htmlentities($cat, ENT_QUOTES, 'utf-8'))."'>".htmlentities($cat, ENT_QUOTES, 'utf-8')."</a>&nbsp;";
+		    }?>
 	          </div>
 
 					</div>
@@ -213,14 +213,16 @@
 			<center>
 				<!--EndMarkForVirtualJudge-->
 				<div class='panel-footer'>
-				<?php 
-        if($pr_flag){
-					echo "<a class='btn btn-info btn-sm' href='submitpage.php?id=$id' role='button'>$MSG_SUBMIT</a>";
-        }else{
-					echo "<a class='btn btn-info btn-sm' href='submitpage.php?cid=$cid&pid=$pid&langmask=$langmask' role='button'>$MSG_SUBMIT</a>";
+				<?php
+        if ($pr_flag) {
+            echo "<a class='btn btn-info btn-sm' href='submitpage.php?id=$id' role='button'>$MSG_SUBMIT</a>";
+        } else {
+            echo "<a class='btn btn-info btn-sm' href='submitpage.php?cid=$cid&pid=$pid&langmask=$langmask' role='button'>$MSG_SUBMIT</a>";
         }
-        if ($OJ_BBS) echo "<a class='btn btn-warning btn-sm' href='bbs.php?pid=".$row['problem_id']."$ucid'>$MSG_BBS</a>";
-        ?>
+        if ($OJ_BBS) {
+            echo "<a class='btn btn-warning btn-sm' href='bbs.php?pid=".$row['problem_id']."$ucid'>$MSG_BBS</a>";
+        }
+		?>
 				</div>
 			</center>
 		</div>
@@ -248,7 +250,7 @@
 
 		$( document ).ready( function () {
 			$( "#creator" ).load( "problem-ajax.php?pid=<?php echo $id?>" );
-<?php if(isset($OJ_MARKDOWN)&&$OJ_MARKDOWN){ ?>
+<?php if (isset($OJ_MARKDOWN)&&$OJ_MARKDOWN) { ?>
                         $("div.md").each(function(){
                                 $(this).html(marked.parse($(this).html()));
                         });

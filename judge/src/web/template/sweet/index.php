@@ -2,20 +2,22 @@
 $cur_path = "template/$OJ_TEMPLATE/";
 $url=basename($_SERVER['REQUEST_URI']);
 $dir=basename(getcwd());
-if($dir=="discuss3") $path_fix="../";
-else $path_fix="";
-if(isset($OJ_NEED_LOGIN)&&$OJ_NEED_LOGIN&&(
-        $url!='loginpage.php'&&
-        $url!='lostpassword.php'&&
-        $url!='lostpassword2.php'&&
-        $url!='registerpage.php'
-    ) && !isset($_SESSION[$OJ_NAME.'_'.'user_id'])){
-
+if ($dir=="discuss3") {
+    $path_fix="../";
+} else {
+    $path_fix="";
+}
+if (isset($OJ_NEED_LOGIN)&&$OJ_NEED_LOGIN&&(
+    $url!='loginpage.php'&&
+    $url!='lostpassword.php'&&
+    $url!='lostpassword2.php'&&
+    $url!='registerpage.php'
+) && !isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {
     header("location:".$path_fix."loginpage.php");
     exit();
 }
 
-if($OJ_ONLINE){
+if ($OJ_ONLINE) {
     require_once($path_fix.'include/online.php');
     $on = new online();
 }
@@ -110,14 +112,14 @@ if($OJ_ONLINE){
             <div class="btns_wp scale_box">
 
                 <?php
-                if (!isset($_SESSION[$OJ_NAME.'_'.'user_id'])){?>
+                if (!isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {?>
 
                     <a class="btn_download JS-btn-download" href='<?php echo $path_fix?>loginpage.php'>登录</a>
 
                 <?php }?>
 
                 <?php
-                if (isset($_SESSION[$OJ_NAME.'_'.'user_id'])){?>
+                if (isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {?>
 
                     <a class="btn_download JS-btn-download" href='<?php echo $path_fix?>problemset.php'>练习</a>
 

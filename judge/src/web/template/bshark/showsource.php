@@ -66,12 +66,13 @@ $color = array(
                 </table>
                 <?php
                 echo "<div class=\"card\" style=\"box-shadow:0px 3px 3px #ddd;\"><div class=\"card-body\"><pre><code class=\"" . $language_name[$slanguage] . ";\">";
-                if ($ok != true)
-                    echo $MSG_WARNING_ACCESS_DENIED;
-                else
-                    echo htmlentities(str_replace("\n\r", "\n", $view_source), ENT_QUOTES, "utf-8") . "\n" . $auth;
-                echo "</div></div></code></pre>";
-                ?>
+if ($ok != true) {
+    echo $MSG_WARNING_ACCESS_DENIED;
+} else {
+    echo htmlentities(str_replace("\n\r", "\n", $view_source), ENT_QUOTES, "utf-8") . "\n" . $auth;
+}
+echo "</div></div></code></pre>";
+?>
             </div>
         </div>
     </div>
@@ -83,12 +84,12 @@ $color = array(
         foreach ($judge_result as $result) {
             echo "'$result',";
         }
-        ?> ''];
+?> ''];
         var color = [<?php
-        foreach ($color as $result) {
-            echo "'$result',";
-        }
-        ?> ''];
+foreach ($color as $result) {
+    echo "'$result',";
+}
+?> ''];
         var fresh_res = <?php echo $sresult; ?>;
         var is_look = 1;
         if (is_look == 0) fresh_res = '----';

@@ -1,11 +1,11 @@
 <?php require("admin-header.php");
 
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }?>
-<?php $tsql=Array();
-$csql=Array();
+<?php $tsql=array();
+$csql=array();
 $tsql[0]="select 1 from topic limit 1";
 $csql[0]="
 CREATE TABLE `topic` (
@@ -159,18 +159,17 @@ $tsql[27]="CREATE TABLE  `balloon` (
   PRIMARY KEY (`balloon_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
 
-if(isset($_POST['do'])){
-	require_once("../include/check_post_key.php");
-	echo "Executing...<br>";
-	for($i=0;isset($tsql[$i]);$i++){
-		if(pdo_query($tsql[$i])){
-				echo $csql[$i]."<br>";
-				pdo_query($csql[$i]);
-		}else{
-				echo $tsql[$i]."<br>";
-		}
-		
-	}
+if (isset($_POST['do'])) {
+    require_once("../include/check_post_key.php");
+    echo "Executing...<br>";
+    for ($i=0;isset($tsql[$i]);$i++) {
+        if (pdo_query($tsql[$i])) {
+            echo $csql[$i]."<br>";
+            pdo_query($csql[$i]);
+        } else {
+            echo $tsql[$i]."<br>";
+        }
+    }
 }
 ?>
 <div class="container">

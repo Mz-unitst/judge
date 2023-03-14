@@ -1,24 +1,28 @@
-<?php 
-if(stripos($_SERVER['REQUEST_URI'],"template")!==false)exit();
-  $url=basename($_SERVER['REQUEST_URI']);
-  $dir=basename(getcwd());
-  if($dir=="discuss3") $path_fix="../";
-  else $path_fix="";
-  if(isset($OJ_NEED_LOGIN)&&$OJ_NEED_LOGIN&&(
-                  $url!='loginpage.php'&&
-                  $url!='lostpassword.php'&&
-                  $url!='lostpassword2.php'&&
-                  $url!='registerpage.php'
-                  ) && !isset($_SESSION[$OJ_NAME.'_'.'user_id'])){
- 
-           header("location:".$path_fix."loginpage.php");
-           exit();
-        }
-  $_SESSION[$OJ_NAME.'_'.'profile_csrf']=rand();
-  if($OJ_ONLINE){
+<?php
+if (stripos($_SERVER['REQUEST_URI'], "template")!==false) {
+    exit();
+}
+$url=basename($_SERVER['REQUEST_URI']);
+$dir=basename(getcwd());
+if ($dir=="discuss3") {
+    $path_fix="../";
+} else {
+    $path_fix="";
+}
+if (isset($OJ_NEED_LOGIN)&&$OJ_NEED_LOGIN&&(
+    $url!='loginpage.php'&&
+    $url!='lostpassword.php'&&
+    $url!='lostpassword2.php'&&
+    $url!='registerpage.php'
+) && !isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {
+    header("location:".$path_fix."loginpage.php");
+    exit();
+}
+$_SESSION[$OJ_NAME.'_'.'profile_csrf']=rand();
+if ($OJ_ONLINE) {
     require_once($path_fix.'include/online.php');
     $on = new online();
-  }
+}
 ?>
       <!-- Static navbar -->
       <nav class="navbar navbar-default" role="navigation" >
@@ -31,7 +35,7 @@ if(stripos($_SERVER['REQUEST_URI'],"template")!==false)exit();
               <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="<?php echo $OJ_HOME?>"><i class="icon-home"></i><?php echo $OJ_NAME?></a>
-            <?php if(file_exists("moodle")){?>
+            <?php if (file_exists("moodle")) {?>
               <a class="navbar-brand" href="moodle"><i class="icon-home"></i>Moodle</a>
             <?php }?>
           </div>
@@ -39,8 +43,10 @@ if(stripos($_SERVER['REQUEST_URI'],"template")!==false)exit();
             <ul class="nav navbar-nav">
             <?php $ACTIVE="class='active'"?>
 
-            <?php if(!isset($OJ_ON_SITE_CONTEST_ID)){?>
-              <li <?php if ($url=="faqs.php") echo " $ACTIVE"; ?>>
+            <?php if (!isset($OJ_ON_SITE_CONTEST_ID)) {?>
+              <li <?php if ($url=="faqs.php") {
+                  echo " $ACTIVE";
+              } ?>>
                 <a href="<?php echo $path_fix?> faqs.php">
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <?php echo $MSG_FAQ?>
                 </a>
@@ -48,8 +54,10 @@ if(stripos($_SERVER['REQUEST_URI'],"template")!==false)exit();
             <?php } else {?>
             <?php }?>
 
-            <?php if (isset($OJ_PRINTER)&& $OJ_PRINTER){ ?>
-              <li <?php if ($url=="printer.php") echo " $ACTIVE";?>>
+            <?php if (isset($OJ_PRINTER)&& $OJ_PRINTER) { ?>
+              <li <?php if ($url=="printer.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>printer.php">
                   <span class="glyphicon glyphicon-print" aria-hidden="true"></span> <?php echo $MSG_PRINTER?>
                 </a>
@@ -57,35 +65,51 @@ if(stripos($_SERVER['REQUEST_URI'],"template")!==false)exit();
             <?php }?>
 
             <?php// if (!isset($OJ_ON_SITE_CONTEST_ID)&&!isset($_GET['cid'])){?>
-            <?php if (!isset($OJ_ON_SITE_CONTEST_ID)){?>            
-              <?php if (isset($OJ_BBS)&& $OJ_BBS){ ?>
-                <li <?php if ($dir=="discuss3") echo " $ACTIVE";?>>
+            <?php if (!isset($OJ_ON_SITE_CONTEST_ID)) {?>            
+              <?php if (isset($OJ_BBS)&& $OJ_BBS) { ?>
+                <li <?php if ($dir=="discuss3") {
+                    echo " $ACTIVE";
+                }?>>
                   <a href="<?php echo $path_fix?>bbs.php"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><?php echo $MSG_BBS?></a>
                 </li>
               <?php }?>
 
-              <li <?php if ($url=="problemset.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="problemset.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>problemset.php" ><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <?php echo $MSG_PROBLEMS?></a>
               </li>
-              <li <?php if ($url=="category.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="category.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>category.php"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> <?php echo $MSG_SOURCE?></a>
               </li>
-              <li <?php if ($url=="status.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="status.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>status.php"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> <?php echo $MSG_STATUS?></a>
               </li>
-              <li <?php if ($url=="ranklist.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="ranklist.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>ranklist.php"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <?php echo $MSG_RANKLIST?></a>
               </li>
-              <li <?php if ($url=="contest.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="contest.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>contest.php"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> <?php echo $MSG_CONTEST?></a>
               </li>
-            <?php }else{?>
-              <li <?php if ($url=="contest.php") echo " $ACTIVE";?>>
+            <?php } else {?>
+              <li <?php if ($url=="contest.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>contest.php" ><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> <?php echo $MSG_CONTEST?></a>
               </li>
             <?php }?>
             
-            <?php if(isset($_GET['cid'])){ $cid=intval($_GET['cid']); } ?>
+            <?php if (isset($_GET['cid'])) {
+                $cid=intval($_GET['cid']);
+            } ?>
 
               <!--<li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>

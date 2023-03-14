@@ -1,7 +1,7 @@
 <?php require_once("admin-header.php");
-	if(isset($OJ_LANG)){
-		require_once("../lang/$OJ_LANG.php");
-	}
+if (isset($OJ_LANG)) {
+    require_once("../lang/$OJ_LANG.php");
+}
 ?>
 
 <html>

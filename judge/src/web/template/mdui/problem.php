@@ -13,17 +13,17 @@
     <div class="mdui-container">
         <div class="mdui-card">
             <div class="mdui-card-primary" style="text-align: center;">
-                <div class="mdui-card-primary-title"><?php echo (isset($id) ? $id : chr($pid+ord('A'))).': '.$row["title"]; ?></div>
+                <div class="mdui-card-primary-title"><?php echo(isset($id) ? $id : chr($pid+ord('A'))).': '.$row["title"]; ?></div>
                 <div class="mdui-card-primary-subtitle">
                     <div class="mdui-m-x-1" style="display: inline-block;">时间限制：<code><?php echo $row["time_limit"].'s'; ?></code></div>
                     <div class="mdui-m-x-1" style="display: inline-block;">内存限制：<code><?php echo $row["memory_limit"].'MB'; ?></code></div>
-                    <?php if($row["spj"]) { ?>
+                    <?php if ($row["spj"]) { ?>
                         <div class="mdui-color-yellow mdui-m-t-1" style="border: 1px solid transparent; border-radius: 5px; padding: .5px 5px; font-size: 85%; display: inline-block;">Special Judge</div>
                     <?php } ?>
                 </div>
             </div>
             <div class="mdui-card-actions" style="text-align: center;">
-                <?php if($pr_flag){ ?>
+                <?php if ($pr_flag) { ?>
                     <a class="mdui-btn mdui-ripple mdui-color-teal-500" href="submitpage.php?id=<?php echo $id; ?>">提交</a>
                 <?php } else { ?>
                     <a class="mdui-btn mdui-ripple mdui-color-teal-500" href="submitpage.php?cid=<?php echo $cid; ?>&pid=<?php echo $pid; ?>&langmask=<?php echo $langmask; ?>">提交</a>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
 
-                <?php if($row['input']) { ?>
+                <?php if ($row['input']) { ?>
                     <div class='panel panel-default'>
                         <div class='panel-heading'>
                             <h3>输入格式</h3>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                 <?php } ?>
-                <?php if($row['output']) { ?>
+                <?php if ($row['output']) { ?>
                 <div class='panel panel-default'>
                     <div class='panel-heading'>
                         <h3>输出格式</h3>
@@ -83,13 +83,13 @@
                     </div>
                 </div>
                 <?php } ?>
-                <?php  
-                    $sinput = str_replace("<","&lt;",$row['sample_input']);
-                    $sinput = str_replace(">","&gt;",$sinput);
-                    $soutput = str_replace("<","&lt;",$row['sample_output']);
-                    $soutput = str_replace(">","&gt;",$soutput);
-                ?>
-                <?php if(strlen($sinput)) { ?>
+                <?php
+                    $sinput = str_replace("<", "&lt;", $row['sample_input']);
+    $sinput = str_replace(">", "&gt;", $sinput);
+    $soutput = str_replace("<", "&lt;", $row['sample_output']);
+    $soutput = str_replace(">", "&gt;", $soutput);
+    ?>
+                <?php if (strlen($sinput)) { ?>
                 <div class='panel panel-default'>
                     <div class='panel-heading'>
                         <h3>
@@ -106,7 +106,7 @@
                 </div>
                 <?php } ?>
 
-                <?php if(strlen($soutput)) { ?>
+                <?php if (strlen($soutput)) { ?>
                 <div class='panel panel-default'>
                     <div class='panel-heading'>
                         <h3>
@@ -123,7 +123,7 @@
                 </div>
                 <?php } ?>
 
-                <?php if($row['hint']) { ?>
+                <?php if ($row['hint']) { ?>
                 <div class='panel panel-default'>
                     <div class='panel-heading'>
                         <h3>提示/说明</h3>
@@ -134,14 +134,14 @@
                 </div>
                 <?php }
 
-                if($pr_flag){?>
+                if ($pr_flag) {?>
                 <div class='panel panel-default'>
                     <div class='panel-heading'>
                         <h3>分类</h3>
                     </div>
 
                     <div fd="source" style="word-wrap: break-word;" pid="<?php echo $row['problem_id']?>" class="panel-body content">
-                        <?php 
+                        <?php
                             $colors = [
                                 "red",
                                 "pink",
@@ -151,13 +151,13 @@
                                 "green",
                                 "teal"
                                 ];
-                            foreach($result as $row) { 
-                                $hash_num = hexdec(substr(md5($row["source"]),0,7));
-                                $label_color = $colors[$hash_num%count($colors)];
-                                $label_color = $label_color ? $label_color : "theme";
-                                echo '<a class="mdui-btn mdui-btn-dense mdui-color-'.$label_color.'-accent mdui-ripple mdui-m-x-2" href="problemset.php?search='.urlencode($row["source"]).'">'.$row["source"].'</a>';
-                            }
-                        ?>
+                    foreach ($result as $row) {
+                        $hash_num = hexdec(substr(md5($row["source"]), 0, 7));
+                        $label_color = $colors[$hash_num%count($colors)];
+                        $label_color = $label_color ? $label_color : "theme";
+                        echo '<a class="mdui-btn mdui-btn-dense mdui-color-'.$label_color.'-accent mdui-ripple mdui-m-x-2" href="problemset.php?search='.urlencode($row["source"]).'">'.$row["source"].'</a>';
+                    }
+                    ?>
                     </div>
 
                 </div>

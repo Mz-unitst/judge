@@ -8,17 +8,19 @@
 </head>
 <hr>
 
-<?php 
+<?php
   require_once("../include/db_info.inc.php");
-  require_once("admin-header.php");
-  if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator']) || isset($_SESSION[$OJ_NAME.'_'.'problem_editor']))) {
+require_once("admin-header.php");
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator']) || isset($_SESSION[$OJ_NAME.'_'.'problem_editor']))) {
     echo "<a href='../loginpage.php'>Please Login First!</a>";
     exit(1);
-  }
-  echo "<center><h3>".$MSG_PROBLEM."-".$MSG_ADD."</h3></center>";
-  include_once("kindeditor.php") ;
-  $source=pdo_query("select source from problem order by problem_id desc limit 1"); //默认续用最后一次的分类标签
-  if(is_array($source)&&isset($source[0]))$source=$source[0][0];
+}
+echo "<center><h3>".$MSG_PROBLEM."-".$MSG_ADD."</h3></center>";
+include_once("kindeditor.php") ;
+$source=pdo_query("select source from problem order by problem_id desc limit 1"); //默认续用最后一次的分类标签
+if (is_array($source)&&isset($source[0])) {
+    $source=$source[0][0];
+}
 
 ?>
 
@@ -80,21 +82,20 @@
         </p>
         <p align=left>
           <?php echo "<h4>".$MSG_SOURCE."</h4>"?>
-          <textarea name=source style="width:100%;" rows=1><?php echo htmlentities($source,ENT_QUOTES,'UTF-8') ?></textarea><br><br>
+          <textarea name=source style="width:100%;" rows=1><?php echo htmlentities($source, ENT_QUOTES, 'UTF-8') ?></textarea><br><br>
         </p>
         <p align=left><?php echo "<h4>".$MSG_CONTEST."</h4>"?>
           <select name=contest_id>
             <?php
             $sql="SELECT `contest_id`,`title` FROM `contest` WHERE `start_time`>NOW() order by `contest_id`";
-            $result=pdo_query($sql);
-            echo "<option value=''>none</option>";
-            if (count($result)==0) {
-            }
-            else {
-              foreach ($result as $row) {
-                echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
-              }
-            }?>
+$result=pdo_query($sql);
+echo "<option value=''>none</option>";
+if (count($result)==0) {
+} else {
+    foreach ($result as $row) {
+        echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+    }
+}?>
           </select>
         </p>
 

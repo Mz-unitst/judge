@@ -19,35 +19,39 @@
                         <h2>C<?php echo $view_cid; ?>: <?php echo $view_title; ?>
                         </h2>
                         <span class="ui label <?php
-                        if ($now > $end_time)
+                        if ($now > $end_time) {
                             echo "grey";
-                        else if ($now < $start_time)
+                        } elseif ($now < $start_time) {
                             echo "green";
-                        else
+                        } else {
                             echo "red";
-                        ?>">
+                        }
+        ?>">
                             <?php
-                            if ($now > $end_time)
-                                echo $MSG_Ended;
-                            else if ($now < $start_time)
-                                echo "未开始";
-                            else
-                                echo $MSG_Running;
-                            ?>
+            if ($now > $end_time) {
+                echo $MSG_Ended;
+            } elseif ($now < $start_time) {
+                echo "未开始";
+            } else {
+                echo $MSG_Running;
+            }
+        ?>
                         </span>
                         
                         <span class="ui label <?php
-                        if ($view_private == '0')
+                        if ($view_private == '0') {
                             echo "blue";
-                        else
+                        } else {
                             echo "red";
-                        ?>">
+                        }
+        ?>">
                             <?php
-                            if ($view_private == '0')
-                                echo $MSG_Public;
-                            else
-                                echo $MSG_Private;
-                            ?>
+            if ($view_private == '0') {
+                echo $MSG_Public;
+            } else {
+                echo $MSG_Private;
+            }
+        ?>
                         </span>
                         <h3>
                             <?php echo $MSG_CONTEST; ?><?php echo $MSG_TIME; ?>
@@ -87,29 +91,30 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $cnt = 0;
-                                    foreach ($view_problemset as $row) {
-                                        if ($cnt)
-                                            echo "<tr class='oddrow'>";
-                                        else
-                                            echo "<tr class='evenrow'>";
-                                        foreach ($row as $table_cell) {
-                                            if (trim($table_cell) == "<div class='label label-danger'>N</div>") {
-                                                echo "<td class='left red marked'>";
-                                                echo "</td>";
-                                            } else if (trim($table_cell) == "<div class='label label-success'>Y</div>") {
-                                                echo "<td class='left green marked'>";
-                                                echo "</td>";
-                                            } else {
-                                                echo "<td>";
-                                                echo "\t" . $table_cell;
-                                                echo "</td>";
-                                            }
-                                        }
-                                        echo "</tr>";
-                                        $cnt = 1 - $cnt;
+                $cnt = 0;
+                            foreach ($view_problemset as $row) {
+                                if ($cnt) {
+                                    echo "<tr class='oddrow'>";
+                                } else {
+                                    echo "<tr class='evenrow'>";
+                                }
+                                foreach ($row as $table_cell) {
+                                    if (trim($table_cell) == "<div class='label label-danger'>N</div>") {
+                                        echo "<td class='left red marked'>";
+                                        echo "</td>";
+                                    } elseif (trim($table_cell) == "<div class='label label-success'>Y</div>") {
+                                        echo "<td class='left green marked'>";
+                                        echo "</td>";
+                                    } else {
+                                        echo "<td>";
+                                        echo "\t" . $table_cell;
+                                        echo "</td>";
                                     }
-                                    ?>
+                                }
+                                echo "</tr>";
+                                $cnt = 1 - $cnt;
+                            }
+                            ?>
                                 </tbody>
                             </table>
                         <?php } ?>
@@ -132,7 +137,7 @@
                         <a class="item" href='conteststatistics.php?cid=<?php echo $view_cid ?>'>
                             <?php echo $MSG_STATISTICS; ?>
                         </a>
-                        <?php if(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
+                        <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
                             <a href="suspect_list.php?cid=<?php echo $view_cid?>" class="item"><?php echo $MSG_IP_VERIFICATION?></a>
                             <a href="user_set_ip.php?cid=<?php echo $view_cid?>" class="item"><?php echo $MSG_SET_LOGIN_IP?></a>
                             <a target="_blank" href="../../bsadmin/contest_edit.php?cid=<?php echo $view_cid ?>" class="item"><?php echo $MSG_EDIT.$MSG_CONTEST;?></a>

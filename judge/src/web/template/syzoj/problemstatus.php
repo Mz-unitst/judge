@@ -48,32 +48,32 @@
                               </thead>
                             <tbody>
                             <?php
-                            foreach($view_solution as $row){
-                            echo "<tr>";
-                            foreach($row as $table_cell){
-                            echo "<td>";
-                            echo "\t".$table_cell;
-                            echo "</td>";
+                            foreach ($view_solution as $row) {
+                                echo "<tr>";
+                                foreach ($row as $table_cell) {
+                                    echo "<td>";
+                                    echo "\t".$table_cell;
+                                    echo "</td>";
+                                }
+                                echo "</tr>";
                             }
-                            echo "</tr>";
-                            }
-                            ?>
+?>
                             <!-- <tr>
                             <td colspan="8">
                               <?php
-                              echo "<a href='problemstatus.php?id=$id'>[首页]</a>";
-                              echo "<a href='status.php?problem_id=$id'>[评测列表]</a>";
-                              if ($page>$pagemin){
-                              $page--;
-                              echo "<a href='problemstatus.php?id=$id&page=$page'>[上一页]</a>";
-                              $page++;
-                              }
-                              if ($page<$pagemax){
-                              $page++;
-                              echo "<a href='problemstatus.php?id=$id&page=$page'>[下一页]</a>";
-                              $page--;
-                              }
-                              ?>
+  echo "<a href='problemstatus.php?id=$id'>[首页]</a>";
+echo "<a href='status.php?problem_id=$id'>[评测列表]</a>";
+if ($page>$pagemin) {
+    $page--;
+    echo "<a href='problemstatus.php?id=$id&page=$page'>[上一页]</a>";
+    $page++;
+}
+if ($page<$pagemax) {
+    $page++;
+    echo "<a href='problemstatus.php?id=$id&page=$page'>[下一页]</a>";
+    $page--;
+}
+?>
                               
                             </td>
                             </tr> -->
@@ -83,25 +83,25 @@
                                 <div style="text-align: center; ">
                                 <div class="ui pagination menu" style="box-shadow: none; ">
                                   <?php
-                                    // <a class="icon item" href="status.php?" id="page_prev">  
-                                    // 首页
-                                    // </a>
-                                    echo "<a class=\"item\" href='problemstatus.php?id=$id'>首页</a>";
-                                    if ($page>$pagemin){
-                                      $page--;
-                                      echo "<a class=\"item\" href='problemstatus.php?id=$id&page=$page'>上一页</a>";
-                                      $page++;
-                                    }
-                                    if ($page<$pagemax){
-                                      $page++;
-                                      echo "<a class=\"item\" href='problemstatus.php?id=$id&page=$page'>下一页</a>";
-                                      $page--;
-                                      }
-                                    // <a class="item" href="status.php?&amp;top=65577">上一页</a>      
-                                    // <a class="icon item" href="status.php?&amp;top=65538&amp;prevtop=65557" id="page_next">
-                                    //   下一页
-                                    // </a>
-                                  ?>
+      // <a class="icon item" href="status.php?" id="page_prev">
+      // 首页
+      // </a>
+      echo "<a class=\"item\" href='problemstatus.php?id=$id'>首页</a>";
+if ($page>$pagemin) {
+    $page--;
+    echo "<a class=\"item\" href='problemstatus.php?id=$id&page=$page'>上一页</a>";
+    $page++;
+}
+if ($page<$pagemax) {
+    $page++;
+    echo "<a class=\"item\" href='problemstatus.php?id=$id&page=$page'>下一页</a>";
+    $page--;
+}
+// <a class="item" href="status.php?&amp;top=65577">上一页</a>
+// <a class="icon item" href="status.php?&amp;top=65538&amp;prevtop=65557" id="page_next">
+//   下一页
+// </a>
+?>
                                 </div>
                                 </div>
                               </div>
@@ -130,10 +130,10 @@ $(function () {
       datasets: [
         {
           data: [
-            <?php foreach($view_problem_number as $row){
-              echo $row.",";
+            <?php foreach ($view_problem_number as $row) {
+                echo $row.",";
             }
-            ?>
+?>
           ],
           backgroundColor: [
             "#32CD32",
@@ -149,10 +149,10 @@ $(function () {
         }
       ],
       labels: [
-        <?php foreach($view_problem_title as $row){
-              echo "\"".$row."\",";
-            }
-            ?>
+        <?php foreach ($view_problem_title as $row) {
+            echo "\"".$row."\",";
+        }
+?>
       ]
     },
     options: {

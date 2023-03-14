@@ -1,6 +1,6 @@
-<?php 
-   $view_discuss=ob_get_contents();
-    ob_end_clean();
+<?php
+$view_discuss=ob_get_contents();
+ob_end_clean();
 require_once("lang/$OJ_LANG.php");
 ?>
 <!DOCTYPE html>

@@ -10,59 +10,62 @@
 <center>
 <?php require_once("../include/db_info.inc.php");?>
 <?php require_once("admin-header.php");
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 ?>
 <?php
 include_once("kindeditor.php") ;
 ?>
 <?php require_once("../include/simple_html_dom.php");
-  $url=$_POST ['url'];
-  if (!$url) $url=$_GET['url'];
-  if (strpos($url, "http") === false){
-	echo "Please Input like http://acm.hdu.edu.cn/showproblem.php?pid=1000";
-	exit(1);
-  }
-  if (false) {
-	$url = stripslashes ( $url);
-  }
-  $remote_id=mb_substr($url,mb_strpos($url,"=")+1);  
-  $baseurl=substr($url,0,strrpos($url,"/")+1);
+$url=$_POST ['url'];
+if (!$url) {
+    $url=$_GET['url'];
+}
+if (strpos($url, "http") === false) {
+    echo "Please Input like http://acm.hdu.edu.cn/showproblem.php?pid=1000";
+    exit(1);
+}
+if (false) {
+    $url = stripslashes($url);
+}
+$remote_id=mb_substr($url, mb_strpos($url, "=")+1);
+$baseurl=substr($url, 0, strrpos($url, "/")+1);
   //echo $baseurl;
-  $html = file_get_html($url, false,null,0, -1,true,true, DEFAULT_TARGET_CHARSET,false);//file_get_html($url,'GB2312');
-  
-  foreach($html->find('img') as $element)
-        $element->src=$baseurl.$element->src;
-        
-  $element=$html->find('h1',0);
-  $title=$element->plaintext;
-  
-  $element=$html->find('span',0);
-  $tlimit=$element->plaintext; 
-  $tlimit=substr($tlimit,12);
-  $tlimit=substr($tlimit,strpos($tlimit, '/')+1,strpos($tlimit, ' MS') - strpos($tlimit, '/'));
-  $mlimit=$element->plaintext;
-  $mlimit=substr($mlimit, strpos($mlimit, "Memory"));
-  $mlimit=substr($mlimit, strpos($mlimit, '/')+1,strpos($mlimit, ' K') - strpos($mlimit, '/'));
-  //echo $mlimit;
-  $tlimit/=1000;
-  $mlimit/=1000;
-  
-  $element=$html->find('div[class=panel_content]',0);
-  $descriptionHTML=$element->outertext;
-  $element=$html->find('div[class=panel_content]',1);
-  $inputHTML=$element->outertext;
-  $element=$html->find('div[class=panel_content]',2);
-  $outputHTML=$element->outertext;
-  
-  $element=$html->find('pre',0);
-  $element=$element->find('div',0);
-  $sample_input=$element->innertext;
-  $element=$html->find('pre',1);
-  $element=$element->find('div',0);
-  $sample_output=$element->innertext;
+$html = file_get_html($url, false, null, 0, -1, true, true, DEFAULT_TARGET_CHARSET, false);//file_get_html($url,'GB2312');
+
+foreach ($html->find('img') as $element) {
+    $element->src=$baseurl.$element->src;
+}
+
+$element=$html->find('h1', 0);
+$title=$element->plaintext;
+
+$element=$html->find('span', 0);
+$tlimit=$element->plaintext;
+$tlimit=substr($tlimit, 12);
+$tlimit=substr($tlimit, strpos($tlimit, '/')+1, strpos($tlimit, ' MS') - strpos($tlimit, '/'));
+$mlimit=$element->plaintext;
+$mlimit=substr($mlimit, strpos($mlimit, "Memory"));
+$mlimit=substr($mlimit, strpos($mlimit, '/')+1, strpos($mlimit, ' K') - strpos($mlimit, '/'));
+//echo $mlimit;
+$tlimit/=1000;
+$mlimit/=1000;
+
+$element=$html->find('div[class=panel_content]', 0);
+$descriptionHTML=$element->outertext;
+$element=$html->find('div[class=panel_content]', 1);
+$inputHTML=$element->outertext;
+$element=$html->find('div[class=panel_content]', 2);
+$outputHTML=$element->outertext;
+
+$element=$html->find('pre', 0);
+$element=$element->find('div', 0);
+$sample_input=$element->innertext;
+$element=$html->find('pre', 1);
+$element=$element->find('div', 0);
+$sample_output=$element->innertext;
 ?>
 <form method=POST action=problem_add.php>
 <input type=hidden name=problem_id value=New Problem>

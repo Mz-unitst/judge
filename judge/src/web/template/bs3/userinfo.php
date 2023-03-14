@@ -20,7 +20,6 @@
   </head>
 
   <body>
-
     <div class="container">
     <?php include("template/$OJ_TEMPLATE/nav.php");?>	    
       <!-- Main component for a primary marketing message or call to action -->
@@ -29,10 +28,10 @@
 <center>
 <table class="table table-striped" id=statics width=70%>
 <caption>
-<?php echo $user."--".htmlentities($nick,ENT_QUOTES,"UTF-8")?>
+<?php echo $user."--".htmlentities($nick, ENT_QUOTES, "UTF-8")?>
 <?php
-echo "<a href=mail.php?to_user=$user>$MSG_MAIL</a>";
-?>
+    echo "<a href=mail.php?to_user=$user>$MSG_MAIL</a>";
+    ?>
 </caption>
 <tr ><td width=15%><?php echo $MSG_Number?></td><td width=25% align=center><?php echo $Rank?></td><td width=70% align=center>Solved Problems List</td></tr>
 <tr ><td><?php echo $MSG_SOVLED?><td align=center><a href='status.php?user_id=<?php echo $user?>&jresult=4'><?php echo $AC?></td></a>
@@ -43,30 +42,31 @@ function p(id,c){
 
 }
 <?php $sql="SELECT `problem_id`,count(1) from solution where `user_id`=? and result=4 group by `problem_id` ORDER BY `problem_id` ASC";
-if ($result=pdo_query($sql,$user)){ 
-    foreach($result as $row)
-    echo "p($row[0],$row[1]);";
-}
+    if ($result=pdo_query($sql, $user)) {
+        foreach ($result as $row) {
+            echo "p($row[0],$row[1]);"."cnm";
+        }
+    }
 
-?>
+    ?>
 </script>
 <div id=submission style="width:600px;height:300px" ></div>
 </td>
 </tr>
 <tr ><td><?php echo $MSG_SUBMIT?></td><td align=center><a href='status.php?user_id=<?php echo $user?>'><?php echo $Submit?></a></td></tr>
 <?php
-foreach($view_userstat as $row){
-//i++;
-echo "<tr ><td>".$jresult[$row[0]]."</td><td align=center><a href=status.php?user_id=$user&jresult=".$row[0]." >".$row[1]."</a></td></tr>";
+foreach ($view_userstat as $row) {
+    //i++;
+    echo "<tr ><td>".$jresult[$row[0]]."</td><td align=center><a href=status.php?user_id=$user&jresult=".$row[0]." >".$row[1]."</a></td></tr>";
 }
-//}
-echo "<tr id=pie ><td>Statistics</td><td><div id='PieDiv' style='position:relative;height:105px;width:120px;'></div></td></tr>";
-?>
+    //}
+    echo "<tr id=pie ><td>Statistics</td><td><div id='PieDiv' style='position:relative;height:105px;width:120px;'></div></td></tr>";
+    ?>
 <script type="text/javascript" src="include/wz_jsgraphics.js"></script>
 <script type="text/javascript" src="include/pie.js"></script>
 <script language="javascript">
-var y= new Array ();
-var x = new Array ();
+var y= [];
+var x = [];
 var dt=document.getElementById("statics");
 var data=dt.rows;
 var n;
@@ -88,31 +88,32 @@ mypie.drawPie(y,x);
 <tr ><td>Email:<td align=center>[email protected]<?php// echo $email?></tr>
 </table>
 <?php
-if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])){
-?><table border=1>
+if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {
+    ?><table border=1>
 <thead><tr class=toprow><th>UserID</th><th>Password</th><th>IP</th><th>Time</th></tr></thead>
 <tbody>
 <?php
-$cnt=0;
-foreach($view_userinfo as $row){
-	if ($cnt)
-		echo "<tr class='oddrow'>";
-	else
-		echo "<tr class='evenrow'>";
-	for($i=0;$i<count($row)/2;$i++){
-		echo "<td>";
-		echo "\t".$row[$i];
-		echo "</td>";
-	}
-	echo "</tr>";
-	$cnt=1-$cnt;
-}
-?>
+    $cnt=0;
+    foreach ($view_userinfo as $row) {
+        if ($cnt) {
+            echo "<tr class='oddrow'>";
+        } else {
+            echo "<tr class='evenrow'>";
+        }
+        for ($i=0;$i<count($row)/2;$i++) {
+            echo "<td>";
+            echo "\t".$row[$i];
+            echo "</td>";
+        }
+        echo "</tr>";
+        $cnt=1-$cnt;
+    }
+    ?>
 </tbody>
 </table>
 <?php
-}
-?>
+    }
+    ?>
 </center>
       </div>
 
@@ -130,13 +131,13 @@ $(function () {
 var d1 = [];
 var d2 = [];
 <?php
-foreach($chart_data_all as $k=>$d){
-?>
+foreach ($chart_data_all as $k=>$d) {
+    ?>
 d1.push([<?php echo $k?>, <?php echo $d?>]);
 <?php }?>
 <?php
-foreach($chart_data_ac as $k=>$d){
-?>
+foreach ($chart_data_ac as $k=>$d) {
+    ?>
 d2.push([<?php echo $k?>, <?php echo $d?>]);
 <?php }?>
 //var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];

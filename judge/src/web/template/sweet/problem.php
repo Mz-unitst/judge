@@ -26,91 +26,97 @@
     <!-- Main component for a primary marketing message or call to action -->
     <div class="jumbotron">
       <?php
-      if($pr_flag){
-        echo "<title>$MSG_PROBLEM".$row['problem_id']."--". $row['title']."</title>";
-        echo "<center><h3>$id: ".$row['title']."</h3>";
-      }else{
-        //$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        $id=$row['problem_id'];
-        echo "<title>$MSG_PROBLEM ".$PID[$pid].": ".$row['title']." </title>";
-        echo "<center><h3>$MSG_PROBLEM ".$PID[$pid].": ".$row['title']."</h3>";
+      if ($pr_flag) {
+          echo "<title>$MSG_PROBLEM".$row['problem_id']."--". $row['title']."</title>";
+          echo "<center><h3>$id: ".$row['title']."</h3>";
+      } else {
+          //$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          $id=$row['problem_id'];
+          echo "<title>$MSG_PROBLEM ".$PID[$pid].": ".$row['title']." </title>";
+          echo "<center><h3>$MSG_PROBLEM ".$PID[$pid].": ".$row['title']."</h3>";
       }
 
       echo "<span class=green>$MSG_Time_Limit: </span>".$row['time_limit']." Sec&nbsp;&nbsp;";
-      echo "<span class=green>$MSG_Memory_Limit: </span>".$row['memory_limit']." MB";
+  echo "<span class=green>$MSG_Memory_Limit: </span>".$row['memory_limit']." MB";
 
-      if($row['spj']) echo "&nbsp;&nbsp;<span class=red>Special Judge</span>";
-      echo "<br><span class=green>$MSG_SUBMIT: </span>".$row['submit']."&nbsp;&nbsp;";
-      echo "<span class=green>$MSG_SOVLED: </span>".$row['accepted']."<br>";
+  if ($row['spj']) {
+      echo "&nbsp;&nbsp;<span class=red>Special Judge</span>";
+  }
+  echo "<br><span class=green>$MSG_SUBMIT: </span>".$row['submit']."&nbsp;&nbsp;";
+  echo "<span class=green>$MSG_SOVLED: </span>".$row['accepted']."<br>";
 
-      if($pr_flag){
-        echo "[<a href='submitpage.php?id=$id'>$MSG_SUBMIT</a>] ";
-      }else{
-        echo "[<a href='submitpage.php?cid=$cid&pid=$pid&langmask=$langmask'>$MSG_SUBMIT</a>] ";
-      }
+  if ($pr_flag) {
+      echo "[<a href='submitpage.php?id=$id'>$MSG_SUBMIT</a>] ";
+  } else {
+      echo "[<a href='submitpage.php?cid=$cid&pid=$pid&langmask=$langmask'>$MSG_SUBMIT</a>] ";
+  }
 
-      echo "[<a href='problemstatus.php?id=".$row['problem_id']."'>$MSG_STATUS</a>] ";
-      echo "[<a href='bbs.php?pid=".$row['problem_id']."$ucid'>$MSG_BBS</a>] ";
-      echo "[$MSG_Creator:<span id='creator'></span>]";
+  echo "[<a href='problemstatus.php?id=".$row['problem_id']."'>$MSG_STATUS</a>] ";
+  echo "[<a href='bbs.php?pid=".$row['problem_id']."$ucid'>$MSG_BBS</a>] ";
+  echo "[$MSG_Creator:<span id='creator'></span>]";
 
-      if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])){
-        require_once("include/set_get_key.php");
+  if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {
+      require_once("include/set_get_key.php");
       ?>
 
       [<a href="admin/problem_edit.php?id=<?php echo $id?>&getkey=<?php echo $_SESSION[$OJ_NAME.'_'.'getkey']?>" >Edit</a>]
       [<a href='javascript:phpfm(<?php echo $row['problem_id'];?>)'>TestData</a>]
 
     <?php
-    }
+  }
 
-    echo "</center>";
-    echo "<!--StartMarkForVirtualJudge-->";
-    echo "<h4>$MSG_Description</h4><div class=content>".$row['description']."</div><br>";
-    
-    if($row['input'])echo "<h4>$MSG_Input</h4><div class=content>".$row['input']."</div><br>";
-    if($row['output'])echo "<h4>$MSG_Output</h4><div class=content>".$row['output']."</div><br>";
-    
-    $sinput=str_replace("<","&lt;",$row['sample_input']);
-    $sinput=str_replace(">","&gt;",$sinput);
-    $soutput=str_replace("<","&lt;",$row['sample_output']);
-    $soutput=str_replace(">","&gt;",$soutput);
+  echo "</center>";
+  echo "<!--StartMarkForVirtualJudge-->";
+  echo "<h4>$MSG_Description</h4><div class=content>".$row['description']."</div><br>";
 
-    if(strlen($sinput)){
+  if ($row['input']) {
+      echo "<h4>$MSG_Input</h4><div class=content>".$row['input']."</div><br>";
+  }
+  if ($row['output']) {
+      echo "<h4>$MSG_Output</h4><div class=content>".$row['output']."</div><br>";
+  }
+
+  $sinput=str_replace("<", "&lt;", $row['sample_input']);
+  $sinput=str_replace(">", "&gt;", $sinput);
+  $soutput=str_replace("<", "&lt;", $row['sample_output']);
+  $soutput=str_replace(">", "&gt;", $soutput);
+
+  if (strlen($sinput)) {
       echo "<h4>$MSG_Sample_Input</h4><pre class=content><span class=sampledata>".($sinput)."</span></pre><br>";
-    }
+  }
 
-    if(strlen($soutput)){
+  if (strlen($soutput)) {
       echo "<h4>$MSG_Sample_Output</h4><pre class=content><span class=sampledata>".($soutput)."</span></pre><br>";
-    }
+  }
 
-    if($row['hint']){
+  if ($row['hint']) {
       echo "<h4>$MSG_HINT</h4><div class='hint content'>".$row['hint']."</div><br>";
-    }
+  }
 
-    if($pr_flag){
+  if ($pr_flag) {
       echo "<h4>$MSG_SOURCE</h4><div class=content>";
-      $cats=explode(" ",$row['source']);
-      foreach($cats as $cat){
-        echo "<a href='problemset.php?search=".urlencode(htmlentities($cat,ENT_QUOTES,'utf-8'))."'>".htmlentities($cat,ENT_QUOTES,'utf-8')."</a>&nbsp;";
+      $cats=explode(" ", $row['source']);
+      foreach ($cats as $cat) {
+          echo "<a href='problemset.php?search=".urlencode(htmlentities($cat, ENT_QUOTES, 'utf-8'))."'>".htmlentities($cat, ENT_QUOTES, 'utf-8')."</a>&nbsp;";
       }
       echo "</div><br>";
-    }
+  }
 
-    echo "<center>";
-    echo "<!--EndMarkForVirtualJudge-->";
+  echo "<center>";
+  echo "<!--EndMarkForVirtualJudge-->";
 
-    if($pr_flag){
+  if ($pr_flag) {
       echo "[<a href='submitpage.php?id=$id'>$MSG_SUBMIT</a>] ";
-    }else{
+  } else {
       echo "[<a href='submitpage.php?cid=$cid&pid=$pid&langmask=$langmask'>$MSG_SUBMIT</a>]";
-    }
+  }
 
-    echo "[<a href='problemstatus.php?id=".$row['problem_id']."'>$MSG_STATUS</a>]";
-    //echo "[<a href='bbs.php?pid=".$row['problem_id']."$ucid'>$MSG_BBS</a>]";
+  echo "[<a href='problemstatus.php?id=".$row['problem_id']."'>$MSG_STATUS</a>]";
+  //echo "[<a href='bbs.php?pid=".$row['problem_id']."$ucid'>$MSG_BBS</a>]";
 
-    if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])){
+  if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {
       require_once("include/set_get_key.php");
-    ?>
+      ?>
 
     [<a href="admin/problem_edit.php?id=<?php echo $id?>&getkey=<?php echo $_SESSION[$OJ_NAME.'_'.'getkey']?>" >Edit</a>]
     [<a href='javascript:phpfm(<?php echo $row['problem_id'];?>)'>TestData</a>]

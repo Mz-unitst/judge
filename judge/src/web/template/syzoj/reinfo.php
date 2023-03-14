@@ -96,7 +96,9 @@
 
     explain();
     
-    <?php if(isset($OJ_DOWNLOAD)&&$OJ_DOWNLOAD) echo  "showDownload();" ?>
+    <?php if (isset($OJ_DOWNLOAD)&&$OJ_DOWNLOAD) {
+        echo  "showDownload();";
+    } ?>
 </script>
 <?php include("template/$OJ_TEMPLATE/footer.php");?>
 

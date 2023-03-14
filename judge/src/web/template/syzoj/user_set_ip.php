@@ -1,5 +1,5 @@
-<?php 
-  include("template/$OJ_TEMPLATE/header.php");
+<?php
+include("template/$OJ_TEMPLATE/header.php");
 ?>
 <div class="container">
 
@@ -20,39 +20,39 @@
       <?php } ?>
       
       <?php if ($now>$end_time) {
-        echo "<span class=text-muted>$MSG_Ended</span>";
+          echo "<span class=text-muted>$MSG_Ended</span>";
+      } elseif ($now<$start_time) {
+          echo "<span class=text-success>$MSG_Start&nbsp;</span>";
+          echo "<span class=text-success>$MSG_TotalTime</span>"." ".formatTimeLength($end_time-$start_time);
+      } else {
+          echo "<span class=text-danger>$MSG_Running</span>&nbsp;";
+          echo "<span class=text-danger>$MSG_LeftTime</span>"." ".formatTimeLength($end_time-$now);
       }
-      else if ($now<$start_time) {
-        echo "<span class=text-success>$MSG_Start&nbsp;</span>";
-        echo "<span class=text-success>$MSG_TotalTime</span>"." ".formatTimeLength($end_time-$start_time);
-      }
-      else {
-        echo "<span class=text-danger>$MSG_Running</span>&nbsp;";
-        echo "<span class=text-danger>$MSG_LeftTime</span>"." ".formatTimeLength($end_time-$now);
-      }
-      ?>
+?>
 
       <br><br>
 
       <?php echo $MSG_CONTEST_STATUS?> : 
       
       <?php
-      if ($now>$end_time)
-        echo "<span class=text-muted>".$MSG_End."</span>";
-      else if ($now<$start_time)
-        echo "<span class=text-success>".$MSG_Start."</span>";
-      else
-        echo "<span class=text-danger>".$MSG_Running."</span>";
-      ?>
+if ($now>$end_time) {
+    echo "<span class=text-muted>".$MSG_End."</span>";
+} elseif ($now<$start_time) {
+    echo "<span class=text-success>".$MSG_Start."</span>";
+} else {
+    echo "<span class=text-danger>".$MSG_Running."</span>";
+}
+?>
       &nbsp;&nbsp;
 
       <?php echo $MSG_CONTEST_OPEN?> : 
 
-      <?php if ($view_private=='0')
-        echo "<span class=text-primary>".$MSG_Public."</span>";
-      else
-        echo "<span class=text-danger>".$MSG_Private."</span>";
-      ?>
+      <?php if ($view_private=='0') {
+          echo "<span class=text-primary>".$MSG_Public."</span>";
+      } else {
+          echo "<span class=text-danger>".$MSG_Private."</span>";
+      }
+?>
 
       <br>
 
@@ -68,7 +68,7 @@
         <a href="contestrank-oi.php?cid=<?php echo $view_cid?>" class="btn btn-primary btn-sm"><?php echo "OI".$MSG_STANDING?></a>
         <a href="conteststatistics.php?cid=<?php echo $view_cid?>" class="btn btn-primary btn-sm"><?php echo $MSG_STATISTICS?></a>
         <a href="suspect_list.php?cid=<?php echo $view_cid?>" class="btn btn-warning btn-sm"><?php echo $MSG_IP_VERIFICATION?></a>
-        <?php if(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
+        <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
           <a href="user_set_ip.php?cid=<?php echo $view_cid?>" class="btn btn-success btn-sm"><?php echo $MSG_SET_LOGIN_IP?></a>
           <a target="_blank" href="../../admin/contest_edit.php?cid=<?php echo $view_cid?>" class="btn btn-success btn-sm"><?php echo "EDIT"?></a>
         <?php } ?>
@@ -79,19 +79,20 @@
 	  <br>
 
 	  <?php
-	  if ($result2=="changed")
-	  	echo "<center><h4 class='text-danger'>User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')."'s Login IP Changed to ".$ip."</h4></center>";
-	  else
-	  	echo "<center><h4 class='text-danger'>Login IP Change</h4></center>";
-	 	?>
+if ($result2=="changed") {
+    echo "<center><h4 class='text-danger'>User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')."'s Login IP Changed to ".$ip."</h4></center>";
+} else {
+    echo "<center><h4 class='text-danger'>Login IP Change</h4></center>";
+}
+?>
 
 	  <center>
 		<form action=user_set_ip.php?cid=<?php echo $view_cid?> method=post class="form-horizontal">
 			<div class="form-group">
 				<label class="col-sm-offset-2 col-sm-3 control-label"><?php echo $MSG_USER_ID?></label>
-				<?php if(isset($_GET['uid'])) { ?>
+				<?php if (isset($_GET['uid'])) { ?>
 				<div class="col-sm-3"><input name="user_id" class="form-control" value="<?php echo htmlentities($_GET['uid'], ENT_QUOTES, 'UTF-8');?>" type="text" required ></div>
-		  	<?php } else if(isset($_POST['user_id'])) { ?>
+		  	<?php } elseif (isset($_POST['user_id'])) { ?>
 				<div class="col-sm-3"><input name="user_id" class="form-control" value="<?php echo htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8');?>" type="text" required ></div>
 				<?php } else { ?>
 				<div class="col-sm-3"><input name="user_id" class="form-control" placeholder="<?php echo $MSG_USER_ID."*"?>" type="text" required ></div>
@@ -100,7 +101,7 @@
 
 			<div class="form-group">
 				<label class="col-sm-offset-2 col-sm-3 control-label"><?php echo "New IP"?></label>
-				<?php if(isset($_POST['ip'])) { ?>
+				<?php if (isset($_POST['ip'])) { ?>
 				<div class="col-sm-3"><input name="ip" class="form-control" value="<?php echo htmlentities($_POST['ip'], ENT_QUOTES, 'UTF-8')?>" type="text"  autocomplete="off" required ></div>
 				<?php } else { ?>
 				<div class="col-sm-3"><input name="ip" class="form-control" placeholder="<?php echo "?.?.?.?*"?>" type="text"  autocomplete="off" required ></div>

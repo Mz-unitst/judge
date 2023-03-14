@@ -33,19 +33,21 @@
 End Time: <font color=#993399><?php echo $view_end_time?></font><br>
 Current Time: <font color=#993399><span id=nowdate > <?php echo date("Y-m-d H:i:s")?></span></font>
 Status:<?php
-if ($now>$end_time)
-echo "<span class=red>Ended</span>";
-else if ($now<$start_time)
-echo "<span class=red>Not Started</span>";
-else
-echo "<span class=red>Running</span>";
-?>&nbsp;&nbsp;
+if ($now>$end_time) {
+    echo "<span class=red>Ended</span>";
+} elseif ($now<$start_time) {
+    echo "<span class=red>Not Started</span>";
+} else {
+    echo "<span class=red>Running</span>";
+}
+    ?>&nbsp;&nbsp;
 <?php
-if ($view_private=='0')
-echo "<span class=blue>Public</font>";
-else
-echo "&nbsp;&nbsp;<span class=red>Private</font>";
-?>
+if ($view_private=='0') {
+    echo "<span class=blue>Public</font>";
+} else {
+    echo "&nbsp;&nbsp;<span class=red>Private</font>";
+}
+    ?>
 <br>
 [<a href='status.php?cid=<?php echo $view_cid?>'>Status</a>]
 [<a href='contestrank.php?cid=<?php echo $view_cid?>'>Standing</a>]
@@ -64,23 +66,24 @@ echo "&nbsp;&nbsp;<span class=red>Private</font>";
 </thead>
 <tbody>
 <?php
-$cnt=0;
-$limit = 0;
-foreach($view_problemset as $row){
-if ($cnt)
-echo "<tr class='oddrow'>";
-else
-echo "<tr class='evenrow'>";
-foreach($row as $table_cell){
-echo "<td>";
-echo "\t".$table_cell;
-echo "</td>";
-}
-echo "</tr>";
-$cnt=1-$cnt;
-    $limit++;
-}
-?>
+    $cnt=0;
+    $limit = 0;
+    foreach ($view_problemset as $row) {
+        if ($cnt) {
+            echo "<tr class='oddrow'>";
+        } else {
+            echo "<tr class='evenrow'>";
+        }
+        foreach ($row as $table_cell) {
+            echo "<td>";
+            echo "\t".$table_cell;
+            echo "</td>";
+        }
+        echo "</tr>";
+        $cnt=1-$cnt;
+        $limit++;
+    }
+    ?>
 </tbody>
 </table></center>
       </div>

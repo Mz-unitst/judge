@@ -41,21 +41,22 @@
 								<div class="scrollhint menu">
 									<div class="item" data-value="-1">All</div>
 									<?php
-									if (isset($_GET['language'])) {
-										$selectedLang = intval($_GET['language']);
-									} else {
-										$selectedLang = -1;
-									}
-									$lang_count = count($language_ext);
-									$langmask = $OJ_LANGMASK;
-									$lang = (~((int) $langmask)) & ((1 << ($lang_count)) - 1);
-									for ($i = 0; $i < $lang_count; $i++) {
-										if ($lang & (1 << $i))
-											echo "<div  data-value=$i class='item" . ($selectedLang == $i ? " active" : "") . "'>
+                                    if (isset($_GET['language'])) {
+                                        $selectedLang = intval($_GET['language']);
+                                    } else {
+                                        $selectedLang = -1;
+                                    }
+                                    $lang_count = count($language_ext);
+		$langmask = $OJ_LANGMASK;
+		$lang = (~((int) $langmask)) & ((1 << ($lang_count)) - 1);
+		for ($i = 0; $i < $lang_count; $i++) {
+		    if ($lang & (1 << $i)) {
+		        echo "<div  data-value=$i class='item" . ($selectedLang == $i ? " active" : "") . "'>
             " . $language_name[$i] . "
             </div>";
-									}
-									?>
+		    }
+		}
+		?>
 								</div>
 							</div>
 						</div>
@@ -68,33 +69,38 @@
 									<?php echo $MSG_RESULT; ?>
 								</div>
 								<div class="scrollhint menu">
-									<?php if (isset($_GET['jresult']))
-										$jresult_get = intval($_GET['jresult']);
-									else
-										$jresult_get = -1;
-									if ($jresult_get >= 12 || $jresult_get < 0)
-										$jresult_get = -1;
-									if ($jresult_get == -1)
-										echo "<div class='item active' data-value='-1'>All</div>";
-									else
-										echo "<div class='item' data-value='-1'>All</div>";
-									for ($j = 0; $j < 12; $j++) {
-										$i = ($j + 4) % 12;
-										if ($i == $jresult_get)
-											echo "<div class='item active' data-value='" . strval($jresult_get) . "'>" . $jresult[$i] . "</div>";
-										else
-											echo "<div class='item' data-value='" . strval($i) . "'>" . $jresult[$i] . "</div>";
+									<?php if (isset($_GET['jresult'])) {
+									    $jresult_get = intval($_GET['jresult']);
+									} else {
+									    $jresult_get = -1;
 									}
-									?>
+		if ($jresult_get >= 12 || $jresult_get < 0) {
+		    $jresult_get = -1;
+		}
+		if ($jresult_get == -1) {
+		    echo "<div class='item active' data-value='-1'>All</div>";
+		} else {
+		    echo "<div class='item' data-value='-1'>All</div>";
+		}
+		for ($j = 0; $j < 12; $j++) {
+		    $i = ($j + 4) % 12;
+		    if ($i == $jresult_get) {
+		        echo "<div class='item active' data-value='" . strval($jresult_get) . "'>" . $jresult[$i] . "</div>";
+		    } else {
+		        echo "<div class='item' data-value='" . strval($i) . "'>" . $jresult[$i] . "</div>";
+		    }
+		}
+		?>
 								</div>
 							</div>
 						</div>
 						<?php if (isset($_SESSION[$OJ_NAME . '_' . 'administrator']) || isset($_SESSION[$OJ_NAME . '_' . 'source_browser'])) {
-							if (isset($_GET['showsim']))
-								$showsim = intval($_GET['showsim']);
-							else
-								$showsim = 0;
-							?>
+						    if (isset($_GET['showsim'])) {
+						        $showsim = intval($_GET['showsim']);
+						    } else {
+						        $showsim = 0;
+						    }
+						    ?>
 							<div class="field">
 								<label>相似度：</label>
 								<div class="ui mini selection dropdown" style="width: 110px;">
@@ -104,7 +110,7 @@
 									<div class="default text">SIM</div>
 									<div class="scrollhint menu">
 										<?php
-										echo "<div data-value=0 class='item" . ($showsim == 0 ? ' active' : '') . "'>All</div>
+						                echo "<div data-value=0 class='item" . ($showsim == 0 ? ' active' : '') . "'>All</div>
 								<div data-value=50 class='item" . ($showsim == 50 ? ' active' : '') . "'>50</div>
 								<div data-value=60 class='item" . ($showsim == 60 ? ' active' : '') . "'>60</div>
 								<div data-value=70 class='item" . ($showsim == 70 ? ' active' : '') . "'>70</div>
@@ -116,7 +122,7 @@
 							</div>
 						<?php
 						}
-						?>
+		?>
 						<button class="ui labeled icon mini blue button" type="submit" style="margin-left: 20px;">
 							<i class="search icon"></i>
 							<?php echo $MSG_SEARCH; ?>
@@ -186,25 +192,27 @@
 					</thead>
 					<tbody>
 						<?php
-						$cnt = 0;
-						foreach ($view_status as $row) {
-							echo "<tr>";
-							$i = 0;
-							foreach ($row as $table_cell) {
-								if ($i > 9)
-									continue;
-								if ($i > 3 && $i != 8 && $i != 6)
-									echo "<td class='hidden-xs'>";
-								else
-									echo "<td>";
-								echo $table_cell;
-								echo "</td>";
-								$i++;
-							}
-							echo "</tr>\n";
-							$cnt = 1 - $cnt;
-						}
-						?>
+		$cnt = 0;
+		foreach ($view_status as $row) {
+		    echo "<tr>";
+		    $i = 0;
+		    foreach ($row as $table_cell) {
+		        if ($i > 9) {
+		            continue;
+		        }
+		        if ($i > 3 && $i != 8 && $i != 6) {
+		            echo "<td class='hidden-xs'>";
+		        } else {
+		            echo "<td>";
+		        }
+		        echo $table_cell;
+		        echo "</td>";
+		        $i++;
+		    }
+		    echo "</tr>\n";
+		    $cnt = 1 - $cnt;
+		}
+		?>
 					</tbody>
 				</table>
 				<div class="ui container center aligned">
@@ -229,15 +237,15 @@
 <script>
 	var i = 0;
 	var judge_result = [<?php
-	foreach ($judge_result as $result) {
-		echo "'$result',";
-	} ?>
+    foreach ($judge_result as $result) {
+        echo "'$result',";
+    } ?>
 		''];
 
 	var judge_color = [<?php
-	foreach ($judge_color as $result) {
-		echo "'$result',";
-	} ?>
+    foreach ($judge_color as $result) {
+        echo "'$result',";
+    } ?>
 		''];
 </script>
 <script src="<?php echo $OJ_CDN_URL ?>template/bs3/auto_refresh.js"></script>

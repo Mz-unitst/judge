@@ -20,34 +20,38 @@
                         <h2>C<?php echo $view_cid; ?>: <?php echo $view_title; ?>
                         </h2>
                         <span class="ui label <?php
-                        if ($now > $end_time)
+                        if ($now > $end_time) {
                             echo "grey";
-                        else if ($now < $start_time)
+                        } elseif ($now < $start_time) {
                             echo "green";
-                        else
+                        } else {
                             echo "red";
-                        ?>">
+                        }
+        ?>">
                             <?php
-                            if ($now > $end_time)
-                                echo $MSG_Ended;
-                            else if ($now < $start_time)
-                                echo "未开始";
-                            else
-                                echo $MSG_Running;
-                            ?>
+            if ($now > $end_time) {
+                echo $MSG_Ended;
+            } elseif ($now < $start_time) {
+                echo "未开始";
+            } else {
+                echo $MSG_Running;
+            }
+        ?>
                         </span>
                         <span class="ui label <?php
-                        if ($view_private == '0')
+                        if ($view_private == '0') {
                             echo "blue";
-                        else
+                        } else {
                             echo "red";
-                        ?>">
+                        }
+        ?>">
                             <?php
-                            if ($view_private == '0')
-                                echo $MSG_Public;
-                            else
-                                echo $MSG_Private;
-                            ?>
+            if ($view_private == '0') {
+                echo $MSG_Public;
+            } else {
+                echo $MSG_Private;
+            }
+        ?>
                         </span>
                         <h3>
                             <?php echo $MSG_CONTEST; ?><?php echo $MSG_TIME; ?>
@@ -83,19 +87,19 @@
                             <tbody>
 
                             <?php
-                            foreach ($result1 as $row) {
-                                echo "<tr>";
-                                echo "<td>" . $row['ip'] . "</td>";
-                                echo "<td>" . $row['user_id'] . "</td>";
-                                echo "<td>";
-                                echo "<a href='../userinfo.php?user=" . $row['user_id'] . "'><sub>" . $MSG_USERINFO . "</sub></a> <sub>/</sub> ";
-                                echo "<a href='../status.php?cid=$contest_id&user_id=" . $row['user_id'] . "'><sub>" . $MSG_CONTEST . " " . $MSG_SUBMIT . "</sub></a>";
-                                echo "</td>";
-                                echo "<td>" . $row['in_date'];
-                                echo "<td>" . $row['c'] . "</td>";
-                                echo "</tr>";
-                            }
-                            ?>
+        foreach ($result1 as $row) {
+            echo "<tr>";
+            echo "<td>" . $row['ip'] . "</td>";
+            echo "<td>" . $row['user_id'] . "</td>";
+            echo "<td>";
+            echo "<a href='../userinfo.php?user=" . $row['user_id'] . "'><sub>" . $MSG_USERINFO . "</sub></a> <sub>/</sub> ";
+            echo "<a href='../status.php?cid=$contest_id&user_id=" . $row['user_id'] . "'><sub>" . $MSG_CONTEST . " " . $MSG_SUBMIT . "</sub></a>";
+            echo "</td>";
+            echo "<td>" . $row['in_date'];
+            echo "<td>" . $row['c'] . "</td>";
+            echo "</tr>";
+        }
+        ?>
                             </tbody>
 
                         </table>
@@ -119,19 +123,19 @@
                         </thead>
 
                             <?php
-                            foreach ($result2 as $row) {
-                                echo "<tr>";
-                                echo "<td>" . $row['user_id'] . "</td>";
-                                echo "<td>";
-                                echo "<a href='../userinfo.php?user=" . $row['user_id'] . "'><sub>" . $MSG_USERINFO . "</sub></a> <sub>/</sub> ";
-                                echo "<a href='../status.php?cid=$contest_id&user_id=" . $row['user_id'] . "'><sub>" . $MSG_CONTEST . " " . $MSG_SUBMIT . "</sub></a>";
-                                echo "</td>";
-                                echo "<td>" . $row['ip'];
-                                echo "<td>" . $row['time'];
-                                echo "<td>" . $row['c'];
-                                echo "</tr>";
-                            }
-                            ?>
+        foreach ($result2 as $row) {
+            echo "<tr>";
+            echo "<td>" . $row['user_id'] . "</td>";
+            echo "<td>";
+            echo "<a href='../userinfo.php?user=" . $row['user_id'] . "'><sub>" . $MSG_USERINFO . "</sub></a> <sub>/</sub> ";
+            echo "<a href='../status.php?cid=$contest_id&user_id=" . $row['user_id'] . "'><sub>" . $MSG_CONTEST . " " . $MSG_SUBMIT . "</sub></a>";
+            echo "</td>";
+            echo "<td>" . $row['ip'];
+            echo "<td>" . $row['time'];
+            echo "<td>" . $row['c'];
+            echo "</tr>";
+        }
+        ?>
                         </table>
                     </center>
                 </div>
@@ -154,7 +158,7 @@
                         <a class="item" href='conteststatistics.php?cid=<?php echo $view_cid ?>'>
                             <?php echo $MSG_STATISTICS; ?>
                         </a>
-                        <?php if(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
+                        <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
                             <a href="suspect_list.php?cid=<?php echo $view_cid?>" class="active item"><?php echo $MSG_IP_VERIFICATION?></a>
                             <a href="user_set_ip.php?cid=<?php echo $view_cid?>" class="item"><?php echo $MSG_SET_LOGIN_IP?></a>
                             <a target="_blank" href="../../bsadmin/contest_edit.php?cid=<?php echo $view_cid ?>" class="item"><?php echo $MSG_EDIT.$MSG_CONTEST;?></a>

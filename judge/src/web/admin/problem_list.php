@@ -2,17 +2,18 @@
 require("admin-header.php");
 require_once("../include/set_get_key.php");
 
-if(!(isset($_SESSION[$OJ_NAME.'_'.'administrator'])
+if (!(
+    isset($_SESSION[$OJ_NAME.'_'.'administrator'])
         || isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])
         || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])
-        )){
-  echo "<a href='../loginpage.php'>Please Login First!</a>";
-  exit(1);
+)) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 
 
-if(isset($OJ_LANG)){
-  require_once("../lang/$OJ_LANG.php");
+if (isset($OJ_LANG)) {
+    require_once("../lang/$OJ_LANG.php");
 }
 ?>
 
@@ -32,8 +33,11 @@ $ids = intval($row['ids']);
 $idsperpage = 50;
 $pages = intval(ceil($ids/$idsperpage));
 
-if(isset($_GET['page'])){ $page = intval($_GET['page']);}
-else{ $page = 1;}
+if (isset($_GET['page'])) {
+    $page = intval($_GET['page']);
+} else {
+    $page = 1;
+}
 
 $pagesperframe = 5;
 $frame = intval(ceil($page/$pagesperframe));
@@ -44,20 +48,22 @@ $epage = min($spage+$pagesperframe-1, $pages);
 $sid = ($page-1)*$idsperpage;
 
 $sql = "";
-if(isset($_GET['keyword']) && $_GET['keyword']!=""){
-  $keyword = $_GET['keyword'];
-  $keyword = "%$keyword%";
-  $sql = "SELECT `problem_id`,`title`,`accepted`,`in_date`,`defunct`,source,remote_oj,remote_id  FROM `problem` WHERE (problem_id LIKE ?) OR (title LIKE ?) OR (description LIKE ?) OR (source LIKE ?)";
-  $result = pdo_query($sql,$keyword,$keyword,$keyword,$keyword);
-}else{
-  $sql = "SELECT `problem_id`,`title`,`accepted`,`in_date`,`defunct`,source,remote_oj,remote_id  FROM `problem` ORDER BY `problem_id` DESC LIMIT $sid, $idsperpage";
-  $result = pdo_query($sql);
+if (isset($_GET['keyword']) && $_GET['keyword']!="") {
+    $keyword = $_GET['keyword'];
+    $keyword = "%$keyword%";
+    $sql = "SELECT `problem_id`,`title`,`accepted`,`in_date`,`defunct`,source,remote_oj,remote_id  FROM `problem` WHERE (problem_id LIKE ?) OR (title LIKE ?) OR (description LIKE ?) OR (source LIKE ?)";
+    $result = pdo_query($sql, $keyword, $keyword, $keyword, $keyword);
+} else {
+    $sql = "SELECT `problem_id`,`title`,`accepted`,`in_date`,`defunct`,source,remote_oj,remote_id  FROM `problem` ORDER BY `problem_id` DESC LIMIT $sid, $idsperpage";
+    $result = pdo_query($sql);
 }
 ?>
 
 <center>
 <form action=problem_list.php class="form-search form-inline">
-  <input type="text" name=keyword value="<?php if(isset($_GET['keyword']))echo htmlentities($_GET['keyword'],ENT_QUOTES,"utf-8")?>" class="form-control search-query" placeholder="<?php echo $MSG_PROBLEM_ID.', '.$MSG_TITLE.', '.$MSG_Description.', '.$MSG_SOURCE?>">
+  <input type="text" name=keyword value="<?php if (isset($_GET['keyword'])) {
+      echo htmlentities($_GET['keyword'], ENT_QUOTES, "utf-8");
+  }?>" class="form-control search-query" placeholder="<?php echo $MSG_PROBLEM_ID.', '.$MSG_TITLE.', '.$MSG_Description.', '.$MSG_SOURCE?>">
   <button type="submit" class="form-control"><?php echo $MSG_SEARCH?></button>
 </form>
 </center>
@@ -79,19 +85,22 @@ echo "</select>";
 <center>
 <table width=100% border=1 style="text-align:center;">
   <form method=post action=contest_add.php>
-<input type="hidden" name=keyword value="<?php if(isset($_GET['keyword']))echo htmlentities($_GET['keyword'],ENT_QUOTES,"utf-8")?>">
+<input type="hidden" name=keyword value="<?php if (isset($_GET['keyword'])) {
+    echo htmlentities($_GET['keyword'], ENT_QUOTES, "utf-8");
+}?>">
     <tr>
       <td width=60px><?php echo $MSG_PROBLEM_ID?><input type=checkbox style='vertical-align:2px;' onchange='$("input[type=checkbox]").prop("checked", this.checked)'></td>
       <td><?php echo $MSG_TITLE?></td>
       <td><?php echo $MSG_AC?></td>
       <td><?php echo $MSG_SAVED_DATE?></td>
       <?php
-      if(isset($_SESSION[$OJ_NAME.'_'.'administrator']) ||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])){
-        if(isset($_SESSION[$OJ_NAME.'_'.'administrator']) ||isset($_SESSION[$OJ_NAME.'_'.'problem_editor']))
-          echo "<td>$MSG_PROBLEM_STATUS</td><td>$MSG_DELETE</td>";
-        echo "<td>$MSG_EDIT</td><td>$MSG_TESTDATA</td>";
+      if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) ||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])) {
+          if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) ||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])) {
+              echo "<td>$MSG_PROBLEM_STATUS</td><td>$MSG_DELETE</td>";
+          }
+          echo "<td>$MSG_EDIT</td><td>$MSG_TESTDATA</td>";
       }
-      ?>
+?>
     </tr>
         <tr>
         <td colspan=2 style="height:40px;"><?php echo "$MSG_CHECK_TO"?></td>
@@ -103,32 +112,34 @@ echo "</select>";
       </td>
     </tr>
     <?php
-    foreach($result as $row){
-      echo "<tr>";
+    foreach ($result as $row) {
+        echo "<tr>";
         echo "<td>".$row['problem_id']." <input type=checkbox style='vertical-align:2px;' name='pid[]' value='".$row['problem_id']."'></td>";
         echo "<td><a href='../problem.php?id=".$row['problem_id']."'>".$row['title']."</a>";
-               if(!empty($row['remote_oj']))echo "&nbsp;<a href='".$row['source']."' target=_blank>  ".$row['remote_oj'].$row['remote_id']."</a>";
+        if (!empty($row['remote_oj'])) {
+            echo "&nbsp;<a href='".$row['source']."' target=_blank>  ".$row['remote_oj'].$row['remote_id']."</a>";
+        }
         echo "</td>";
         echo "<td>".$row['accepted']."</td>";
         echo "<td>".$row['in_date']."</td>";
-        if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])){
-          if(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])){
-            echo "<td><a href=problem_df_change.php?id=".$row['problem_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">".($row['defunct']=="N"?"<span titlc='click to reserve it' class=green>$MSG_AVAILABLE</span>":"<span class=red title='click to be available'>$MSG_RESERVED</span>")."</a><td>";
-            if($OJ_SAE||function_exists("system")){
-    ?>
+        if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])) {
+            if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])) {
+                echo "<td><a href=problem_df_change.php?id=".$row['problem_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">".($row['defunct']=="N" ? "<span titlc='click to reserve it' class=green>$MSG_AVAILABLE</span>" : "<span class=red title='click to be available'>$MSG_RESERVED</span>")."</a><td>";
+                if ($OJ_SAE||function_exists("system")) {
+                    ?>
               <a href=# onclick='javascript:if(confirm("Delete?")) location.href="problem_del.php?id=<?php echo $row['problem_id']?>&getkey=<?php echo $_SESSION[$OJ_NAME.'_'.'getkey']?>"'>
 <?php echo $MSG_DELETE ?>
               </a>
         <?php
+                }
+            }
+            if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'."p".$row['problem_id']])) {
+                echo "<td><a href=problem_edit.php?id=".$row['problem_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">$MSG_EDIT</a>";
+                echo "<td><a href='javascript:phpfm(".$row['problem_id'].");'>$MSG_TEST_DATA</a>";
+            }
         }
-      }
-      if(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'."p".$row['problem_id']]) ){
-        echo "<td><a href=problem_edit.php?id=".$row['problem_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">$MSG_EDIT</a>";
-        echo "<td><a href='javascript:phpfm(".$row['problem_id'].");'>$MSG_TEST_DATA</a>";
-      }
+        echo "</tr>";
     }
-    echo "</tr>";
-  }
 ?>
     <tr>
       <td colspan=2 style="height:40px;"><?php echo "$MSG_CHECK_TO"?></td>
@@ -159,21 +170,20 @@ function phpfm(pid){
 </div>
 
 <?php
-if(!(isset($_GET['keyword']) && $_GET['keyword']!=""))
-{
-  echo "<div style='display:inline;'>";
-  echo "<nav class='center'>";
-  echo "<ul class='pagination pagination-sm'>";
-  echo "<li class='page-item'><a href='problem_list.php?page=".(strval(1))."'>&lt;&lt;</a></li>";
-  echo "<li class='page-item'><a href='problem_list.php?page=".($page==1?strval(1):strval($page-1))."'>&lt;</a></li>";
-  for($i=$spage; $i<=$epage; $i++){
-    echo "<li class='".($page==$i?"active ":"")."page-item'><a title='go to page' href='problem_list.php?page=".$i."'>".$i."</a></li>";
-  }
-  echo "<li class='page-item'><a href='problem_list.php?page=".($page==$pages?strval($page):strval($page+1))."'>&gt;</a></li>";
-  echo "<li class='page-item'><a href='problem_list.php?page=".(strval($pages))."'>&gt;&gt;</a></li>";
-  echo "</ul>";
-  echo "</nav>";
-  echo "</div>";
+if (!(isset($_GET['keyword']) && $_GET['keyword']!="")) {
+    echo "<div style='display:inline;'>";
+    echo "<nav class='center'>";
+    echo "<ul class='pagination pagination-sm'>";
+    echo "<li class='page-item'><a href='problem_list.php?page=".(strval(1))."'>&lt;&lt;</a></li>";
+    echo "<li class='page-item'><a href='problem_list.php?page=".($page==1 ? strval(1) : strval($page-1))."'>&lt;</a></li>";
+    for ($i=$spage; $i<=$epage; $i++) {
+        echo "<li class='".($page==$i ? "active " : "")."page-item'><a title='go to page' href='problem_list.php?page=".$i."'>".$i."</a></li>";
+    }
+    echo "<li class='page-item'><a href='problem_list.php?page=".($page==$pages ? strval($page) : strval($page+1))."'>&gt;</a></li>";
+    echo "<li class='page-item'><a href='problem_list.php?page=".(strval($pages))."'>&gt;&gt;</a></li>";
+    echo "</ul>";
+    echo "</nav>";
+    echo "</div>";
 }
 ?>
 

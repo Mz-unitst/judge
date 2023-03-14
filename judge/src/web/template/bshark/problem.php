@@ -51,16 +51,17 @@
 					<div class="card-body">
 						<div class="problemHead">
 							<?php
-							if ($pr_flag) {
-								echo "<h1>#$id. " . $row['title'] . "</h1>";
-							} else {
-								//$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-								$id = $row['problem_id'];
-								echo "<h1>$MSG_PROBLEM " . $PID[$pid] . ". " . $row['title'] . "</h1>";
-							}
-							if ($row['spj'])
-								echo $MSG_SPJ . '/';
-							?>
+                            if ($pr_flag) {
+                                echo "<h1>#$id. " . $row['title'] . "</h1>";
+                            } else {
+                                //$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                                $id = $row['problem_id'];
+                                echo "<h1>$MSG_PROBLEM " . $PID[$pid] . ". " . $row['title'] . "</h1>";
+                            }
+                            if ($row['spj']) {
+                                echo $MSG_SPJ . '/';
+                            }
+		?>
 							<div class="ui teal label vTooltip">
 								<i class="book icon"></i>
 								<?php echo $row['spj'] ? "SPJ" : "传统题"; ?>
@@ -91,81 +92,81 @@
 						</div>
 						<div class="ui divider"></div>
 						<?php
-						if ($row['description']) {
-							?>
+                        if ($row['description']) {
+                            ?>
 							<h4>
 								<?php echo $MSG_Description; ?>
 							</h4>
 							<?php
-							echo bbcode_to_html($row['description']);
-						}
-						?>
+                            echo bbcode_to_html($row['description']);
+                        }
+		?>
 						<?php
-						if ($row['input']) {
-							?>
+		if ($row['input']) {
+		    ?>
 							<h4>
 								<?php echo $MSG_Input; ?>
 							</h4>
 							<?php
-							echo bbcode_to_html($row['input']);
-						}
-						?>
+		    echo bbcode_to_html($row['input']);
+		}
+		?>
 						<?php
-						if ($row['output']) {
-							?>
+		if ($row['output']) {
+		    ?>
 							<h4>
 								<?php echo $MSG_Output; ?>
 							</h4>
 							<?php
-							echo bbcode_to_html($row['output']);
-						}
-						$sinput = str_replace("<", "&lt;", $row['sample_input']);
-						$sinput = str_replace(">", "&gt;", $sinput);
-						$soutput = str_replace("<", "&lt;", $row['sample_output']);
-						$soutput = str_replace(">", "&gt;", $soutput);
-						?>
+		    echo bbcode_to_html($row['output']);
+		}
+		$sinput = str_replace("<", "&lt;", $row['sample_input']);
+		$sinput = str_replace(">", "&gt;", $sinput);
+		$soutput = str_replace("<", "&lt;", $row['sample_output']);
+		$soutput = str_replace(">", "&gt;", $soutput);
+		?>
 						<div class="row" style="margin-top: 12px">
 							<div class="col-md-6">
 								<div id="qwqs1">
 									<?php
-									if (strlen($sinput)) {
-										?>
+		            if (strlen($sinput)) {
+		                ?>
 										<h4><?php echo $MSG_Sample_Input; ?><a class="ui mini blue button"
 												href="javascript:void(0)" id="qwqa1">复制</a></h4>
 										<blockquote id="sampleInput">
 											<pre><?php
-											echo $sinput . "</pre></blockquote>";
-									}
-									?>
+		                    echo $sinput . "</pre></blockquote>";
+		            }
+		?>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div id="qwqs2">
 									<?php
-									if (strlen($soutput)) {
-										?><h4><?php echo $MSG_Sample_Output; ?><a class="ui mini blue button"
+		if (strlen($soutput)) {
+		    ?><h4><?php echo $MSG_Sample_Output; ?><a class="ui mini blue button"
 																						href="javascript:void(0)" id="qwqa2">复制</a></h4><blockquote id="sampleOutput"><pre><?php
-																						echo $soutput . '</pre></blockquote>';
-									}
-									?>
+		                                                    echo $soutput . '</pre></blockquote>';
+		}
+		?>
 								</div>
 							</div>
 						</div>
 						<?php
-						if ($row['hint']) {
-							?><h4><?php echo $MSG_HINT; ?></h4><?php
-							   echo bbcode_to_html($row['hint']);
-						}
-						?>
+                        if ($row['hint']) {
+                            ?><h4><?php echo $MSG_HINT; ?></h4><?php
+                               echo bbcode_to_html($row['hint']);
+                        }
+		?>
 						<?php
-						if ($pr_flag) {
-							echo "<h4>$MSG_Source</h4>";
-							$cats = explode(" ", $row['source']);
-							foreach ($cats as $cat) {
-								echo "<a href='problemset.php?search=" . urlencode(htmlentities($cat, ENT_QUOTES, 'utf-8')) . "'>" . htmlentities($cat, ENT_QUOTES, 'utf-8') . "</a>&nbsp;";
-							}
-						}
-						?>
+		if ($pr_flag) {
+		    echo "<h4>$MSG_Source</h4>";
+		    $cats = explode(" ", $row['source']);
+		    foreach ($cats as $cat) {
+		        echo "<a href='problemset.php?search=" . urlencode(htmlentities($cat, ENT_QUOTES, 'utf-8')) . "'>" . htmlentities($cat, ENT_QUOTES, 'utf-8') . "</a>&nbsp;";
+		    }
+		}
+		?>
 					</div>
 					<!--EndMarkForVirtualJudge-->
 				</div>
@@ -174,20 +175,21 @@
 				<div class="card" style="padding: 0;">
 					<div class="ui vertical fluid menu problemAction">
 						  <a href="<?php if ($pr_flag) {
-							  echo "submitpage.php?id=$id";
+						      echo "submitpage.php?id=$id";
 						  } else {
-							  echo "submitpage.php?cid=$cid&pid=$pid&langmask=$langmask";
+						      echo "submitpage.php?cid=$cid&pid=$pid&langmask=$langmask";
 						  } ?>" class="item" aria-current="true">
 							<?php echo $MSG_SUBMIT; ?>
 						</a>
-						<?php if (!$pr_flag)
-							echo "<a class='item' href='contest.php?cid=$cid'>$MSG_PROBLEM$MSG_LIST</a>";
-						?>
+						<?php if (!$pr_flag) {
+						    echo "<a class='item' href='contest.php?cid=$cid'>$MSG_PROBLEM$MSG_LIST</a>";
+						}
+		?>
 						<a href="<?php echo "status.php?problem_id=" . $row['problem_id']; ?>" class="item"><?php echo $MSG_STATUS; ?></a>
 						<?php
-						if (isset($_SESSION[$OJ_NAME . '_' . 'administrator']) || isset($_SESSION[$OJ_NAME . '_' . 'problem_manager'])) {
-							require_once("include/set_get_key.php");
-							?> 
+		if (isset($_SESSION[$OJ_NAME . '_' . 'administrator']) || isset($_SESSION[$OJ_NAME . '_' . 'problem_manager'])) {
+		    require_once("include/set_get_key.php");
+		    ?> 
 																			<a href="swadmin/problem_edit.php?id=<?php echo $id ?>&getkey=<?php echo $_SESSION[$OJ_NAME . '_' . 'getkey'] ?>" class="item"><?php echo $MSG_EDIT; ?></a>
 																			<a href='javascript:phpfm(<?php echo $row['problem_id']; ?>)' class="item"><?php echo $MSG_TESTDATA; ?></a>
 						<?php } ?>

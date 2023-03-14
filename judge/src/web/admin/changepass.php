@@ -1,12 +1,12 @@
 <?php require_once("admin-header.php");
 
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'password_setter']) )){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'password_setter']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 
-if(isset($OJ_LANG)){
-  require_once("../lang/$OJ_LANG.php");
+if (isset($OJ_LANG)) {
+    require_once("../lang/$OJ_LANG.php");
 }
 ?>
 
@@ -17,34 +17,35 @@ if(isset($OJ_LANG)){
 <div class='container'>
 
 <?php
-if(isset($_POST['do'])){	
-	require_once("../include/check_post_key.php");
-	require_once("../include/my_func.inc.php");
-	
-	$user_id = $_POST['user_id'];
-        $passwd = $_POST['passwd'];
+if (isset($_POST['do'])) {
+    require_once("../include/check_post_key.php");
+    require_once("../include/my_func.inc.php");
 
-  if(false){
-		$user_id = stripslashes($user_id);
-		$passwd = stripslashes($passwd);
-	}
+    $user_id = $_POST['user_id'];
+    $passwd = $_POST['passwd'];
 
-	$passwd = pwGen($passwd);
-	$sql = "update `users` set `password`=? where `user_id`=?  and user_id not in( select user_id from privilege where rightstr='administrator')";
-	
-	if(pdo_query($sql,$passwd,$user_id) == 1)
-		echo "<center><h4 class='text-danger'>User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')."'s Password Changed!</h4></center>";
-  else
-  	echo "<center><h4 class='text-danger'>There is No such User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')."! or User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')." is administrator!</h4></center>";
+    if (false) {
+        $user_id = stripslashes($user_id);
+        $passwd = stripslashes($passwd);
+    }
+
+    $passwd = pwGen($passwd);
+    $sql = "update `users` set `password`=? where `user_id`=?  and user_id not in( select user_id from privilege where rightstr='administrator')";
+
+    if (pdo_query($sql, $passwd, $user_id) == 1) {
+        echo "<center><h4 class='text-danger'>User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')."'s Password Changed!</h4></center>";
+    } else {
+        echo "<center><h4 class='text-danger'>There is No such User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')."! or User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')." is administrator!</h4></center>";
+    }
 }
 ?>
 
 <form action=changepass.php method=post class="form-horizontal">
 	<div class="form-group">
 		<label class="col-sm-offset-3 col-sm-3 control-label"><?php echo $MSG_USER_ID?></label>
-		<?php if(isset($_GET['uid'])) { ?>
+		<?php if (isset($_GET['uid'])) { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" value="<?php echo htmlentities($_GET['uid'], ENT_QUOTES, 'UTF-8');?>" type="text" required ></div>
-  	<?php } else if(isset($_POST['user_id'])) { ?>
+  	<?php } elseif (isset($_POST['user_id'])) { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" value="<?php echo htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8');?>" type="text" required ></div>
 		<?php } else { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" placeholder="<?php echo $MSG_USER_ID."*"?>" type="text" required ></div>

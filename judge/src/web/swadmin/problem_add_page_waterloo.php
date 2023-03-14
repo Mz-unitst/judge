@@ -11,9 +11,9 @@
 <?php require_once("../include/db_info.inc.php");?>
 
 <?php require_once("admin-header.php");
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }?>
 <?php
 include_once("kindeditor.php") ;
@@ -31,38 +31,41 @@ include_once("kindeditor.php") ;
 <hr>
 <h1>Add New problem</h1>
 <?php require_once("../include/simple_html_dom.php");
-  $url=$_POST ['url'];
+$url=$_POST ['url'];
 
-  if (!$url) $url=$_GET['url'];
-  if (strpos($url, "http") === false){
-	echo "Please Input like http://acm.student.cs.uwaterloo.ca/~acm00";
-	exit(1);
-  }   
-    
-  if (false) {
-	$url = stripslashes ( $url);
-  }
-  $baseurl=substr($url,0,strrpos($url,"/")+1);
+if (!$url) {
+    $url=$_GET['url'];
+}
+if (strpos($url, "http") === false) {
+    echo "Please Input like http://acm.student.cs.uwaterloo.ca/~acm00";
+    exit(1);
+}
+
+if (false) {
+    $url = stripslashes($url);
+}
+$baseurl=substr($url, 0, strrpos($url, "/")+1);
 //  echo $baseurl;
-  $html = file_get_html($url);
-  foreach($html->find('img') as $element)
-        $element->src=$baseurl.$element->src;
-  $element=$html->find('h2',0);
-  $title=$element->plaintext;
-  $i=1;
-  $sample_output=$sample_input=$descriptionHTML="";
-  
-  $html=$html->innertext;
-  $i=strpos($html,"<h3>");
- // echo $i."-".strlen($html);
-  $descriptionHTML=substr($html,0,$i-1);
- // echo $i."-".strlen($descriptionHTML);
-  $i=strpos($html,"<pre>",$i);
-  $j=strpos($html,"</pre>",$i);
-  $sample_input=substr($html,$i+5,$j-$i-5);
-  $i=strpos($html,"<pre>",$j);
-  $j=strpos($html,"</pre>",$i);
-  $sample_output=substr($html,$i+5,$j-$i-5);
+$html = file_get_html($url);
+foreach ($html->find('img') as $element) {
+    $element->src=$baseurl.$element->src;
+}
+$element=$html->find('h2', 0);
+$title=$element->plaintext;
+$i=1;
+$sample_output=$sample_input=$descriptionHTML="";
+
+$html=$html->innertext;
+$i=strpos($html, "<h3>");
+// echo $i."-".strlen($html);
+$descriptionHTML=substr($html, 0, $i-1);
+// echo $i."-".strlen($descriptionHTML);
+$i=strpos($html, "<pre>", $i);
+$j=strpos($html, "</pre>", $i);
+$sample_input=substr($html, $i+5, $j-$i-5);
+$i=strpos($html, "<pre>", $j);
+$j=strpos($html, "</pre>", $i);
+$sample_output=substr($html, $i+5, $j-$i-5);
 
 ?>
 <form method=POST action=problem_add.php>
@@ -96,10 +99,11 @@ include_once("kindeditor.php") ;
 <?php $sql="SELECT `contest_id`,`title` FROM `contest` WHERE `start_time`>NOW() order by `contest_id`";
 $result=pdo_query($sql);
 echo "<option value=''>none</option>";
-if (count($result)==0){
-}else{
-	foreach($result as $row)
-			echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+if (count($result)==0) {
+} else {
+    foreach ($result as $row) {
+        echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+    }
 }
 ?>
 	</select>

@@ -38,7 +38,7 @@
             $account[$csadff] = pdo_query($sql . ' AND `result`=4', $day[$csadff], $day[$csadff - 1])[0][0];
         }
     }
-    ?>
+        ?>
     <style>
         .faqs-card {
             padding-top: 24px;
@@ -56,9 +56,9 @@
                 <div class="card">
                     <div class="card-body">
                         <?php
-                        $sql = 'SELECT * FROM `news` WHERE `defunct`!=\'Y\' ORDER BY `importance`';
-                        $news = pdo_query($sql);
-                        ?>
+                            $sql = 'SELECT * FROM `news` WHERE `defunct`!=\'Y\' ORDER BY `importance`';
+        $news = pdo_query($sql);
+        ?>
                         <h2 class="ui header">
                             <?php echo $MSG_NEWS; ?>
                         </h2>
@@ -77,8 +77,8 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($news as $view_news) {
-                                        ?>
+                    foreach ($news as $view_news) {
+                        ?>
                                         <tr>
                                             <td><a href="viewnews.php?id=<?php echo $view_news['news_id']; ?>">
                                                     <?php echo $view_news['title']; ?>
@@ -89,11 +89,11 @@
                                             <td><?php echo $view_news['user_id']; ?></td>
                                         </tr>
                                     <?php
-                                    }
-                                    ?>
+                    }
+                            ?>
                                 </tbody>
                             </table>
-                        <?php } else if ($THEME_NEWS_MOD == 'show') {
+                        <?php } elseif ($THEME_NEWS_MOD == 'show') {
                             foreach ($news as $view_news) {
                                 ?>
                                     <div class="faqs-card">
@@ -105,8 +105,9 @@
                                     </div>
                             <?php
                             }
-                        } else
-                            echo "There is something wrong with your configuration file.Please open '/template/bshark/theme.conf.php' and fix it." ?>
+                        } else {
+                            echo "There is something wrong with your configuration file.Please open '/template/bshark/theme.conf.php' and fix it.";
+                        } ?>
                             </div>
                         </div>
                 <?php if ($THEME_HOME_STATISTICS == "show") { ?>
@@ -115,12 +116,12 @@
                             <h2 class="ui header">统计信息</h2>
                             <p>共有<?php
                             echo $user_count;
-                            ?>位大佬入驻OJ,共有<?php
-                            echo $problem_count;
-                            ?>道优质题目,我已完成<?php echo $ac_count; ?>道,评测机已完成<?php echo $submit_count; ?>次评测,欢迎新用户:
+                    ?>位大佬入驻OJ,共有<?php
+                    echo $problem_count;
+                    ?>道优质题目,我已完成<?php echo $ac_count; ?>道,评测机已完成<?php echo $submit_count; ?>次评测,欢迎新用户:
                                 <?php
-                                echo pdo_query('select * from `users` order by `reg_time` DESC limit 1')[0]['user_id'];
-                                ?>!</p>
+                        echo pdo_query('select * from `users` order by `reg_time` DESC limit 1')[0]['user_id'];
+                    ?>!</p>
                             <div>
                                 <div style="width:100%;" align="center">
 
@@ -170,8 +171,8 @@
                         </h2>
                         <?php
                         $sql = "SELECT * FROM `contest` WHERE `defunct`!='Y' ORDER BY UNIX_TIMESTAMP(`start_time`) DESC LIMIT 5";
-                        $ress = pdo_query($sql);
-                        ?>
+        $ress = pdo_query($sql);
+        ?>
                         <table class="ui very basic fluid unstackable table">
                             <thead>
                                 <tr>
@@ -195,7 +196,7 @@
                                                     class="ui label grey">
                                                     <?php echo $MSG_Ended; ?>
                                                 </span>
-                                            <?php } else if (strtotime($new['start_time']) > time()) { ?><span
+                                            <?php } elseif (strtotime($new['start_time']) > time()) { ?><span
                                                         class="ui label green">未开始</span>
                                             <?php } else { ?><span class="ui label red">
                                                     <?php echo $MSG_Runnning; ?>
@@ -231,18 +232,20 @@
                 data: {
                     labels: [<?php for ($i = 1; $i <= 7; ++$i) {
                         echo '\'' . date('Y-m-d', $day[8 - $i]) . '\'';
-                        if ($i != 7)
+                        if ($i != 7) {
                             echo ',';
+                        }
                     }
-                    ?>],
+        ?>],
             datasets: [{
                 label: '提交',
                 data: [<?php for ($i = 1; $i <= 7; ++$i) {
                     echo $subcount[8 - $i];
-                    if ($i != 7)
+                    if ($i != 7) {
                         echo ',';
+                    }
                 }
-                ?>],
+        ?>],
                 backgroundColor: '#2185d0',
                     borderColor: '#2185d0',
                         borderWidth: 1
@@ -251,10 +254,11 @@
                 label: '正确',
                     data: [<?php for ($i = 1; $i <= 7; ++$i) {
                         echo $account[8 - $i];
-                        if ($i != 7)
+                        if ($i != 7) {
                             echo ',';
+                        }
                     }
-                    ?>],
+        ?>],
                 backgroundColor: '#4caf50',
                     borderColor: '#4caf50',
                         borderWidth: 1

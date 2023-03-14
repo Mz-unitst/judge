@@ -38,11 +38,11 @@
         <th>分享时间</th>
         <th>操作</th>
     </tr>
-    <?php if($pageNum == 0){ ?>
+    <?php if ($pageNum == 0) { ?>
         <tr><td colspan="4"><center>您暂未分享任何代码,<a href="./sharecodepage.php">立即分享</a></center></td></tr>
     <?php }?>
     <?php
-    foreach($share_list as $share_info){
+    foreach ($share_list as $share_info) {
         echo "<tr>";
         echo "<td><a href='./sharecodepage.php?sid=".$share_info["share_id"]."'>".$share_info["share_id"]."</a></td>";
         echo "<td><a href='./sharecodepage.php?sid=".$share_info["share_id"]."'>".$share_info["title"]."</a></td>";
@@ -56,11 +56,11 @@
     }
     ?>
 </table>
-      <?php if($pageNum > 1){ ?>
+      <?php if ($pageNum > 1) { ?>
       <nav aria-label="...">
           <ul class="pagination">
               <li><a href="./sharecodelist.php?page=1" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-              <?php for($i=1;$i<=$pageNum;$i++){
+              <?php for ($i=1;$i<=$pageNum;$i++) {
                   echo "<li><a href='./sharecodelist.php?page=".$i."'>".$i."</a></li>";
               }?>
               <li><a href="./sharecodelist.php?page=<?php echo $pageNum?>" aria-label="Next"><span aria-hidden="true">»</span></a></li>

@@ -28,7 +28,9 @@
         <tr align='center'>
           <td>
             <form class=form-inline method=post action=contest.php>
-              <input class="form-control" name=keyword value="<?php if(isset($_POST['keyword'])) echo htmlentities($_POST['keyword'],ENT_QUOTES,"UTF-8")?>" placeholder="<?php echo $MSG_CONTEST_NAME?>">
+              <input class="form-control" name=keyword value="<?php if (isset($_POST['keyword'])) {
+                  echo htmlentities($_POST['keyword'], ENT_QUOTES, "UTF-8");
+              }?>" placeholder="<?php echo $MSG_CONTEST_NAME?>">
               <button class="form-control" type=submit><?php echo $MSG_SEARCH?></button>
 	      <a href="contest.php" ><?php echo $MSG_VIEW_ALL_CONTESTS ?></a>
             </form>
@@ -52,23 +54,27 @@
         <tbody align='center'>
           <?php
           $cnt=0;
-          foreach($view_contest as $row){
-            if ($cnt)
-              echo "<tr class='oddrow'>";
-            else
-              echo "<tr class='evenrow'>";
-            $i=0;
-            foreach($row as $table_cell){
-              if($i==2) echo "<td class=text-left>";
-              else echo "<td>";
-              echo "\t".$table_cell;
-              echo "</td>";
-              $i++;
-            }
-            echo "</tr>";
-            $cnt=1-$cnt;
+  foreach ($view_contest as $row) {
+      if ($cnt) {
+          echo "<tr class='oddrow'>";
+      } else {
+          echo "<tr class='evenrow'>";
+      }
+      $i=0;
+      foreach ($row as $table_cell) {
+          if ($i==2) {
+              echo "<td class=text-left>";
+          } else {
+              echo "<td>";
           }
-          ?>
+          echo "\t".$table_cell;
+          echo "</td>";
+          $i++;
+      }
+      echo "</tr>";
+      $cnt=1-$cnt;
+  }
+  ?>
         </tbody>
       </table>
 
@@ -77,15 +83,17 @@
         <ul class="pagination">
           <li class="page-item"><a href="contest.php?page=1">&lt;&lt;</a></li>
           <?php
-          if(!isset($page)) $page=1;
-          $page=intval($page);
-          $section=8;
-          $start=$page>$section?$page-$section:1;
-          $end=$page+$section>$view_total_page?$view_total_page:$page+$section;
-          for ($i=$start;$i<=$end;$i++){
-            echo "<li class='".($page==$i?"active ":"")."page-item'><a title='go to page' href='contest.php?page=".$i.(isset($_GET['my'])?"&my":"")."'>".$i."</a></li>";
-          }
-          ?>
+  if (!isset($page)) {
+      $page=1;
+  }
+  $page=intval($page);
+  $section=8;
+  $start=$page>$section ? $page-$section : 1;
+  $end=$page+$section>$view_total_page ? $view_total_page : $page+$section;
+  for ($i=$start;$i<=$end;$i++) {
+      echo "<li class='".($page==$i ? "active " : "")."page-item'><a title='go to page' href='contest.php?page=".$i.(isset($_GET['my']) ? "&my" : "")."'>".$i."</a></li>";
+  }
+  ?>
           <li class="page-item"><a href="contest.php?page=<?php echo $view_total_page?>">&gt;&gt;</a></li>
         </ul>
         </small>

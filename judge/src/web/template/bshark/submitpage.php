@@ -63,9 +63,9 @@
 								Problem <span class=blue><b><?php echo $id ?></b></span>
 								<input id=problem_id type='hidden' value='<?php echo $id ?>' name="id"><br>
 							<?php } else {
-								//$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-//if ($pid>25) $pid=25;
-								?>
+							    //$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+							    //if ($pid>25) $pid=25;
+							    ?>
 								<?php echo $MSG_PROBLEM; ?> <span class=blue><b>
 										<?php echo chr($pid + ord('A')) ?>
 									</b></span> of <?php echo $MSG_CONTEST; ?> <span class=blue><b>
@@ -80,18 +80,21 @@
 								</label>
 								<div class="ui selection dropdown">
 									<?php
-									$lang_count = count($language_ext);
-									if (isset($_GET['langmask']))
-										$langmask = $_GET['langmask'];
-									else
-										$langmask = $OJ_LANGMASK;
-									$lang = (~((int) $langmask)) & ((1 << ($lang_count)) - 1);
-									$lastlang = 1;
-									if (isset($_COOKIE['lastlang']))
-										$lastlang = $_COOKIE['lastlang'];
-									if ($lastlang == "undefined")
-										$lastlang = 1;
-									?>
+							        $lang_count = count($language_ext);
+		if (isset($_GET['langmask'])) {
+		    $langmask = $_GET['langmask'];
+		} else {
+		    $langmask = $OJ_LANGMASK;
+		}
+		$lang = (~((int) $langmask)) & ((1 << ($lang_count)) - 1);
+		$lastlang = 1;
+		if (isset($_COOKIE['lastlang'])) {
+		    $lastlang = $_COOKIE['lastlang'];
+		}
+		if ($lastlang == "undefined") {
+		    $lastlang = 1;
+		}
+		?>
 									<input type="hidden" name="language" id="language"
 										onChange="reloadtemplate($(this).val());" value="<?php echo $lastlang; ?>">
 									<i class="dropdown icon"></i>
@@ -100,13 +103,14 @@
 									</div>
 									<div class="scrollhint menu">
 										<?php
-										for ($i = 0; $i < $lang_count; $i++) {
-											if ($lang & (1 << $i))
-												echo "<div data-value='$i' class='item " . ($lastlang == $i ? "active" : "") . "'>
+		    for ($i = 0; $i < $lang_count; $i++) {
+		        if ($lang & (1 << $i)) {
+		            echo "<div data-value='$i' class='item " . ($lastlang == $i ? "active" : "") . "'>
 " . $language_name[$i] . "
 </div>";
-										}
-										?>
+		        }
+		    }
+		?>
 									</div>
 								</div>
 							</div>
@@ -146,9 +150,9 @@
 				<div class="card" style="padding: 0;">
 					<div class="ui vertical fluid menu problemAction">
 						<a href="<?php if (isset($id)) {
-							echo "problem.php?id=$id";
+						    echo "problem.php?id=$id";
 						} else {
-							echo "problem.php?cid=$cid&pid=$pid";
+						    echo "problem.php?cid=$cid&pid=$pid";
 						} ?>" class="item" aria-current="true">
 							返回<?php echo $MSG_PROBLEM; ?>
 						</a>
@@ -164,9 +168,9 @@
 		var i = 0;
 		var using_blockly = false;
 		var judge_result = [<?php
-		foreach ($judge_result as $result) {
-			echo "'$result',";
-		}
+        foreach ($judge_result as $result) {
+            echo "'$result',";
+        }
 		?> ''];
 		function print_result(solution_id) {
 			sid = solution_id;
@@ -242,11 +246,13 @@
 			if (typeof (editor) != "undefined")
 				$("#hide_source").val(editor.getValue());
 			if (mark == 'problem_id')
-				problem_id.value = '<?php if (isset($id))
-					echo $id ?> ';
+				problem_id.value = '<?php if (isset($id)) {
+				    echo $id;
+				} ?> ';
 																																																																	else
-				problem_id.value = '<?php if (isset($cid))
-					echo $cid ?> ';
+				problem_id.value = '<?php if (isset($cid)) {
+				    echo $cid;
+				} ?> ';
 
 				document.getElementById("frmSolution").target = "_self";
 				document.getElementById("encoded_submit_mark").name = "encoded_submit";
@@ -271,11 +277,13 @@
 				var mark = "<?php echo isset($id) ? 'problem_id' : 'cid'; ?>";
 			var problem_id = document.getElementById(mark);
 			if (mark == 'problem_id')
-				problem_id.value = '<?php if (isset($id))
-					echo $id ?> ';
+				problem_id.value = '<?php if (isset($id)) {
+				    echo $id;
+				} ?> ';
 																																																																	else
-				problem_id.value = '<?php if (isset($cid))
-					echo $cid ?> ';
+				problem_id.value = '<?php if (isset($cid)) {
+				    echo $cid;
+				} ?> ';
 				document.getElementById("frmSolution").target = "_self";
 				document.getElementById("frmSolution").submit();
 			}

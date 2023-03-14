@@ -10,70 +10,72 @@
 <center>
 <?php require_once("../include/db_info.inc.php");?>
 <?php require_once("admin-header.php");
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 ?>
 <?php
 include_once("kindeditor.php") ;
 ?>
 <?php require_once("../include/simple_html_dom.php");
-  $url=$_POST ['url'];
-  if (!$url) $url=$_GET['url'];
-  if (strpos($url, "http") === false){
-	echo "Please Input like https://loj.ac/problem/1";
-	exit(1);
-  }
-  if (false) {
-	$url = stripslashes ( $url);
-  }
-  $loj_id=intval(substr($url,23));
-  echo $loj_id;
-  $baseurl=substr($url,0,strrpos($url,"/")+1);
-  //echo $baseurl;
-  $html = file_get_html($url);
- // foreach($html->find('img') as $element)
+$url=$_POST ['url'];
+if (!$url) {
+    $url=$_GET['url'];
+}
+if (strpos($url, "http") === false) {
+    echo "Please Input like https://loj.ac/problem/1";
+    exit(1);
+}
+if (false) {
+    $url = stripslashes($url);
+}
+$loj_id=intval(substr($url, 23));
+echo $loj_id;
+$baseurl=substr($url, 0, strrpos($url, "/")+1);
+//echo $baseurl;
+$html = file_get_html($url);
+// foreach($html->find('img') as $element)
  //       $element->src=$baseurl.$element->src;
-        
-  $element=$html->find('h1',0);
-  $title=trim($element->plaintext);
 
-  $element=$html->find('span',0);
-  $mlimit=$element->plaintext; 
-  $mlimit=substr($mlimit, strpos($mlimit, "：")+3);
-  $mlimit=substr($mlimit,0,strpos($mlimit, 'MiB')-1);
-  $element=$html->find('span',1);
-  $tlimit=$element->plaintext;
-  $tlimit=substr($tlimit, strpos($tlimit, "：")+3);
-  $tlimit=substr($tlimit,0,strpos($mlimit, ' ms')-3);
-  $tlimit/=1000;
-  //$mlimit/=1000;
-  //echo "mlimit:$mlimit<br>";
-  //echo "tlimit:".$tlimit;
-function mjpage($raw){
- 
-          $ret=str_replace('<span class="mjpage">','\(',$raw);
-          $ret=str_replace('</span>','\)',$ret);
-          return $ret;
+$element=$html->find('h1', 0);
+$title=trim($element->plaintext);
+
+$element=$html->find('span', 0);
+$mlimit=$element->plaintext;
+$mlimit=substr($mlimit, strpos($mlimit, "：")+3);
+$mlimit=substr($mlimit, 0, strpos($mlimit, 'MiB')-1);
+$element=$html->find('span', 1);
+$tlimit=$element->plaintext;
+$tlimit=substr($tlimit, strpos($tlimit, "：")+3);
+$tlimit=substr($tlimit, 0, strpos($mlimit, ' ms')-3);
+$tlimit/=1000;
+//$mlimit/=1000;
+//echo "mlimit:$mlimit<br>";
+//echo "tlimit:".$tlimit;
+function mjpage($raw)
+{
+    $ret=str_replace('<span class="mjpage">', '\(', $raw);
+    $ret=str_replace('</span>', '\)', $ret);
+    return $ret;
 }
 
-  
-  $element=$html->find('div[class=ui bottom attached segment font-content]',0);
-  $descriptionHTML=mjpage($element->outertext);
-  $element=$html->find('div[class=ui bottom attached segment font-content]',1);
-  $inputHTML=mjpage($element->outertext);
-  $element=$html->find('div[class=ui bottom attached segment font-content]',2);
-  $outputHTML=mjpage($element->outertext);
-  
-  $element=$html->find('code[class=lang-plain]',0);
-  $sample_input=$element->innertext;
-  $element=$html->find('code[class=lang-plain]',1);
-  $sample_output=$element->innertext;
-  $element=$html->find('div[class=ui bottom attached segment font-content]',4);
-  $hintHTML=mjpage($element->outertext);
-  $element=$html->find('div[class=ui bottom attached segment]',1);
-  $sourceHTML=$element->outertext;
+
+$element=$html->find('div[class=ui bottom attached segment font-content]', 0);
+$descriptionHTML=mjpage($element->outertext);
+$element=$html->find('div[class=ui bottom attached segment font-content]', 1);
+$inputHTML=mjpage($element->outertext);
+$element=$html->find('div[class=ui bottom attached segment font-content]', 2);
+$outputHTML=mjpage($element->outertext);
+
+$element=$html->find('code[class=lang-plain]', 0);
+$sample_input=$element->innertext;
+$element=$html->find('code[class=lang-plain]', 1);
+$sample_output=$element->innertext;
+$element=$html->find('div[class=ui bottom attached segment font-content]', 4);
+$hintHTML=mjpage($element->outertext);
+$element=$html->find('div[class=ui bottom attached segment]', 1);
+$sourceHTML=$element->outertext;
 ?>
 <form method=POST action="problem_add_loj.php">
 <input type=submit value=Submit name=submit>
@@ -109,10 +111,11 @@ function mjpage($raw){
 <?php $sql="SELECT `contest_id`,`title` FROM `contest` WHERE `start_time`>NOW() order by `contest_id`";
 $result=pdo_query($sql);
 echo "<option value=''>none</option>";
-if (count($result)==0){
-}else{
-	foreach($result as $row)
-				echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+if (count($result)==0) {
+} else {
+    foreach ($result as $row) {
+        echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+    }
 }
 ?>
 	</select>

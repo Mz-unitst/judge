@@ -8,15 +8,15 @@
 </head>
 <hr>
 
-<?php 
+<?php
   require_once("../include/db_info.inc.php");
-  require_once("admin-header.php");
-  if(!(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor']))){
+require_once("admin-header.php");
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor']))) {
     echo "<a href='../loginpage.php'>Please Login First!</a>";
     exit(1);
-  }
-  echo "<center><h3>$MSG_ADD"."$MSG_PROBLEM</h3></center>";
-  include_once("kindeditor.php") ;
+}
+echo "<center><h3>$MSG_ADD"."$MSG_PROBLEM</h3></center>";
+include_once("kindeditor.php") ;
 ?>
 
 <body leftmargin="30" >
@@ -80,14 +80,14 @@
           <select name=contest_id>
             <?php
             $sql="SELECT `contest_id`,`title` FROM `contest` WHERE `start_time`>NOW() order by `contest_id`";
-            $result=pdo_query($sql);
-            echo "<option value=''>none</option>";
-            if (count($result)==0){
-            }else{
-              foreach($result as $row){
-                echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
-              }
-            }?>
+$result=pdo_query($sql);
+echo "<option value=''>none</option>";
+if (count($result)==0) {
+} else {
+    foreach ($result as $row) {
+        echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+    }
+}?>
           </select>
         </p>
 

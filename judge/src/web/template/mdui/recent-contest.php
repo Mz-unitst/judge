@@ -36,10 +36,10 @@
         <tbody class="row-hover">
         <?php
         $odd=true;
-         foreach($rows as $row) {
-           $odd=!$odd;
+    foreach ($rows as $row) {
+        $odd=!$odd;
         ?>
-        <tr class="<?php echo $odd?"oddrow":"evenrow"  ?>">
+        <tr class="<?php echo $odd ? "oddrow" : "evenrow"  ?>">
             <td class="column-1"><?php echo$row['oj']?></td><td class="column-2"><a id="name_<?php echo$row['id']?>" href="<?php echo$row['link']?>" target="_blank"><?php echo$row['name']?></a></td><td class="column-3"><?php echo$row['start_time']?></td><td class="column-4"><?php echo$row['week']?></td><td class="column-5"><?php echo$row['access']?></td>
         </tr>
         <?php } ?>

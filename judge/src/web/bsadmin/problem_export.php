@@ -10,10 +10,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -22,20 +22,21 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-    $maxfile=min(ini_get("upload_max_filesize"),ini_get("post_max_size"));
-function writable($path){
-	$ret=false;
-	$fp=fopen($path."/testifwritable.tst","w");
-	$ret=!($fp===false);
-	fclose($fp);
-	unlink($path."/testifwritable.tst");
-	return $ret;
-}
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+	    $maxfile=min(ini_get("upload_max_filesize"), ini_get("post_max_size"));
+	function writable($path)
+	{
+	    $ret=false;
+	    $fp=fopen($path."/testifwritable.tst", "w");
+	    $ret=!($fp===false);
+	    fclose($fp);
+	    unlink($path."/testifwritable.tst");
+	    return $ret;
+	}
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">

@@ -12,7 +12,7 @@
                 <?php require_once('./include/set_post_key.php');?>
                 <div class="field">
                     <label for="username">昵称*</label>
-                    <input name="nick" placeholder="请输入昵称" type="text" value="<?php echo htmlentities($row['nick'],ENT_QUOTES,"UTF-8")?>">
+                    <input name="nick" placeholder="请输入昵称" type="text" value="<?php echo htmlentities($row['nick'], ENT_QUOTES, "UTF-8")?>">
                 </div>
                 <div class="field">
                     <label class="ui header">密码*</label>
@@ -30,13 +30,13 @@
                 </div>
                 <div class="field">
                     <label for="username">个性签名</label>
-                    <input name="school" placeholder="请输入个性签名" type="text" value="<?php echo htmlentities($row['school'],ENT_QUOTES,"UTF-8")?>">
+                    <input name="school" placeholder="请输入个性签名" type="text" value="<?php echo htmlentities($row['school'], ENT_QUOTES, "UTF-8")?>">
                 </div>
                 <div class="field">
                     <label for="email">邮箱*</label>
-                    <input name="email" placeholder="请输入邮箱" type="text" value="<?php echo htmlentities($row['email'],ENT_QUOTES,"UTF-8")?>">
+                    <input name="email" placeholder="请输入邮箱" type="text" value="<?php echo htmlentities($row['email'], ENT_QUOTES, "UTF-8")?>">
                 </div>
-                <?php if($OJ_VCODE){?>
+                <?php if ($OJ_VCODE) {?>
                   <div class="field">
                     <label for="email">验证码*</label>
                     <input name="vcode" class="form-control" placeholder="请输入验证码" type="text">
@@ -47,7 +47,7 @@
                 <button name="submit" type="reset" class="ui button">重置</button>
             </form>
 </div>
-<?php if ($OJ_SaaS_ENABLE && $domain==$DOMAIN){ ?>
+<?php if ($OJ_SaaS_ENABLE && $domain==$DOMAIN) { ?>
   <div class="center"> <a name='MyOJ'>&nbsp;</a> <label >My OJ:</label>
           <form action="saasinit.php" method="post" role="form" class="ui form">
                 <div class="field">

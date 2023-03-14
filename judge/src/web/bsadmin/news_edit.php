@@ -10,10 +10,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 </head>
@@ -21,55 +21,55 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+	?>
 <?php
-if(isset($_POST['news_id'])){
-  require_once("../include/check_post_key.php");
-  $title = $_POST['title'];
-  $content = $_POST['content'];
+if (isset($_POST['news_id'])) {
+    require_once("../include/check_post_key.php");
+    $title = $_POST['title'];
+    $content = $_POST['content'];
 
-  $content = str_replace("<p>", "", $content);
-  $content = str_replace("</p>", "<br />", $content);
-  $content = str_replace(",", "&#44;", $content);
+    $content = str_replace("<p>", "", $content);
+    $content = str_replace("</p>", "<br />", $content);
+    $content = str_replace(",", "&#44;", $content);
 
-  $user_id = $_SESSION[$OJ_NAME.'_'.'user_id'];
-  $news_id = intval($_POST['news_id']);
+    $user_id = $_SESSION[$OJ_NAME.'_'.'user_id'];
+    $news_id = intval($_POST['news_id']);
 
-  if(false){
-    $title = stripslashes($title);
-    $content = stripslashes($content);
-  }
+    if (false) {
+        $title = stripslashes($title);
+        $content = stripslashes($content);
+    }
 
 
 
-  $title = RemoveXSS($title);
-  $content = RemoveXSS($content);
+    $title = RemoveXSS($title);
+    $content = RemoveXSS($content);
 
-  $sql = "UPDATE `news` SET `title`=?,`time`=now(),`content`=?,user_id=? WHERE `news_id`=?";
-  echo $sql;
-  pdo_query($sql,$title,$content,$user_id,$news_id) ;
+    $sql = "UPDATE `news` SET `title`=?,`time`=now(),`content`=?,user_id=? WHERE `news_id`=?";
+    echo $sql;
+    pdo_query($sql, $title, $content, $user_id, $news_id) ;
 
-  ?><script>location.href="news_list.php";</script><?php
-  exit();
-}else{
-  $news_id = intval($_GET['id']);
-  $sql = "SELECT * FROM `news` WHERE `news_id`=?";
-  $result = pdo_query($sql,$news_id);
-  if(count($result)!=1){
-    echo "No such News!";
-    exit(0);
-  }
+    ?><script>location.href="news_list.php";</script><?php
+    exit();
+} else {
+    $news_id = intval($_GET['id']);
+    $sql = "SELECT * FROM `news` WHERE `news_id`=?";
+    $result = pdo_query($sql, $news_id);
+    if (count($result)!=1) {
+        echo "No such News!";
+        exit(0);
+    }
 
-  $row = $result[0];
+    $row = $result[0];
 
-  $title = htmlentities($row['title'],ENT_QUOTES,"UTF-8");
-  $content = $row['content'];
+    $title = htmlentities($row['title'], ENT_QUOTES, "UTF-8");
+    $content = $row['content'];
 }
-?>
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -109,7 +109,7 @@ if(isset($_POST['news_id'])){
     <?php require_once("../include/set_post_key.php");?>
     <label for=title>标题</label><input type="text" name="title" class="form-control" value="<?php echo $title;?>">
     <lable for=content>内容</lable>
-    <textarea name='content' rows=15 class="kindeditor" ><?php echo htmlentities($content,ENT_QUOTES,"UTF-8")?></textarea><br>
+    <textarea name='content' rows=15 class="kindeditor" ><?php echo htmlentities($content, ENT_QUOTES, "UTF-8")?></textarea><br>
     <input type=hidden name='news_id' value=<?php echo $news_id?>>
     <button type='submit' class="btn btn-info btn-addon i"><i class="fa fa-save"></i>保存</button>
   </form>

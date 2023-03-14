@@ -10,80 +10,87 @@
 <center>
 <?php require_once("../include/db_info.inc.php");?>
 <?php require_once("admin-header.php");
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 ?>
 <?php
 include_once("kindeditor.php") ;
 ?>
 <?php require_once("../include/simple_html_dom.php");
-  function pregReplaceImg2($content,$prefix)
-        {
-            $contentAlter = preg_replace_callback('/(<[img|IMG].*?src=[\'\"])([\s\S]*?)([\'\"])[\s\S]*?/i', function($match)use($prefix){
-                if(strstr($match[2], 'http://') == false && strstr($match[1], 'https://') == false)
-                    return $match[1].$prefix.$match[2].$match[3];
-                else
-                    return $match[1].$match[2].$match[3];
-            } , $content);
-            return $contentAlter;
+function pregReplaceImg2($content, $prefix)
+{
+    $contentAlter = preg_replace_callback('/(<[img|IMG].*?src=[\'\"])([\s\S]*?)([\'\"])[\s\S]*?/i', function ($match) use ($prefix) {
+        if (strstr($match[2], 'http://') == false && strstr($match[1], 'https://') == false) {
+            return $match[1].$prefix.$match[2].$match[3];
+        } else {
+            return $match[1].$match[2].$match[3];
         }
+    }, $content);
+    return $contentAlter;
+}
 
 
 $url=$_POST ['url'];
-  if (!$url) $url=$_GET['url'];
-  if (strpos($url, "http") === false){
-	echo "Please Input like http://uoj.ac/problem/1";
-	exit(1);
-  }
-  if (false) {
-	$url = stripslashes ( $url);
-  }
-  $loj_id=intval(substr($url,strrpos($url,"/")+1));
-  //echo strrpos($url,"/");
-  $baseurl=substr($url,0,strrpos($url,"/")+1);
-  //echo $baseurl;
-  $html = file_get_html($url);
- // foreach($html->find('img') as $element)
+if (!$url) {
+    $url=$_GET['url'];
+}
+if (strpos($url, "http") === false) {
+    echo "Please Input like http://uoj.ac/problem/1";
+    exit(1);
+}
+if (false) {
+    $url = stripslashes($url);
+}
+$loj_id=intval(substr($url, strrpos($url, "/")+1));
+//echo strrpos($url,"/");
+$baseurl=substr($url, 0, strrpos($url, "/")+1);
+//echo $baseurl;
+$html = file_get_html($url);
+// foreach($html->find('img') as $element)
  //       $element->src=$baseurl.$element->src;
-        
-  $element=$html->find('h1',2);
-  $title=trim($element->plaintext);
 
-  $element=$html->find('article',0);
-  $mlimit=$element->plaintext; 
-  $mlimit=mb_substr($mlimit, mb_strpos($mlimit, "空间限制")+6);
-  $mlimit=mb_substr($mlimit,0,mb_strpos($mlimit, 'MB')-8);
-  $mlimit=intval($mlimit);
-  if($mlimit==0)$mlimit=256;
-  $tlimit=$element->plaintext;
-  $tlimit=mb_substr($tlimit, mb_strpos($tlimit, "时间限制")+6);
-  $tlimit=mb_substr($tlimit,0,mb_strpos($tlimit, 's')-8);
-  $tlimit=intval($tlimit);
-  if($tlimit==0)$tlimit=1;
-  //$mlimit/=1000;
-  //echo "mlimit:$mlimit<br>";
-  //echo "tlimit:".$tlimit;
-  
-  $element=$html->find('article',0);
-  $descriptionHTML=$element->outertext;
-  $descriptionHTML=pregReplaceImg2($descriptionHTML,"https://darkbzoj.tk/");
+$element=$html->find('h1', 2);
+$title=trim($element->plaintext);
+
+$element=$html->find('article', 0);
+$mlimit=$element->plaintext;
+$mlimit=mb_substr($mlimit, mb_strpos($mlimit, "空间限制")+6);
+$mlimit=mb_substr($mlimit, 0, mb_strpos($mlimit, 'MB')-8);
+$mlimit=intval($mlimit);
+if ($mlimit==0) {
+    $mlimit=256;
+}
+$tlimit=$element->plaintext;
+$tlimit=mb_substr($tlimit, mb_strpos($tlimit, "时间限制")+6);
+$tlimit=mb_substr($tlimit, 0, mb_strpos($tlimit, 's')-8);
+$tlimit=intval($tlimit);
+if ($tlimit==0) {
+    $tlimit=1;
+}
+//$mlimit/=1000;
+//echo "mlimit:$mlimit<br>";
+//echo "tlimit:".$tlimit;
+
+$element=$html->find('article', 0);
+$descriptionHTML=$element->outertext;
+$descriptionHTML=pregReplaceImg2($descriptionHTML, "https://darkbzoj.tk/");
 
 
-  $element=$html->find('div[class=ui bottom attached segment font-content]',1);
-  $inputHTML=$element->outertext;
-  $element=$html->find('div[class=ui bottom attached segment font-content]',2);
-  $outputHTML=$element->outertext;
-  
-  $element=$html->find('code[class=lang-plain]',0);
-  $sample_input=$element->innertext;
-  $element=$html->find('code[class=lang-plain]',1);
-  $sample_output=$element->innertext;
-  $element=$html->find('div[class=ui bottom attached segment font-content]',4);
-  $hintHTML=$element->outertext;
-  $element=$html->find('div[class=ui bottom attached segment]',1);
-  $sourceHTML=$element->outertext;
+$element=$html->find('div[class=ui bottom attached segment font-content]', 1);
+$inputHTML=$element->outertext;
+$element=$html->find('div[class=ui bottom attached segment font-content]', 2);
+$outputHTML=$element->outertext;
+
+$element=$html->find('code[class=lang-plain]', 0);
+$sample_input=$element->innertext;
+$element=$html->find('code[class=lang-plain]', 1);
+$sample_output=$element->innertext;
+$element=$html->find('div[class=ui bottom attached segment font-content]', 4);
+$hintHTML=$element->outertext;
+$element=$html->find('div[class=ui bottom attached segment]', 1);
+$sourceHTML=$element->outertext;
 ?>
 <form method=POST action="problem_add_uoj.php">
 <input type=submit value=Submit name=submit>
@@ -120,10 +127,11 @@ $url=$_POST ['url'];
 <?php $sql="SELECT `contest_id`,`title` FROM `contest` WHERE `start_time`>NOW() order by `contest_id`";
 $result=pdo_query($sql);
 echo "<option value=''>none</option>";
-if (count($result)==0){
-}else{
-	foreach($result as $row)
-				echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+if (count($result)==0) {
+} else {
+    foreach ($result as $row) {
+        echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+    }
 }
 ?>
 	</select>

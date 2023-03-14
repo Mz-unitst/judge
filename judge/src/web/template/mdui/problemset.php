@@ -10,13 +10,15 @@
     <div class="mdui-container">
         <!-- <div class="mdui-btn-group" style="width: 100% !important;">
             <?php
-                if (!isset($page)) $page = 1;
+                if (!isset($page)) {
+                    $page = 1;
+                }
                 $page = intval($page);
-                $section = 10;
-                $start = $page > $section ? $page - $section : 1;
-                $end = $page + $section > $view_total_page ? $view_total_page : $page + $section;
-            ?>
-            <?php if($page == 1) { ?>
+    $section = 10;
+    $start = $page > $section ? $page - $section : 1;
+    $end = $page + $section > $view_total_page ? $view_total_page : $page + $section;
+    ?>
+            <?php if ($page == 1) { ?>
                 <button class="mdui-btn" disabled>
                         <i class="mdui-icon material-icons">chevron_left</i>
                 </button>
@@ -30,15 +32,15 @@
                 <button class="mdui-btn" disabled>...</button>
             <?php } ?>
             <?php
-                for ( $i = $start; $i <= $end; $i++ ) {
-                    echo '<a class="mdui-btn '.($page == $i ? "mdui-btn-active" : "").'" href="problemset.php?page='.$i.'">'.$i.'</a>';
-                }
-            ?>
+        for ($i = $start; $i <= $end; $i++) {
+            echo '<a class="mdui-btn '.($page == $i ? "mdui-btn-active" : "").'" href="problemset.php?page='.$i.'">'.$i.'</a>';
+        }
+    ?>
             <?php if ($end < $view_total_page) { ?>
                 <button class="mdui-btn" disabled>...</button>
                 <a class="mdui-btn" href="problemset.php?page=<?php echo $view_total_page; ?>"></a>
             <?php } ?>
-            <?php if($page == $view_total_page) { ?>
+            <?php if ($page == $view_total_page) { ?>
                 <button class="mdui-btn" disabled>
                         <i class="mdui-icon material-icons">chevron_right</i>
                 </button>
@@ -74,7 +76,7 @@
         <table id="problemset" width="90%" class="mdui-table mdui-table-hoverable mdui-m-y-4">
             <thead>
                 <tr>
-                    <?php if (isset($_SESSION[$OJ_NAME.'_'.'user_id'])){?>
+                    <?php if (isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {?>
                           <th>状态</th>
                     <?php } ?>
                     <th>编号</th>
@@ -87,41 +89,43 @@
             </thead>
             <tbody>
                 <?php
-                $cnt = 0;
-                foreach ( $result as $row ) {
-                    echo "<tr>";
-                    if(isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {
-                       if (isset($sub_arr[$row['problem_id']])) {
-                            if (isset($acc_arr[$row['problem_id']])) 
-                               echo "<td style='color: green;'>AC</td>";
-                            else
-                               echo "<td style='color: red;'>WA</td>";
-                        }
-                        else {
-                             echo "<td>WA</td>";
-                        }
-                    }
-                   
-                    echo '<td>'.$row["problem_id"].'</td>';
-                    echo '<td><a class="mdui-text-color-theme-accent" href="problem.php?id='.$row["problem_id"].'">'.$row["title"].'</a></td>';
-                    echo '<td><a class="mdui-text-color-theme-accent" href="problemset.php?search='.urlencode($row["source"]).'">'.$row["source"].'</td>';
-                    echo '<td><a class="mdui-text-color-theme-accent" href="status.php?problem_id='.$row["problem_id"].'&jresult=4">'.$row["accepted"].'</td>';
-                    echo '<td><a class="mdui-text-color-theme-accent" href="status.php?problem_id='.$row["problem_id"].'">'.$row["submit"].'</td>';
-                    echo '<td>'.sprintf("%.02lf%%", 100 * $row['accepted'] / ($row['submit'] ? $row['submit'] : 1)).'</td>';
-                    echo '</tr>';
+        $cnt = 0;
+    foreach ($result as $row) {
+        echo "<tr>";
+        if (isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {
+            if (isset($sub_arr[$row['problem_id']])) {
+                if (isset($acc_arr[$row['problem_id']])) {
+                    echo "<td style='color: green;'>AC</td>";
+                } else {
+                    echo "<td style='color: red;'>WA</td>";
                 }
-                ?>
+            } else {
+                echo "<td>WA</td>";
+            }
+        }
+
+        echo '<td>'.$row["problem_id"].'</td>';
+        echo '<td><a class="mdui-text-color-theme-accent" href="problem.php?id='.$row["problem_id"].'">'.$row["title"].'</a></td>';
+        echo '<td><a class="mdui-text-color-theme-accent" href="problemset.php?search='.urlencode($row["source"]).'">'.$row["source"].'</td>';
+        echo '<td><a class="mdui-text-color-theme-accent" href="status.php?problem_id='.$row["problem_id"].'&jresult=4">'.$row["accepted"].'</td>';
+        echo '<td><a class="mdui-text-color-theme-accent" href="status.php?problem_id='.$row["problem_id"].'">'.$row["submit"].'</td>';
+        echo '<td>'.sprintf("%.02lf%%", 100 * $row['accepted'] / ($row['submit'] ? $row['submit'] : 1)).'</td>';
+        echo '</tr>';
+    }
+    ?>
             </tbody>
         </table>
         <div class="mdui-btn-group mdui-float-right">
             <?php
-                if (!isset($page)) $page = 1;
-                $page = intval($page);
-                $section = 10;
-                $start = $page > $section ? $page - $section : 1;
-                $end = $page + $section > $view_total_page ? $view_total_page : $page + $section;
-            ?>
-            <?php if($page == 1) { ?>
+    if (!isset($page)) {
+        $page = 1;
+    }
+    $page = intval($page);
+    $section = 10;
+    $start = $page > $section ? $page - $section : 1;
+    $end = $page + $section > $view_total_page ? $view_total_page : $page + $section;
+    ?>
+            <?php if ($page == 1) { ?>
                 <button class="mdui-btn" disabled>
                         <i class="mdui-icon material-icons">chevron_left</i>
                 </button>
@@ -135,15 +139,15 @@
                 <button class="mdui-btn" disabled>...</button>
             <?php } ?>
             <?php
-                for ( $i = $start; $i <= $end; $i++ ) {
-                    echo '<a class="mdui-btn '.($page == $i ? "mdui-btn-active" : "").'" href="problemset.php?page='.$i.'">'.$i.'</a>';
-                }
-            ?>
+        for ($i = $start; $i <= $end; $i++) {
+            echo '<a class="mdui-btn '.($page == $i ? "mdui-btn-active" : "").'" href="problemset.php?page='.$i.'">'.$i.'</a>';
+        }
+    ?>
             <?php if ($end < $view_total_page) { ?>
                 <button class="mdui-btn" disabled>...</button>
                 <a class="mdui-btn" href="problemset.php?page=<?php echo $view_total_page; ?>"></a>
             <?php } ?>
-            <?php if($page == $view_total_page) { ?>
+            <?php if ($page == $view_total_page) { ?>
                 <button class="mdui-btn" disabled>
                         <i class="mdui-icon material-icons">chevron_right</i>
                 </button>

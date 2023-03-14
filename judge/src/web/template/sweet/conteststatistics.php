@@ -29,43 +29,51 @@
 <table id=cs width=90%>
 <thead>
 <tr class=toprow><th><th>AC<th>PE<th>WA<th>TLE<th>MLE<th>OLE<th>RE<th>CE<th><th>TR<th>Total
-<?php 
+<?php
   $i=0;
-  foreach ($language_name as $lang){
-	if(isset($R[$pid_cnt][$i+11]))	
-		echo "<th class='center'>$language_name[$i]</th>";
-	else
-		echo "<th>";
-	$i++;
-  }
+    foreach ($language_name as $lang) {
+        if (isset($R[$pid_cnt][$i+11])) {
+            echo "<th class='center'>$language_name[$i]</th>";
+        } else {
+            echo "<th>";
+        }
+        $i++;
+    }
 
 
-?>
+    ?>
 
 </tr>
 </thead>
 <tbody>
 <?php
-for ($i=0;$i<$pid_cnt;$i++){
-if(!isset($PID[$i])) $PID[$i]="";
-if ($i&1)
-echo "<tr align=center class=oddrow><td>";
-else
-echo "<tr align=center class=evenrow><td>";
-echo "<a href='problem.php?cid=$cid&pid=$i'>$PID[$i]</a>";
-for ($j=0;$j<count($language_name)+11;$j++) {
-if(!isset($R[$i][$j])) $R[$i][$j]="";
-echo "<td>".$R[$i][$j];
+for ($i=0;$i<$pid_cnt;$i++) {
+    if (!isset($PID[$i])) {
+        $PID[$i]="";
+    }
+    if ($i&1) {
+        echo "<tr align=center class=oddrow><td>";
+    } else {
+        echo "<tr align=center class=evenrow><td>";
+    }
+    echo "<a href='problem.php?cid=$cid&pid=$i'>$PID[$i]</a>";
+    for ($j=0;$j<count($language_name)+11;$j++) {
+        if (!isset($R[$i][$j])) {
+            $R[$i][$j]="";
+        }
+        echo "<td>".$R[$i][$j];
+    }
+    echo "</tr>";
 }
-echo "</tr>";
-}
-echo "<tr align=center class=evenrow><td>Total";
-for ($j=0;$j<count($language_name)+11;$j++) {
-if(!isset($R[$i][$j])) $R[$i][$j]="";
-echo "<td>".$R[$i][$j];
-}
-echo "</tr>";
-?>
+    echo "<tr align=center class=evenrow><td>Total";
+    for ($j=0;$j<count($language_name)+11;$j++) {
+        if (!isset($R[$i][$j])) {
+            $R[$i][$j]="";
+        }
+        echo "<td>".$R[$i][$j];
+    }
+    echo "</tr>";
+    ?>
 </tbody>
 <table>
 <div id=submission style="width:600px;height:300px" ></div>
@@ -95,13 +103,13 @@ $(function () {
 var d1 = [];
 var d2 = [];
 <?php
-foreach($chart_data_all as $k=>$d){
-?>
+foreach ($chart_data_all as $k=>$d) {
+    ?>
 d1.push([<?php echo $k?>, <?php echo $d?>]);
 <?php }?>
 <?php
-foreach($chart_data_ac as $k=>$d){
-?>
+foreach ($chart_data_ac as $k=>$d) {
+    ?>
 d2.push([<?php echo $k?>, <?php echo $d?>]);
 <?php }?>
 //var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];

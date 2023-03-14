@@ -1,18 +1,17 @@
 <?php require_once("admin-header.php");
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }?>
-<?php if(isset($_POST['do'])){
-	require_once("../include/check_post_key.php");
-	$from=$_POST['from'];
-	$to=$_POST['to'];
-	$start=intval($_POST['start']);
-	$end=intval($_POST['end']);
-	$sql="update `solution` set `user_id`=? where `user_id`=? and problem_id>=? and problem_id<=? and result=4";
-	//echo $sql;
-	echo pdo_query($sql,$to,$from,$start,$end)." source file given!";
-	
+<?php if (isset($_POST['do'])) {
+    require_once("../include/check_post_key.php");
+    $from=$_POST['from'];
+    $to=$_POST['to'];
+    $start=intval($_POST['start']);
+    $end=intval($_POST['end']);
+    $sql="update `solution` set `user_id`=? where `user_id`=? and problem_id>=? and problem_id<=? and result=4";
+    //echo $sql;
+    echo pdo_query($sql, $to, $from, $start, $end)." source file given!";
 }
 ?>
 <div class="container">

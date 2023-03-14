@@ -1,4 +1,5 @@
 <?php
+
 $THEME_SHOW_CATEGORY = false; //Whether to display a list of category on the Problemset page
 $THEME_NEWS_MOD = "list"; // list or show
 $THEME_MOD = "light"; //light or dark
@@ -26,4 +27,3 @@ $THEME_CAPTCHA = "none"; // Img CAPTCHA is too ugly, you can use any item in ["n
 4. hard: +, -, *, log, ln
 5. hard++: ∫ and more
 */
-?>

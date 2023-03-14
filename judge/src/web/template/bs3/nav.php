@@ -1,75 +1,78 @@
-<?php 
-  require_once(dirname(__FILE__)."/../../include/memcache.php");
-  function get_menu_news() {
-      $result = "";
-      $sql_news_menu = "select `news_id`,`title` FROM `news` WHERE `menu`=1 AND `title`!='faqs.cn' ORDER BY `importance` ASC,`time` DESC LIMIT 10";
-      $sql_news_menu_result = mysql_query_cache( $sql_news_menu );
-      if ( $sql_news_menu_result ) {
-          foreach ( $sql_news_menu_result as $row ) {
-                  $result .= '<li><a class="item" href="/viewnews.php?id=' . $row['news_id'] . '">'
-                          ."<span class='glyphicon glyphicon-star' aria-hidden='true'>"
-                          . $row['title'] . '</a></li>';
-          }
-      }
-      return $result;
-  }
+<?php
+require_once(dirname(__FILE__)."/../../include/memcache.php");
+function get_menu_news()
+{
+    $result = "";
+    $sql_news_menu = "select `news_id`,`title` FROM `news` WHERE `menu`=1 AND `title`!='faqs.cn' ORDER BY `importance` ASC,`time` DESC LIMIT 10";
+    $sql_news_menu_result = mysql_query_cache($sql_news_menu);
+    if ($sql_news_menu_result) {
+        foreach ($sql_news_menu_result as $row) {
+            $result .= '<li><a class="item" href="/viewnews.php?id=' . $row['news_id'] . '">'
+                    ."<span class='glyphicon glyphicon-star' aria-hidden='true'>"
+                    . $row['title'] . '</a></li>';
+        }
+    }
+    return $result;
+}
 
-  if(stripos($_SERVER['REQUEST_URI'],"template")!==false) exit();
-  
-  $url=basename($_SERVER['REQUEST_URI']);
-  $dir=basename(getcwd());
+if (stripos($_SERVER['REQUEST_URI'], "template")!==false) {
+    exit();
+}
 
-  if($dir=="discuss3") $path_fix="../";
-  else $path_fix="";
+$url=basename($_SERVER['REQUEST_URI']);
+$dir=basename(getcwd());
 
-  if(isset($OJ_NEED_LOGIN) && $OJ_NEED_LOGIN && ($url!='loginpage.php' && $url!='lostpassword.php' && $url!='lostpassword2.php' && $url!='registerpage.php') && !isset($_SESSION[$OJ_NAME.'_'.'user_id']))
-  {
+if ($dir=="discuss3") {
+    $path_fix="../";
+} else {
+    $path_fix="";
+}
+
+if (isset($OJ_NEED_LOGIN) && $OJ_NEED_LOGIN && ($url!='loginpage.php' && $url!='lostpassword.php' && $url!='lostpassword2.php' && $url!='registerpage.php') && !isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {
     header("location:".$path_fix."loginpage.php");
     exit();
-  }
+}
 
-  $_SESSION[$OJ_NAME.'_'.'profile_csrf']=rand();
-  
-  if($OJ_ONLINE)
-  {
+$_SESSION[$OJ_NAME.'_'.'profile_csrf']=rand();
+
+if ($OJ_ONLINE) {
     require_once($path_fix.'include/online.php');
     $on = new online();
-  }
-    $sql_news_menu_result_html = "";
+}
+$sql_news_menu_result_html = "";
 
-    if ($OJ_MENU_NEWS) {
-        if ($OJ_REDIS) {
-            $redis = new Redis();
-            $redis->connect($OJ_REDISSERVER, $OJ_REDISPORT);
+if ($OJ_MENU_NEWS) {
+    if ($OJ_REDIS) {
+        $redis = new Redis();
+        $redis->connect($OJ_REDISSERVER, $OJ_REDISPORT);
 
-            if (isset($OJ_REDISAUTH)) {
-              $redis->auth($OJ_REDISAUTH);
-            }
-            $redisDataKey = $OJ_REDISQNAME . '_MENU_NEWS_CACHE';
-            if ($redis->exists($redisDataKey)) {
-                $sql_news_menu_result_html = $redis->get($redisDataKey);
-            } else {
-                $sql_news_menu_result_html = get_menu_news();
-                $redis->set($redisDataKey, $sql_news_menu_result_html);
-                $redis->expire($redisDataKey, 300);
-            }
-
-            $redis->close();
-        } else {
-            $sessionDataKey = $OJ_NAME.'_'."_MENU_NEWS_CACHE";
-            if (isset($_SESSION[$sessionDataKey])) {
-                $sql_news_menu_result_html = $_SESSION[$sessionDataKey];
-            } else {
-                $sql_news_menu_result_html = get_menu_news();
-                $_SESSION[$sessionDataKey] = $sql_news_menu_result_html;
-            }
+        if (isset($OJ_REDISAUTH)) {
+            $redis->auth($OJ_REDISAUTH);
         }
-         // $sql_news_menu_result_html=" <li>$sql_news_menu_result_html</li>";
-    }
+        $redisDataKey = $OJ_REDISQNAME . '_MENU_NEWS_CACHE';
+        if ($redis->exists($redisDataKey)) {
+            $sql_news_menu_result_html = $redis->get($redisDataKey);
+        } else {
+            $sql_news_menu_result_html = get_menu_news();
+            $redis->set($redisDataKey, $sql_news_menu_result_html);
+            $redis->expire($redisDataKey, 300);
+        }
 
-  if(!isset($_GET['spa']))
-  {
-?>
+        $redis->close();
+    } else {
+        $sessionDataKey = $OJ_NAME.'_'."_MENU_NEWS_CACHE";
+        if (isset($_SESSION[$sessionDataKey])) {
+            $sql_news_menu_result_html = $_SESSION[$sessionDataKey];
+        } else {
+            $sql_news_menu_result_html = get_menu_news();
+            $_SESSION[$sessionDataKey] = $sql_news_menu_result_html;
+        }
+    }
+    // $sql_news_menu_result_html=" <li>$sql_news_menu_result_html</li>";
+}
+
+if (!isset($_GET['spa'])) {
+    ?>
     <!-- Static navbar -->
     <nav class="navbar navbar-default" role="navigation" style="position:fixed;z-index:99;width:98%;margin-bottom:50px">
       <div class="container-fluid">
@@ -82,104 +85,114 @@
           </button>
           <a class="navbar-brand" href="<?php echo $OJ_HOME?>"><i class="icon-home"></i><?php echo $OJ_NAME?></a>
           <?php
-            if(file_exists("moodle"))
-            {
-          ?>
+                if (file_exists("moodle")) {
+                    ?>
               <a class="navbar-brand" href="moodle"><i class="icon-home"></i>Moodle</a>
           <?php
-            }
-          ?>
+                }
+    ?>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
           <?php
-            $ACTIVE="class='active'"
-          ?>
+      $ACTIVE="class='active'"
+    ?>
           <?php
-            if(!isset($OJ_ON_SITE_CONTEST_ID))
-            {
+      if (!isset($OJ_ON_SITE_CONTEST_ID)) {
           ?>
-              <li <?php if ($url=="faqs.php") echo " $ACTIVE"; ?>>
+              <li <?php if ($url=="faqs.php") {
+                  echo " $ACTIVE";
+              } ?>>
                 <a href="<?php echo $path_fix?>faqs.php">
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <?php echo $MSG_FAQ?>
                 </a>
               </li>
           <?php
-            }
-            else
-            {
+      } else {
           ?>
           <?php
-            }
-          ?>
+      }
+    ?>
 
           <?php
-            if(isset($OJ_PRINTER) && $OJ_PRINTER)
-            {
+      if (isset($OJ_PRINTER) && $OJ_PRINTER) {
           ?>
-              <li <?php if ($url=="printer.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="printer.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>printer.php">
                   <span class="glyphicon glyphicon-print" aria-hidden="true"></span> <?php echo $MSG_PRINTER?>
                 </a>
               </li>
           <?php
-            }
-          ?>
+      }
+    ?>
 
           <?php
-            //if(!isset($OJ_ON_SITE_CONTEST_ID) && !isset($_GET['cid']))
-            //{
-          ?>
+      //if(!isset($OJ_ON_SITE_CONTEST_ID) && !isset($_GET['cid']))
+      //{
+    ?>
 
           <?php
-            if(!isset($OJ_ON_SITE_CONTEST_ID))
-            {
+      if (!isset($OJ_ON_SITE_CONTEST_ID)) {
           ?>
             <?php
-              if(isset($OJ_BBS) && $OJ_BBS)
-              {
-            ?>
-                <li <?php if ($dir=="discuss3") echo " $ACTIVE";?>>
+              if (isset($OJ_BBS) && $OJ_BBS) {
+                  ?>
+                <li <?php if ($dir=="discuss3") {
+                    echo " $ACTIVE";
+                }?>>
                   <a href="<?php echo $path_fix?>bbs.php"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><?php echo $MSG_BBS?></a>
                 </li>
             <?php
               }
-            ?>
+          ?>
 
-              <li <?php if ($url=="problemset.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="problemset.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>problemset.php" ><span class="glyphicon glyphicon-book" aria-hidden="true"></span> <?php echo $MSG_PROBLEMS?></a>
               </li>
-              <li <?php if ($url=="category.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="category.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>category.php"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> <?php echo $MSG_SOURCE?></a>
               </li>
-              <li <?php if ($url=="status.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="status.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>status.php"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> <?php echo $MSG_STATUS?></a>
               </li>
-              <li <?php if ($url=="ranklist.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="ranklist.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>ranklist.php"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <?php echo $MSG_RANKLIST?></a>
               </li>
-              <li <?php if ($url=="contest.php") echo " $ACTIVE";?>>
-                <a href="<?php echo $path_fix?>contest.php<?php if(isset($_SESSION[$OJ_NAME."_user_id"])) echo "?my"  ?>"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> <?php echo $MSG_CONTEST?></a>
+              <li <?php if ($url=="contest.php") {
+                  echo " $ACTIVE";
+              }?>>
+                <a href="<?php echo $path_fix?>contest.php<?php if (isset($_SESSION[$OJ_NAME."_user_id"])) {
+                    echo "?my";
+                }  ?>"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> <?php echo $MSG_CONTEST?></a>
               </li>
           <?php
-            }
-            else
-            {
+      } else {
           ?>
-              <li <?php if ($url=="contest.php") echo " $ACTIVE";?>>
+              <li <?php if ($url=="contest.php") {
+                  echo " $ACTIVE";
+              }?>>
                 <a href="<?php echo $path_fix?>contest.php" ><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> <?php echo $MSG_CONTEST?></a>
               </li>
           <?php
-            }
-          ?>
+      }
+    ?>
            <?php echo $sql_news_menu_result_html; ?>
           <?php
-            if(isset($_GET['cid']))
-            {
-              $cid=intval($_GET['cid']);
-            }
-          ?>
+      if (isset($_GET['cid'])) {
+          $cid=intval($_GET['cid']);
+      }
+    ?>
 
 <!--<li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -226,5 +239,5 @@
       </div><!--/.container-fluid -->
     </nav>
 <?php
-  }
+}
 ?>

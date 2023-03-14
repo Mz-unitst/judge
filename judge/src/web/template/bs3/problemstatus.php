@@ -38,27 +38,29 @@
 
 							<table id="statics" class="table-hover table-striped" align=center width=90%>
 								<?php
-								$cnt = 0;
-								foreach ($view_problem as $row) {
-									if ($cnt)
-										echo "<tr class='oddrow'>";
-									else
-										echo "<tr class='evenrow'>";
-									$i=1;
-									foreach ($row as $table_cell) {
-										if ($i==1)
-											echo "<td class='text-center'>";
-										else
-											echo "<td class='text-right'>";
+                                $cnt = 0;
+		foreach ($view_problem as $row) {
+		    if ($cnt) {
+		        echo "<tr class='oddrow'>";
+		    } else {
+		        echo "<tr class='evenrow'>";
+		    }
+		    $i=1;
+		    foreach ($row as $table_cell) {
+		        if ($i==1) {
+		            echo "<td class='text-center'>";
+		        } else {
+		            echo "<td class='text-right'>";
+		        }
 
-										echo $table_cell;
-										echo "</td>";
-										$i++;
-									}
-									echo "</tr>";
-									$cnt = 1-$cnt;
-								}
-								?>
+		        echo $table_cell;
+		        echo "</td>";
+		        $i++;
+		    }
+		    echo "</tr>";
+		    $cnt = 1-$cnt;
+		}
+		?>
 
 								<tr id=pie bgcolor=white>
 									<td colspan=2>
@@ -78,14 +80,15 @@
 										Recommanded Next Problem
 										<br>
 										<?php
-										$cnt = 1;
-										foreach ($view_recommand as $row) {
-											echo "<a href=problem.php?id=$row[0]>$row[0]</a>&nbsp;";
-											if ($cnt%5 == 0)
-												echo "<br>";
-											$cnt++;
-										}
-										?>
+		        $cnt = 1;
+							    foreach ($view_recommand as $row) {
+							        echo "<a href=problem.php?id=$row[0]>$row[0]</a>&nbsp;";
+							        if ($cnt%5 == 0) {
+							            echo "<br>";
+							        }
+							        $cnt++;
+							    }
+							    ?>
 									</td>
 								</tr>
 							</table>
@@ -125,32 +128,34 @@
 								</thead>
 								<tbody>
 								<?php
-									$cnt = 0;
-									foreach ($view_solution as $row) {
-										if ( $cnt )
-											echo "<tr class='oddrow'>";
-										else
-											echo "<tr class='evenrow'>";
-										
-										$i = 1;
-										foreach ($row as $table_cell) {
-											if ($i==1 || $i==8)
-												echo "<td class='text-center'>";
-											else if ($i==2 || $i==4 || $i==5 || $i==6  || $i==7)
-												echo "<td class='text-right'>";
-											else
-												echo "<td>";
+                                    $cnt = 0;
+		foreach ($view_solution as $row) {
+		    if ($cnt) {
+		        echo "<tr class='oddrow'>";
+		    } else {
+		        echo "<tr class='evenrow'>";
+		    }
 
-											echo $table_cell;
-											echo "&nbsp";
-											echo "</td>";
-											$i++;
-										}
+		    $i = 1;
+		    foreach ($row as $table_cell) {
+		        if ($i==1 || $i==8) {
+		            echo "<td class='text-center'>";
+		        } elseif ($i==2 || $i==4 || $i==5 || $i==6  || $i==7) {
+		            echo "<td class='text-right'>";
+		        } else {
+		            echo "<td>";
+		        }
 
-										echo "</tr>";
-										$cnt = 1-$cnt;
-									}
-									?>
+		        echo $table_cell;
+		        echo "&nbsp";
+		        echo "</td>";
+		        $i++;
+		    }
+
+		    echo "</tr>";
+		    $cnt = 1-$cnt;
+		}
+		?>
 								</tbody>
 							</table>
 
@@ -158,21 +163,21 @@
 
 							<center>
 							<?php
-							echo "<a href='problemstatus.php?id=$id'>[TOP]</a>";
-							//echo "&nbsp;&nbsp;<a href='status.php?problem_id=$id'>[STATUS]</a>";
-							
-							if ($page>$pagemin) {
-								$page--;
-								echo "&nbsp;&nbsp;<a href='problemstatus.php?id=$id&page=$page'>[PREV]</a>";
-								$page++;
-							}
+                            echo "<a href='problemstatus.php?id=$id'>[TOP]</a>";
+		//echo "&nbsp;&nbsp;<a href='status.php?problem_id=$id'>[STATUS]</a>";
 
-							if ($page<$pagemax) {
-								$page++;
-								echo "&nbsp;&nbsp;<a href='problemstatus.php?id=$id&page=$page'>[NEXT]</a>";
-								$page--;
-							}
-							?>
+		if ($page>$pagemin) {
+		    $page--;
+		    echo "&nbsp;&nbsp;<a href='problemstatus.php?id=$id&page=$page'>[PREV]</a>";
+		    $page++;
+		}
+
+		if ($page<$pagemax) {
+		    $page++;
+		    echo "&nbsp;&nbsp;<a href='problemstatus.php?id=$id&page=$page'>[NEXT]</a>";
+		    $page--;
+		}
+		?>
 						  </center>
 
 						</td>

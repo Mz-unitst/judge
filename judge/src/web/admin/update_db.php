@@ -1,11 +1,11 @@
 <?php require("admin-header.php");
 
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }?>
-<?php $tsql=Array();
-$csql=Array();
+<?php $tsql=array();
+$csql=array();
 $tsql[0]="use ".$DB_NAME.";";
 $csql[0]="
 CREATE TABLE $DB_NAME.`topic` (
@@ -67,8 +67,8 @@ CREATE TABLE $DB_NAME.`mail` (
   `defunct` char(1) NOT NULL default 'N',
   PRIMARY KEY  (`mail_id`),
   KEY `uid` (`to_user`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;";   
- 
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;";
+
 $tsql[5]="ALTER TABLE $DB_NAME.`solution` MODIFY COLUMN `pass_rate` DECIMAL(3,2) UNSIGNED NOT NULL DEFAULT 0,MODIFY COLUMN in_date datetime not null default '2009-06-13 19:00:00', MODIFY COLUMN `user_id` CHAR(48)  CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,MODIFY COLUMN `ip` CHAR(15)  CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;";
 $csql[5]="";
 
@@ -204,19 +204,19 @@ $csql[43]="alter table problem add column remote_id varchar(16) default NULL aft
 $tsql[44]="alter table solution add column remote_oj char(16) not null default '' after judger;";
 $csql[44]="alter table solution add column remote_id char(16) not null default '' after remote_oj;";
 
-if(isset($_POST['do'])){
-	require_once("../include/check_post_key.php");
-	echo "Executing...<br>";
-	for($i=0;isset($tsql[$i]);$i++){
-		if($tsql[$i]){
-			echo $tsql[$i]."<br>";
-			echo "=".pdo_query($tsql[$i])."<hr>";
-		}
-		if($csql[$i]){
-			echo $csql[$i]."<br>";
-			echo "=".pdo_query($csql[$i])."<hr>";
-		}
-	}
+if (isset($_POST['do'])) {
+    require_once("../include/check_post_key.php");
+    echo "Executing...<br>";
+    for ($i=0;isset($tsql[$i]);$i++) {
+        if ($tsql[$i]) {
+            echo $tsql[$i]."<br>";
+            echo "=".pdo_query($tsql[$i])."<hr>";
+        }
+        if ($csql[$i]) {
+            echo $csql[$i]."<br>";
+            echo "=".pdo_query($csql[$i])."<hr>";
+        }
+    }
 }
 ?>
 <div class="container">

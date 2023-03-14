@@ -97,14 +97,14 @@
                     <i class="iconfont icon-mail"></i>
                     <input placeholder="<?php echo $MSG_EMAIL; ?>" autocomplete="off" type="email" name="email">
                 </div>
-                <?php //if ($OJ_VCODE) { ?>
+                <?php //if ($OJ_VCODE) {?>
                 <div class="input-o" style="position: relative;">
                     <i class="iconfont icon-ecurityCode"></i>
                     <input name="vcode" placeholder="<?php echo $MSG_VCODE; ?>" type="text">
                     <img id="vcode-img" src="vcode.php" onclick="this.src='vcode.php?'+Math.random()" height="26px"
                         style="position: absolute; right: 10px; ">
                 </div>
-                <?php //} ?>
+                <?php //}?>
                 <button class="button-login" type=submit><?php echo $MSG_SUBMIT; ?></button>
                 <div class="more-links">
                     <div class="ui two column grid">

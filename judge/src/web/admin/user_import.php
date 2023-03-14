@@ -1,62 +1,72 @@
 <?php
-require_once ("admin-header.php");
+require_once("admin-header.php");
 if (!(isset($_SESSION[$OJ_NAME . '_' . 'administrator']) || isset($_SESSION[$OJ_NAME . '_problem_importer']))) {
     echo "<a href='../loginpage.php'>Please Login First!</a>";
     exit(1);
 }
 if (isset($OJ_LANG)) {
-    require_once ("../lang/$OJ_LANG.php");
+    require_once("../lang/$OJ_LANG.php");
 }
-require_once ("../include/const.inc.php");
-require_once ("../include/my_func.inc.php");
+require_once("../include/const.inc.php");
+require_once("../include/my_func.inc.php");
 ?>
 
 <?php
-function get_extension($file) {
+function get_extension($file)
+{
     $info = pathinfo($file);
     return $info['extension'];
 }
-function import_user($filename) {
+function import_user($filename)
+{
     $check=false;
-    if (($h = fopen("{$filename}", "r")) !== FALSE) {
+    if (($h = fopen("{$filename}", "r")) !== false) {
         // 文件中的每一行数据都被转换为我们调用的单个数组$data
         // 数组的每个元素以逗号分隔
-        while (($data = fgetcsv($h, 1000, ",")) !== FALSE) {
-         // 每个单独的数组都被存入到嵌套的数组中
-                if ($data[0] == "学号") {
-                        $check=true;
-                        echo "导入名单：<hr>\n";
-                        $gb2312=false;
-                        continue;
-                }else if (iconv("gb2312","utf-8",$data[0])=="学号") {
-                        $check=true;
-                        $gb2312=true;
-                        continue;
+        while (($data = fgetcsv($h, 1000, ",")) !== false) {
+            // 每个单独的数组都被存入到嵌套的数组中
+            if ($data[0] == "学号") {
+                $check=true;
+                echo "导入名单：<hr>\n";
+                $gb2312=false;
+                continue;
+            } elseif (iconv("gb2312", "utf-8", $data[0])=="学号") {
+                $check=true;
+                $gb2312=true;
+                continue;
+            }
+            if ($check) {
+                echo $data[0] . "<br>\n";
+                $user_id = mb_trim($data[0]);
+                $nick = $data[1];
+                if ($gb2312) {
+                    $nick=iconv("gb2312", "utf-8", $nick);
                 }
-            if($check){
-                    echo $data[0] . "<br>\n";
-                    $user_id = mb_trim($data[0]);
-                    $nick = $data[1];
-                    if($gb2312) $nick=iconv("gb2312","utf-8",$nick);
-                    $password = pwGen(trim($data[2]));
-                    $school = "";
-                    $email = "";
-                    if (isset($data[3])) $school = $data[3];
-                    if (isset($data[4])) $email = $data[4];
-                    if($gb2312) $school=iconv("gb2312","utf-8",$school);
-                    if (mb_strlen($nick, 'utf-8') > 20) {
-                        $new_len = mb_strlen($nick, 'utf-8');
-                        if ($new_len > $max_length) {
-                            $max_length = $new_len;
-                            $longer = "ALTER TABLE `users` MODIFY COLUMN `nick` varchar($max_length) NULL DEFAULT '' ";
-                            pdo_query($longer);
-                        }
+                $password = pwGen(trim($data[2]));
+                $school = "";
+                $email = "";
+                if (isset($data[3])) {
+                    $school = $data[3];
+                }
+                if (isset($data[4])) {
+                    $email = $data[4];
+                }
+                if ($gb2312) {
+                    $school=iconv("gb2312", "utf-8", $school);
+                }
+                if (mb_strlen($nick, 'utf-8') > 20) {
+                    $new_len = mb_strlen($nick, 'utf-8');
+                    if ($new_len > $max_length) {
+                        $max_length = $new_len;
+                        $longer = "ALTER TABLE `users` MODIFY COLUMN `nick` varchar($max_length) NULL DEFAULT '' ";
+                        pdo_query($longer);
                     }
+                }
 
-                    $ip = "127.0.0.1";
-                    $sql = "INSERT INTO `users`(" . "`user_id`,`email`,`ip`,`accesstime`,`password`,`reg_time`,`nick`,`school`)" . "VALUES(?,?,?,NOW(),?,NOW(),?,?)on DUPLICATE KEY UPDATE `email`=?,`ip`=?,`accesstime`=NOW(),`password`=?,`reg_time`=now(),nick=?,`school`=?";
-                    pdo_query($sql, $user_id, $email, $ip, $password, $nick, $school, $email, $ip, $password, $nick, $school);
-            }else{
+                $ip = "127.0.0.1";
+                $sql = "INSERT INTO `users`(" . "`user_id`,`email`,`ip`,`accesstime`,`password`,`reg_time`,`nick`,`school`)" . "VALUES(?,?,?,NOW(),?,NOW(),?,?)on DUPLICATE KEY UPDATE `email`=?,`ip`=?,`accesstime`=NOW(),`password`=?,`reg_time`=now(),nick=?,`school`=?";
+                pdo_query($sql, $user_id, $email, $ip, $password, $nick, $school, $email, $ip, $password, $nick, $school);
+            } else {
                 echo "<h1>请用下载的模板填写，保存为UTF-8编码。</h1>";
                 break;
             }
@@ -97,7 +107,7 @@ if (isset($_FILES["fps"])) {
         }
     }
 } else {
-?>
+    ?>
 
 <br>
 <br>
@@ -113,7 +123,7 @@ if (isset($_FILES["fps"])) {
         <button class='btn btn-default btn-sm' type=submit>Upload to HUSTOJ</button>
       </div>
       </center>
-      <?php require_once ("../include/set_post_key.php"); ?>
+      <?php require_once("../include/set_post_key.php"); ?>
     </form>
 <a href="users.csv">下载模板</a>
 <?php

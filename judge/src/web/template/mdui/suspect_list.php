@@ -33,7 +33,7 @@
                         <span>状态：</span>
                         <?php if ($now > $end_time) { ?>
                             <b class="">已结束</b>
-                        <?php } else if ($now < $start_time) { ?>
+                        <?php } elseif ($now < $start_time) { ?>
                             <b class="">未开始</b>
                         <?php } else { ?>
                             <b class="">进行中</b>
@@ -80,7 +80,7 @@
                         class="mdui-btn mdui-ripple mdui-color-blue-600">统计</a>
                     <a href="suspect_list.php?cid=<?php echo $view_cid?>"
                         class="mdui-btn mdui-ripple mdui-color-purple">IP验证</a>
-                    <?php if(  isset($_SESSION[$OJ_NAME.'_'.'administrator'])
+                    <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])
                             || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) { ?>
                         <a href="user_set_ip.php?cid=<?php echo $view_cid?>"
                             class="mdui-btn mdui-ripple mdui-color-red">指定登录IP</a>
@@ -109,14 +109,14 @@
                                 echo "<td>".$row['ip']."</td>";
                                 echo "<td>".$row['user_id']."</td>";
                                 echo "<td>";
-                                    echo "<a href='../userinfo.php?user=".$row['user_id']."'><sub>".$MSG_USERINFO."</sub></a> <sub>/</sub> ";
-                                    echo "<a href='../status.php?cid=$contest_id&user_id=".$row['user_id']."'><sub>".$MSG_CONTEST." ".$MSG_SUBMIT."</sub></a>";
+                                echo "<a href='../userinfo.php?user=".$row['user_id']."'><sub>".$MSG_USERINFO."</sub></a> <sub>/</sub> ";
+                                echo "<a href='../status.php?cid=$contest_id&user_id=".$row['user_id']."'><sub>".$MSG_CONTEST." ".$MSG_SUBMIT."</sub></a>";
                                 echo "</td>";
                                 echo "<td>".$row['in_date'];
                                 echo "<td>".$row['c']."</td>";
                                 echo "</tr>";
                             }
-                        ?>
+    ?>
 
                     </table>
                 </center>
@@ -138,18 +138,18 @@
 
                         <?php
           foreach ($result2 as $row) {
-            echo "<tr>";
+              echo "<tr>";
               echo "<td>".$row['user_id']."</td>";
               echo "<td>";
-                echo "<a href='../userinfo.php?user=".$row['user_id']."'><sub>".$MSG_USERINFO."</sub></a> <sub>/</sub> ";
-                echo "<a href='../status.php?cid=$contest_id&user_id=".$row['user_id']."'><sub>".$MSG_CONTEST." ".$MSG_SUBMIT."</sub></a>";
+              echo "<a href='../userinfo.php?user=".$row['user_id']."'><sub>".$MSG_USERINFO."</sub></a> <sub>/</sub> ";
+              echo "<a href='../status.php?cid=$contest_id&user_id=".$row['user_id']."'><sub>".$MSG_CONTEST." ".$MSG_SUBMIT."</sub></a>";
               echo "</td>";
               echo "<td>".$row['ip'];
               echo "<td>".$row['time'];
               echo "<td>".$row['c'];
               echo "</tr>";
           }
-          ?>
+    ?>
                     </table>
                 </center>
             </div>

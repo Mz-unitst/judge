@@ -38,35 +38,41 @@
             <tbody>
                 <?php
                     $cnt=0;
-                    foreach($view_contest as $row){
-                        if ($cnt)
-                        echo "<tr class='oddrow'>";
-                        else
-                        echo "<tr class='evenrow'>";
-                        $i=0;
-                        foreach($row as $table_cell){
-                        if($i==2) echo "<td class=text-left>";
-                        else echo "<td>";
-                        echo "\t".$table_cell;
-                        echo "</td>";
-                        $i++;
-                        }
-                        echo "</tr>";
-                        $cnt=1-$cnt;
-                    }
-                ?>
+    foreach ($view_contest as $row) {
+        if ($cnt) {
+            echo "<tr class='oddrow'>";
+        } else {
+            echo "<tr class='evenrow'>";
+        }
+        $i=0;
+        foreach ($row as $table_cell) {
+            if ($i==2) {
+                echo "<td class=text-left>";
+            } else {
+                echo "<td>";
+            }
+            echo "\t".$table_cell;
+            echo "</td>";
+            $i++;
+        }
+        echo "</tr>";
+        $cnt=1-$cnt;
+    }
+    ?>
             </tbody>
         </table>
 
         <div class="mdui-btn-group mdui-float-right">
             <?php
-                if (!isset($page)) $page = 1;
-                $page = intval($page);
-                $section = 10;
-                $start = $page > $section ? $page - $section : 1;
-                $end = $page + $section > $view_total_page ? $view_total_page : $page + $section;
-            ?>
-            <?php if($page == 1) { ?>
+    if (!isset($page)) {
+        $page = 1;
+    }
+    $page = intval($page);
+    $section = 10;
+    $start = $page > $section ? $page - $section : 1;
+    $end = $page + $section > $view_total_page ? $view_total_page : $page + $section;
+    ?>
+            <?php if ($page == 1) { ?>
                 <button class="mdui-btn" disabled>
                     <i class="mdui-icon material-icons">chevron_left</i>
                 </button>
@@ -80,15 +86,15 @@
                 <button class="mdui-btn" disabled>...</button>
             <?php } ?>
             <?php
-                for ( $i = $start; $i <= $end; $i++ ) {
-                    echo '<a class="mdui-btn '.($page == $i ? "mdui-btn-active" : "").'" href="contest.php?page='.$i.'">'.$i.'</a>';
-                }
-            ?>
+        for ($i = $start; $i <= $end; $i++) {
+            echo '<a class="mdui-btn '.($page == $i ? "mdui-btn-active" : "").'" href="contest.php?page='.$i.'">'.$i.'</a>';
+        }
+    ?>
             <?php if ($end < $view_total_page) { ?>
                 <button class="mdui-btn" disabled>...</button>
                 <a class="mdui-btn" href="contest.php?page=<?php echo $view_total_page; ?>"></a>
             <?php } ?>
-            <?php if($page == $view_total_page) { ?>
+            <?php if ($page == $view_total_page) { ?>
                 <button class="mdui-btn" disabled>
                     <i class="mdui-icon material-icons">chevron_right</i>
                 </button>

@@ -1,25 +1,27 @@
 <?php require_once("admin-header.php");?>
-<?php if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator'])|| isset($_SESSION[$OJ_NAME.'_'.'password_setter']) )){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+<?php if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator'])|| isset($_SESSION[$OJ_NAME.'_'.'password_setter']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
-if(isset($_POST['do'])){
-	
-	require_once("../include/check_post_key.php");
+if (isset($_POST['do'])) {
+    require_once("../include/check_post_key.php");
 
-	require_once("../include/my_func.inc.php");
-	
-	$user_id=$_POST['user_id'];
+    require_once("../include/my_func.inc.php");
+
+    $user_id=$_POST['user_id'];
     $passwd =$_POST['passwd'];
     if (false) {
-		$user_id = stripslashes ( $user_id);
-		$passwd = stripslashes ( $passwd);
-	}
-	$passwd=pwGen($passwd);
-	$sql="update `users` set `password`=? where `user_id`=?  and user_id not in( select user_id from privilege where rightstr='administrator') ";
-	
-	if (pdo_query($sql,$passwd,$user_id)==1) echo "Password Changed!";
-  else echo "No such user! or He/Her is an administrator!";
+        $user_id = stripslashes($user_id);
+        $passwd = stripslashes($passwd);
+    }
+    $passwd=pwGen($passwd);
+    $sql="update `users` set `password`=? where `user_id`=?  and user_id not in( select user_id from privilege where rightstr='administrator') ";
+
+    if (pdo_query($sql, $passwd, $user_id)==1) {
+        echo "Password Changed!";
+    } else {
+        echo "No such user! or He/Her is an administrator!";
+    }
 }
 ?>
 <div class="container">

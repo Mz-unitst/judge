@@ -44,24 +44,26 @@
                 <div class="ui buttons right floated">
 
                     <?php
-          if ($now>$end_time)
-          echo "<span class=\"ui small button grey\">$MSG_Ended</span>";
-          else if ($now<$start_time)
-          echo "<span class=\"ui small button red\">$MSG_Contest_Pending</span>";
-          else
-          echo "<span class=\"ui small button green\">$MSG_Running</span>";
-          ?>
+          if ($now>$end_time) {
+              echo "<span class=\"ui small button grey\">$MSG_Ended</span>";
+          } elseif ($now<$start_time) {
+              echo "<span class=\"ui small button red\">$MSG_Contest_Pending</span>";
+          } else {
+              echo "<span class=\"ui small button green\">$MSG_Running</span>";
+          }
+?>
                     <?php
-          if ($view_private=='0')
-          echo "<span class=\"ui small button blue\">$MSG_Public</span>";
-          else
-          echo "<span class=\"ui small button pink\">$MSG_Private</span>";
-          ?>
+if ($view_private=='0') {
+    echo "<span class=\"ui small button blue\">$MSG_Public</span>";
+} else {
+    echo "<span class=\"ui small button pink\">$MSG_Private</span>";
+}
+?>
                     <span class="ui small button"><?php echo $MSG_Server_Time ?>:<span id=nowdate><?php echo date("Y-m-d H:i:s")?></span></span>
                 </div>
             </div>
         </div>
-        <?php if($view_description){ ?>
+        <?php if ($view_description) { ?>
         <div class="row">
             <div class="column">
                 <h4 class="ui top attached block header"><?php echo $MSG_Contest_Infomation ?></h4>
@@ -77,7 +79,9 @@
                     <thead>
                         <tr>
                             <th class="one wide" style="text-align: center">
-                                    <?php if(isset($_SESSION[$OJ_NAME.'_'.'user_id'])) echo "状态" ?>
+                                    <?php if (isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {
+                                        echo "状态";
+                                    } ?>
                             </th>
                             <th class="two wide" style="text-align: center"><?php echo $MSG_PROBLEM_ID ?></th>
                             <th><?php echo $MSG_TITLE ?></th>
@@ -89,14 +93,14 @@
                     <tbody>
                    
                         <?php
-                        foreach($view_problemset as $row){
-                          echo "<tr>";
-                          foreach($row as $table_cell){
-                            echo "<td>".$table_cell."</td>";
-                          }
-                          echo "</tr>";
+                        foreach ($view_problemset as $row) {
+                            echo "<tr>";
+                            foreach ($row as $table_cell) {
+                                echo "<td>".$table_cell."</td>";
+                            }
+                            echo "</tr>";
                         }
-                        ?>
+?>
                        
                     </tbody>
                 </table>
@@ -109,7 +113,7 @@
 $(function() {
     $('#timer-progress').progress({
         value: Date.now() / 1000 - <?php echo strtotime($view_start_time)?>,
-        total: <?php echo (strtotime($view_end_time)- strtotime($view_start_time))?>
+        total: <?php echo(strtotime($view_end_time)- strtotime($view_start_time))?>
     });
 });
 
@@ -117,7 +121,7 @@ $(function() {
     setInterval(function() {
         $('#timer-progress').progress({
             value: Date.now() / 1000 - <?php echo strtotime($view_start_time)?>,
-            total: <?php echo (strtotime($view_end_time)- strtotime($view_start_time))?>
+            total: <?php echo(strtotime($view_end_time)- strtotime($view_start_time))?>
         });
     }, 5000);
 });

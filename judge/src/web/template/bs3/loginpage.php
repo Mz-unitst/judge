@@ -31,7 +31,7 @@
 	<label class="col-sm-4 control-label"><?php echo $MSG_USER_ID?></label><div class="col-sm-4"><input name="user_id" class="form-control" placeholder="<?php echo $MSG_USER_ID?>" type="text" required ></div>						</div>
 	<div class="form-group">
 	<label class="col-sm-4 control-label"><?php echo $MSG_PASSWORD?></label><div class="col-sm-4"><input name="password" class="form-control" placeholder="<?php echo $MSG_PASSWORD?>" type="password"  autocomplete="off" required ></div>						</div>
-<?php if($OJ_VCODE){?>
+<?php if ($OJ_VCODE) {?>
 
 	<div class="form-group">
 	<label class="col-sm-4 control-label"><?php echo $MSG_VCODE?></label><div class="col-sm-3"><input name="vcode" class="form-control" type="text"></div><div class="col-sm-4"><img id="vcode-img" alt="click to change" onclick="this.src='vcode.php?'+Math.random()" height="30px">*</div>						</div>

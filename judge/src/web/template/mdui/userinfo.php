@@ -28,7 +28,7 @@
                             <td><a href="status.php?user_id=<?php echo $user?>"><?php echo $Submit; ?></a></td>
                         </tr>
                         <?php
-                            foreach($view_userstat as $row){
+                            foreach ($view_userstat as $row) {
                                 echo '<tr>'
                                     .'<td>'
                                     .$jresult[$row[0]]
@@ -40,7 +40,7 @@
                                     .'</td>'
                                     .'</tr>';
                             }
-                        ?>
+    ?>
                         <tr id="pie">
                             <td>统计</td>
                             <td><div id="PieDiv" style="position: relative; height: 105px; width: 120px;"></div></td>
@@ -86,17 +86,18 @@
                     function p(id, c) {
                         $('#submission').append(`<a href="problem.php?id=${id}">${id}</a>&nbsp;<sup>(<a href="status.php?user_id=<?php echo $user; ?>&problem_id=${id}"'>${c}</a>)</sup>`);
                     }
-                    <?php 
-                        $sql = "SELECT `problem_id`, count(1) from solution where `user_id`=? and result=4 group by `problem_id` ORDER BY `problem_id` ASC";
-                        if ($result = pdo_query($sql,$user)) { 
-                            foreach($result as $row)
-                            echo "p($row[0],$row[1]);";
-                        } 
-                    ?>
+                    <?php
+    $sql = "SELECT `problem_id`, count(1) from solution where `user_id`=? and result=4 group by `problem_id` ORDER BY `problem_id` ASC";
+    if ($result = pdo_query($sql, $user)) {
+        foreach ($result as $row) {
+            echo "p($row[0],$row[1]);";
+        }
+    }
+    ?>
                     </script>
                 </div>
             </div>
-            <?php if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])) { ?>
+            <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) { ?>
             <h1>登录记录</h1>
             <table class="mdui-table mdui-table-hoverable">
                 <thead>
@@ -109,19 +110,20 @@
                 </thead>
                 <tbody>
                     <?php
-                            $cnt=0;
-                            foreach($view_userinfo as $row){
-                                if ($cnt)
-                                    echo "<tr class='oddrow'>";
-                                else
-                                    echo "<tr class='evenrow'>";
-                                for($i=0;$i<count($row)/2;$i++){
-                                    echo "<td>".$row[$i]."</td>";
-                                }
-                                echo "</tr>";
-                                $cnt=1-$cnt;
-                            }
-                        ?>
+            $cnt=0;
+                foreach ($view_userinfo as $row) {
+                    if ($cnt) {
+                        echo "<tr class='oddrow'>";
+                    } else {
+                        echo "<tr class='evenrow'>";
+                    }
+                    for ($i=0;$i<count($row)/2;$i++) {
+                        echo "<td>".$row[$i]."</td>";
+                    }
+                    echo "</tr>";
+                    $cnt=1-$cnt;
+                }
+                ?>
                 </tbody>
             </table>
             <?php } ?>
@@ -141,13 +143,13 @@
         var d1 = [];
         var d2 = [];
         <?php
-foreach($chart_data_all as $k=>$d){
-?>
+foreach ($chart_data_all as $k=>$d) {
+    ?>
         d1.push([<?php echo $k?>, <?php echo $d?>]);
         <?php }?>
         <?php
-foreach($chart_data_ac as $k=>$d){
-?>
+foreach ($chart_data_ac as $k=>$d) {
+    ?>
         d2.push([<?php echo $k?>, <?php echo $d?>]);
         <?php }?>
         //var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];

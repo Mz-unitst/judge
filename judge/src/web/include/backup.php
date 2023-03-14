@@ -2,7 +2,7 @@
 
 /**
 * 数据库备份还原类
-* @author 
+* @author
 * Class DatabaseTool
 */
 class DatabaseTool
@@ -36,11 +36,11 @@ class DatabaseTool
                 $this->handler = new PDO("mysql:host={$this->config['host']}:{$this->config['port']};dbname={$this->config['database']}", $this->config['user'], $this->config['password']);
             } catch (PDOException $e) {
                 $this->error = $e->getMessage();
-		echo $this->error;
+                echo $this->error;
                 return false;
             } catch (Exception $e) {
                 $this->error = $e->getMessage();
-		echo $this->error;
+                echo $this->error;
                 return false;
             }
         }

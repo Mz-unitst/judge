@@ -1,4 +1,6 @@
-<?php    if(stripos($_SERVER['REQUEST_URI'],"template"))exit(); ?>
+<?php    if (stripos($_SERVER['REQUEST_URI'], "template")) {
+    exit();
+} ?>
 <!DOCTYPE html>
 <html lang="cn">
 
@@ -44,14 +46,14 @@
             </thead>
             <tbody>
                 <?php
-                    foreach($view_rank as $row){
+                    foreach ($view_rank as $row) {
                         echo '<tr>';
-                        foreach($row as $table_cell){
+                        foreach ($row as $table_cell) {
                             echo '<td>'.$table_cell.'</td>';
                         }
                         echo '</tr>';
                     }
-                ?>
+?>
             </tbody>
         </table>
 <!-- <div class="mdui-btn-group">
@@ -61,23 +63,25 @@
   <button type="button" class="mdui-btn"><i class="mdui-icon material-icons">format_align_justify</i></button>
 </div> -->
             <?php
-                echo '<div class="mdui-btn-group mdui-float-right">';
+echo '<div class="mdui-btn-group mdui-float-right">';
 
-                $qs="";
-                $nstart=isset($_GET["start"])?intval($_GET["start"]):0;
-                if(isset($_GET['prefix'])){
-                    $qs.="&prefix=".htmlentities($_GET['prefix'],ENT_QUOTES,"utf-8");
-                }
-                if(isset($scope)){
-                    $qs.="&scope=".htmlentities($scope,ENT_QUOTES,"utf-8");
-                }
-                for($i = 0; $i <$view_total ; $i += $page_size) {
-                    echo '<a class="mdui-btn'.($i == $nstart?" mdui-btn-active":"").'" href="./ranklist.php?start='.strval ( $i ).$qs. '">'
-                        .strval ($i+1)."-".strval ($i+$page_size).'</a>';
-                    if ($i % 2000 == 500) echo "<br>";
-                }
-                echo '</div>';
-            ?>
+$qs="";
+$nstart=isset($_GET["start"]) ? intval($_GET["start"]) : 0;
+if (isset($_GET['prefix'])) {
+    $qs.="&prefix=".htmlentities($_GET['prefix'], ENT_QUOTES, "utf-8");
+}
+if (isset($scope)) {
+    $qs.="&scope=".htmlentities($scope, ENT_QUOTES, "utf-8");
+}
+for ($i = 0; $i <$view_total ; $i += $page_size) {
+    echo '<a class="mdui-btn'.($i == $nstart ? " mdui-btn-active" : "").'" href="./ranklist.php?start='.strval($i).$qs. '">'
+        .strval($i+1)."-".strval($i+$page_size).'</a>';
+    if ($i % 2000 == 500) {
+        echo "<br>";
+    }
+}
+echo '</div>';
+?>
     </div>
 </body>
 

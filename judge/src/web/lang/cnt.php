@@ -1,4 +1,5 @@
 <?php
+
  //oj-header.php
  $MSG_FAQ ="常見問答";
  $MSG_BBS ="討論版";
@@ -18,7 +19,7 @@
  $MSG_STATISTICS ="統計";
  $MSG_USERINFO ="用戶信息";
  $MSG_MAIL ="短消息";
- 
+
  //status.php
  $MSG_Pending ="等待";
  $MSG_Pending_Rejudging ="等待重判";
@@ -40,22 +41,22 @@
  $MSG_Manual ="人工判題";
  $MSG_OK ="確定";
  $MSG_Explain ="輸入判定原因與提示";
- 
+
  //fool's day
- if (date( 'm' )== 4 &&date( 'd' )== 1 &&rand( 0 , 100 )< 5 ){
- $MSG_Accepted =" <span title=愚人節快樂>似乎好像是正確</span> ";
- //$MSG_Presentation_Error="人品問題-愚人節快樂";
- //$MSG_Wrong_Answer="人品問題-愚人節快樂";
- //$MSG_Time_Limit_Exceed="人品問題-愚人節快樂";
- //$MSG_Memory_Limit_Exceed="人品問題-愚人節快樂";
- //$MSG_Output_Limit_Exceed="人品問題-愚人節快樂";
- //$MSG_Runtime_Error="人品問題-愚人節快樂";
- //$MSG_Compile_Error="人品問題-愚人節快樂";
- //$MSG_Compile_OK="人品問題-愚人節快樂";
-}
- 
+ if (date('m')== 4 &&date('d')== 1 &&rand(0, 100)< 5) {
+     $MSG_Accepted =" <span title=愚人節快樂>似乎好像是正確</span> ";
+     //$MSG_Presentation_Error="人品問題-愚人節快樂";
+     //$MSG_Wrong_Answer="人品問題-愚人節快樂";
+     //$MSG_Time_Limit_Exceed="人品問題-愚人節快樂";
+     //$MSG_Memory_Limit_Exceed="人品問題-愚人節快樂";
+     //$MSG_Output_Limit_Exceed="人品問題-愚人節快樂";
+     //$MSG_Runtime_Error="人品問題-愚人節快樂";
+     //$MSG_Compile_Error="人品問題-愚人節快樂";
+     //$MSG_Compile_OK="人品問題-愚人節快樂";
+ }
+
  $MSG_TEST_RUN ="運行完成";
- 
+
  $MSG_RUNID ="提交編號";
  $MSG_USER ="用戶";
  $MSG_PROBLEM ="問題";
@@ -65,7 +66,7 @@
  $MSG_LANG ="語言";
  $MSG_CODE_LENGTH ="代碼長度";
  $MSG_SUBMIT_TIME ="提交時間";
- 
+
  //problemstatistics.php
  $MSG_PD ="等待";
  $MSG_PR ="等待重判";
@@ -83,7 +84,7 @@
  $MSG_TR ="測試運行";
  $MSG_MC ="待裁判確認";
  $MSG_RESET ="重置";
- 
+
  //problemset.php
  $MSG_SEARCH ="查找";
  $MSG_PROBLEM_ID ="題目編號";
@@ -92,7 +93,7 @@
  $MSG_SUBMIT_NUM ="提交量";
  $MSG_SUBMIT ="提交";
  $MSG_SHOW_OFF ="露一手! ";
- 
+
  //submit.php
  $MSG_VCODE_WRONG ="驗證碼錯誤！ ";
  $MSG_LINK_ERROR ="在哪裡可以找到此鏈接？ 沒有這個問題。 ";
@@ -104,7 +105,7 @@
  $MSG_TOO_SHORT ="代碼太短！ ";
  $MSG_TOO_LONG ="代碼太長！ ";
  $MSG_BREAK_TIME ="您不應在10秒鐘內提交超過1次的申請..... ";
- 
+
  //ranklist.php
  $MSG_Number ="名次";
  $MSG_NICK ="暱稱";
@@ -122,7 +123,7 @@
  $MSG_EMAIL ="電子郵件";
  $MSG_REG_INFO ="設置註冊信息";
  $MSG_VCODE ="驗證碼";
- 
+
  //problem.php
  $MSG_NO_SUCH_PROBLEM ="題目當前不可用!<br>它可能被用於未來的比賽、過去的私有比賽，或者管理員由於尚未測試通過等其他原因暫時停止了該題目用於練習。 ";
  $MSG_Description ="題目描述" ;
@@ -142,7 +143,7 @@
  $MSG_EDIT ="編輯";
  $MSG_TESTDATA ="測試數據";
  $MSG_CLICK_VIEW_HINT ="點擊查看劇透級題解";
- 
+
  //admin menu
  $MSG_SEEOJ ="查看前台";
  $MSG_ADD ="添加";
@@ -154,7 +155,7 @@
  $MSG_SAVE ="保存";
  $MSG_DELETED ="已刪除";
  $MSG_NORMAL ="正常";
- 
+
  $MSG_TEAMGENERATOR ="比賽隊帳號生成器";
  $MSG_SETMESSAGE ="設置公告";
  $MSG_SETPASSWORD ="修改密碼";
@@ -169,7 +170,7 @@
  $MSG_SET_LOGIN_IP ="指定登錄IP ";
  $MSG_PRIVILEGE_TYPE ="權限類型";
  $MSG_NEWS_MENU ="是否展示到菜單";
- 
+
  //contest.php
  $MSG_PRIVATE_WARNING ="比賽尚未開始或私有，不能查看題目。 ";
  $MSG_PRIVATE_USERS_ADD =" *可以將學生學號從Excel整列複製過來，然後要求他們用學號做UserID註冊,就能進入Private的比賽作為作業和測驗。 ";
@@ -191,14 +192,14 @@
  $MSG_IP_VERIFICATION =" IP驗證";
  $MSG_CONTEST_SUSPECT1 ="具有多個ID的IP地址。如果在競賽/考試期間在同一台計算機上訪問了多個ID，則會記錄該ID。 ";
  $MSG_CONTEST_SUSPECT2 ="具有多個IP地址的ID。 如果在競賽/考試期間切換到另一台計算機，它將記錄下來。 ";
- 
+
  $MSG_SECONDS ="秒";
  $MSG_MINUTES ="分";
  $MSG_HOURS ="小時";
  $MSG_DAYS ="天";
  $MSG_MONTHS ="月份";
  $MSG_YEARS ="年份";
- 
+
  $MSG_Public ="公開";
  $MSG_Private ="私有";
  $MSG_Running ="運行中";
@@ -209,14 +210,14 @@
  $MSG_Ended ="已結束";
  $MSG_Login ="請登錄後繼續操作";
  $MSG_JUDGER ="判題機";
- 
+
  $MSG_SOURCE_NOT_ALLOWED_FOR_EXAM ="考試期間，不能查閱以前提交的代碼。 ";
  $MSG_BBS_NOT_ALLOWED_FOR_EXAM ="考試期間,討論版禁用。 ";
  $MSG_MODIFY_NOT_ALLOWED_FOR_EXAM ="考試期間,禁止修改帳號信息。 ";
  $MSG_MAIL_NOT_ALLOWED_FOR_EXAM ="考試期間,內郵禁用。 ";
  $MSG_LOAD_TEMPLATE_CONFIRM ="是否加載默認模板? \\ n 如果選擇是，當前代碼將被覆蓋! ";
  $MSG_NO_MAIL_HERE ="本OJ不支持內部郵件哦~ ";
- 
+
  $MSG_BLOCKLY_OPEN ="可視化";
  $MSG_BLOCKLY_TEST ="翻譯運行";
  $MSG_MY_SUBMISSIONS ="我的提交";
@@ -231,7 +232,7 @@
  $MSG_BALLOON ="氣球";
  $MSG_BALLOON_DONE ="氣球已發放";
  $MSG_BALLOON_PENDING ="氣球待發放";
- 
+
  $MSG_DATE ="日期";
  $MSG_TIME ="時間";
  $MSG_SIGN ="個性簽名";
@@ -241,7 +242,7 @@
  $MSG_SHOW_TAGS ="顯示分類標籤";
  $MSG_SHOW_ALL_TAGS ="所有標籤";
  $MSG_RESERVED ="未啟用";
- 
+
  $MSG_HELP_SEEOJ ="跳轉回到前台";
  $MSG_HELP_ADD_NEWS ="添加首頁顯示的新聞";
  $MSG_HELP_NEWS_LIST ="管理已經發布的新聞";
@@ -273,27 +274,27 @@
  $MSG_HELP_OLE ="輸出超過限制，你的輸出比正確答案長了兩倍，一定是哪裡弄錯了";
  $MSG_HELP_RE ="運行時錯誤，非法的內存訪問，數組越界，指針漂移，調用禁用的系統函數。請點擊後獲得詳細輸出";
  $MSG_HELP_CE ="編譯錯誤，請點擊後獲得編譯器的詳細輸出";
- 
+
  $MSG_HELP_MORE_TESTDATA_LATER ="更多組測試數據，請在題目添加完成後補充";
  $MSG_HELP_ADD_FAQS ="管理員可以添加一條新聞，命名為\" faqs. $OJ_LANG \"來取代<a href=../faqs.php> $MSG_FAQ </a>的內容。 ";
  $MSG_HELP_HUSTOJ =" <sub><a target='_blank' href='https://github.com/zhblue/hustoj'><span class='glyphicon glyphicon-heart' aria-hidden='true'></span> 請到HUSTOJ 來，給我們加個<span class='glyphicon glyphicon-star' aria-hidden='true'></span>Star!</a></sub> ";
  $MSG_HELP_SPJ ="特殊裁判的使用，請參考<a href='https://cn.bing.com/search?q=hustoj+special+judge' target='_blank'>搜索hustoj special judge</a> ";
  $MSG_HELP_BALLOON_SCHOOL ="打印，氣球帳號的School字段用於過濾任務列表，例如填zjicm則只顯示帳號為zjicm開頭的任務";
  $MSG_HRLP_BACKUP_DATABASE ="備份數據庫,測試數據和圖片到0題目錄";
- 
+
  $MSG_WARNING_LOGIN_FROM_DIFF_IP ="從不同的ip地址登錄";
  $MSG_WARNING_DURING_EXAM_NOT_ALLOWED ="在考試期間不被允許";
  $MSG_WARNING_ACCESS_DENIED ="抱歉，您無法查看此消息！因為它不屬於您，或者管理員設定係統狀態為不顯示此類信息。 ";
- 
+
  $MSG_WARNING_USER_ID_SHORT ="用戶名至少3位字符! ";
  $MSG_WARNING_PASSWORD_SHORT ="密碼至少6位! ";
  $MSG_WARNING_REPEAT_PASSWORD_DIFF ="兩次輸入的密碼不一致! ";
- 
- 
+
+
  $MSG_LOSTPASSWORD_MAILBOX ="請到您郵箱的垃圾郵件档案夾尋找驗證碼，並填寫到這裡";
  $MSG_LOSTPASSWORD_WILLBENEW ="如果填寫正確，通過下一步驗證，這個驗證碼就自動成為您的新密碼！ ";
- 
- 
+
+
  // template/../reinfo.php
  $MSG_A_NOT_ALLOWED_SYSTEM_CALL ="使用了系統禁止的操作系統調用，看看是否越權訪問了档案或進程等資源,如果你是系統管理員，而且確認提交的答案沒有問題，測試數據沒有問題，可以發送'RE'到微信公眾號onlinejudge，查看解決方案。 ";
  $MSG_SEGMETATION_FAULT ="段錯誤，檢查是否有數組越界，指針異常，訪問到不應該訪問的內存區域";
@@ -306,7 +307,7 @@
  $MSG_STRING_INDEX_OUT_OF_BOUNDS_EXCEPTION ="字符串的字符下標越界，檢查subString,charAt等方法的參數";
  $MSG_WRONG_OUTPUT_TYPE_EXCEPTION="二進製輸出錯誤，檢查是否誤將數值類型作為字符輸出，或者輸出了不打印字符的情況。";
  $MSG_NON_ZERO_RETURN="Main函數不能返回非零的值，否則視同程式出錯。";
-	
+
  // template/../ceinfo.php
  $MSG_ERROR_EXPLAIN ="輔助解釋";
  $MSG_SYSTEM_OUT_PRINT =" Java中System.out.print用法跟C語言printf不同，請試用System.out.format ";
@@ -378,12 +379,12 @@
  $MSG_FUNCTION_GETS_REMOVIED =" std::gets 於C++11 被棄用，並於C++14 移除。可使用std::fgets 替代。或者增加宏定義#define gets(S) fgets(S,sizeof(S),stdin) ";
  $MSG_PROBLEM_USED_IN ="題目已經用於私有比賽";
  $MSG_MAIL_CAN_ONLY_BETWEEN_TEACHER_AND_STUDENT ="內郵僅限學生老師互相發送，不允許同學間發送！ ";
- 
+
  $MSG_REFRESH_PRIVILEGE ="刷新權限";
- 
+
  $MSG_SAVED_DATE ="保存時間";
  $MSG_PROBLEM_STATUS ="當前狀態";
- 
+
  $MSG_NEW_CONTEST ="創建新比賽";
  $MSG_AVAILABLE ="啟用";
  $MSG_RESERVED ="未啟用";
@@ -392,11 +393,11 @@
  $MSG_EDIT ="編輯";
  $MSG_TEST_DATA ="管理測試數據";
  $MSG_CHECK_TO ="批量選擇操作";
- 
+
  //bbcode.php
  $MSG_TOTAL ="共";
  $MSG_NUMBER_OF_PROBLEMS ="題";
- 
+
  $MSG_SUBMIT_RECORD ="提交記錄";
  $MSG_RETURN_CONTEST ="返回比賽";
  $MSG_COPY ="複製";
@@ -417,4 +418,3 @@
  // sourcecompare.php
  $MSG_Source_Compare ="源代碼對比";
  $MSG_BACK ="返回上一頁";
-?>

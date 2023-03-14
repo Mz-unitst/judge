@@ -1,6 +1,6 @@
-<?php 
+<?php
 require_once("../include/db_info.inc.php");
-require_once ("../include/my_func.inc.php");
+require_once("../include/my_func.inc.php");
 ;?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel=stylesheet href='../include/hoj.css' type='text/css'>
@@ -12,11 +12,13 @@ $("document").ready(function (){
 });
 
 </script>
-<?php if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])||isset($_SESSION[$OJ_NAME.'_'.'password_setter']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+<?php if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])||isset($_SESSION[$OJ_NAME.'_'.'password_setter']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 require_once("../template/$OJ_TEMPLATE/css.php");
-if(file_exists("../lang/$OJ_LANG.php")) require_once("../lang/$OJ_LANG.php");
+if (file_exists("../lang/$OJ_LANG.php")) {
+    require_once("../lang/$OJ_LANG.php");
+}
 ?>
 

@@ -1,4 +1,5 @@
 <?php
+
 class Logger
 {
     private $user;
@@ -35,8 +36,9 @@ class Logger
         $this->url_host_enabled = $url_host_enabled;
         $this->url_param_enabled = $url_param_enabled;
         $this->trace_enabled = $trace_enabled;
-        if ($this->trace_enabled)
+        if ($this->trace_enabled) {
             $this->trace_id = uniqid();
+        }
     }
 
     public function info($message = "", array $data = [])
@@ -67,31 +69,36 @@ class Logger
             $pid = getmypid();
             $prefix = $prefix . "$pid ";
         }
-        if ($this->user_enabled)
+        if ($this->user_enabled) {
             $prefix = $prefix . "[$user] ";
-        if ($this->trace_enabled)
+        }
+        if ($this->trace_enabled) {
             $prefix = $prefix . "[$trace_id] ";
+        }
         if ($this->url_enabled) {
             $script   = $_SERVER['SCRIPT_NAME'];
             $url      =  $script;
             if ($this->url_host_enabled) {
-                $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === FALSE ? 'http' : 'https';
+                $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https';
                 $host     = $_SERVER['HTTP_HOST'];
                 $url      = $protocol . '://' . $host . $url;
             }
             if ($this->url_param_enabled) {
                 $params   = $_SERVER['QUERY_STRING'];
-                if (!empty($params))
+                if (!empty($params)) {
                     $url = $url . "?" . $params;
+                }
             }
             $prefix = $prefix . "$url ";
         }
-        if (empty($message))
+        if (empty($message)) {
             $message = $prefix;
-        else
+        } else {
             $message = "$prefix --- $message";
-        foreach ($data as $key => $val)
+        }
+        foreach ($data as $key => $val) {
             $message = str_replace("%{$key}%", $val, $message);
+        }
         $message .= PHP_EOL;
         $handle = fopen($this->logfile, "a");
         fwrite($handle, $message);

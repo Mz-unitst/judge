@@ -10,10 +10,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -22,11 +22,11 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -89,15 +89,15 @@ include_once("kindeditor.php");
     <?php echo "<label for=contest_id>竞赛&作业</label>"?>
           <select name=contest_id class="form-control">
             <?php
-            $sql="SELECT `contest_id`,`title` FROM `contest` WHERE `start_time`>NOW() order by `contest_id`";
-            $result=pdo_query($sql);
-            echo "<option value=''>暂无竞赛</option>";
-            if (count($result)==0){
-            }else{
-              foreach($result as $row){
-                echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
-              }
-            }?>
+	            $sql="SELECT `contest_id`,`title` FROM `contest` WHERE `start_time`>NOW() order by `contest_id`";
+	$result=pdo_query($sql);
+	echo "<option value=''>暂无竞赛</option>";
+	if (count($result)==0) {
+	} else {
+	    foreach ($result as $row) {
+	        echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+	    }
+	}?>
           </select><br>
     <button type='submit' class="btn btn-info btn-addon i"><i class="fa fa-plus"></i>新建</button>
   </form>

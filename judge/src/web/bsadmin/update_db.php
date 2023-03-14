@@ -9,10 +9,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -21,13 +21,13 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-    
-require_once("../include/set_get_key.php");
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+
+	require_once("../include/set_get_key.php");
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -63,10 +63,10 @@ require_once("../include/set_get_key.php");
 									</div>
 								</div>
 								<div class="card-body">
-								    <?php $tsql=Array();
-$csql=Array();
-$tsql[0]="select 1 from topic limit 1";
-$csql[0]="
+								    <?php $tsql=array();
+	$csql=array();
+	$tsql[0]="select 1 from topic limit 1";
+	$csql[0]="
 CREATE TABLE `topic` (
   `tid` int(11) NOT NULL auto_increment,
   `title` varbinary(60) NOT NULL,
@@ -79,8 +79,8 @@ CREATE TABLE `topic` (
   KEY `cid` (`cid`,`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 ";
-$tsql[1]="select 1 from reply limit 1";
-$csql[1]="
+	$tsql[1]="select 1 from reply limit 1";
+	$csql[1]="
 CREATE TABLE `reply` (
  `rid` int(11) NOT NULL auto_increment,
  `author_id` varchar(20) NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE `reply` (
  KEY `author_id` (`author_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 ";
-$tsql[2]="
+	$tsql[2]="
 ALTER TABLE `problem` DROP COLUMN `sample_Program`,
  DROP COLUMN `ratio`,
  DROP COLUMN `error`,
@@ -101,9 +101,9 @@ ALTER TABLE `problem` DROP COLUMN `sample_Program`,
  DROP COLUMN `submit_user`,
  DROP COLUMN `case_time_limit`;
  ";
-$csql[2]="";
-$tsql[3]="select 1 from sim limit 1";
-$csql[3]="
+	$csql[2]="";
+	$tsql[3]="select 1 from sim limit 1";
+	$csql[3]="
 CREATE TABLE `sim` (
   `s_id` int(11) NOT NULL,
   `sim_s_id` int(11) NULL,
@@ -111,8 +111,8 @@ CREATE TABLE `sim` (
   PRIMARY KEY  (`s_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 
-$tsql[4]="select 1 from mail limit 1";
-$csql[4]="
+	$tsql[4]="select 1 from mail limit 1";
+	$csql[4]="
 CREATE TABLE `mail` (
 
   `mail_id` int(11) NOT NULL auto_increment,
@@ -127,77 +127,77 @@ CREATE TABLE `mail` (
   PRIMARY KEY  (`mail_id`),
   KEY `uid` (`to_user`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000 ;";
-$tsql[5]="ALTER TABLE `solution` MODIFY COLUMN `user_id` CHAR(48)  CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,	DROP COLUMN `className`,MODIFY COLUMN `ip` CHAR(15)  CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;";
-$csql[5]="";
+	$tsql[5]="ALTER TABLE `solution` MODIFY COLUMN `user_id` CHAR(48)  CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,	DROP COLUMN `className`,MODIFY COLUMN `ip` CHAR(15)  CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;";
+	$csql[5]="";
 
-$tsql[6]="select langmask from contest limit 1;";
-$csql[6]="ALTER TABLE `contest` ADD COLUMN `langmask` TINYINT  NOT NULL DEFAULT 0 COMMENT 'bits for LANG to mask' AFTER `private`;";
+	$tsql[6]="select langmask from contest limit 1;";
+	$csql[6]="ALTER TABLE `contest` ADD COLUMN `langmask` TINYINT  NOT NULL DEFAULT 0 COMMENT 'bits for LANG to mask' AFTER `private`;";
 
-$csql[7]="";
-$tsql[7]="optimize table `compileinfo`,`contest` ,`contest_problem` ,`loginlog`,`news`,`privilege`,`problem` ,`solution`,`source_code`,`users`,`topic`,`reply`,`online`,`sim`,`mail`;";
+	$csql[7]="";
+	$tsql[7]="optimize table `compileinfo`,`contest` ,`contest_problem` ,`loginlog`,`news`,`privilege`,`problem` ,`solution`,`source_code`,`users`,`topic`,`reply`,`online`,`sim`,`mail`;";
 
-$csql[8]="";
-$tsql[8]="ALTER TABLE `contest` MODIFY COLUMN `langmask` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'bits for LANG to mask';";
-$tsql[9]="select 1 from runtimeinfo limit 1";
-$csql[9]="CREATE TABLE  `runtimeinfo` (
+	$csql[8]="";
+	$tsql[8]="ALTER TABLE `contest` MODIFY COLUMN `langmask` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'bits for LANG to mask';";
+	$tsql[9]="select 1 from runtimeinfo limit 1";
+	$csql[9]="CREATE TABLE  `runtimeinfo` (
   `solution_id` int(11) NOT NULL DEFAULT '0',
   `error` text,
   PRIMARY KEY (`solution_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ";
-$tsql[10]="select pass_rate from solution";
-$csql[10]="ALTER TABLE `solution` ADD COLUMN `pass_rate` DECIMAL(3,2) UNSIGNED NOT NULL DEFAULT 0 AFTER `judgetime`;";
+	$tsql[10]="select pass_rate from solution";
+	$csql[10]="ALTER TABLE `solution` ADD COLUMN `pass_rate` DECIMAL(3,2) UNSIGNED NOT NULL DEFAULT 0 AFTER `judgetime`;";
 
-$csql[11]="";
-$tsql[11]="ALTER TABLE `users` MODIFY COLUMN `user_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
+	$csql[11]="";
+	$tsql[11]="ALTER TABLE `users` MODIFY COLUMN `user_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
 
-$csql[12]="";
-$tsql[12]="ALTER TABLE `topic` MODIFY COLUMN `author_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
+	$csql[12]="";
+	$tsql[12]="ALTER TABLE `topic` MODIFY COLUMN `author_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
 
-$csql[13]="";
-$tsql[13]="ALTER TABLE `mail` MODIFY COLUMN `to_user` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id',MODIFY COLUMN `from_user` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
+	$csql[13]="";
+	$tsql[13]="ALTER TABLE `mail` MODIFY COLUMN `to_user` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id',MODIFY COLUMN `from_user` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
 
-$csql[14]="";
-$tsql[14]="ALTER TABLE `reply` MODIFY COLUMN `author_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
+	$csql[14]="";
+	$tsql[14]="ALTER TABLE `reply` MODIFY COLUMN `author_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
 
-$csql[15]="";
-$tsql[15]="ALTER TABLE `privilege` MODIFY COLUMN `user_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
+	$csql[15]="";
+	$tsql[15]="ALTER TABLE `privilege` MODIFY COLUMN `user_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
 
-$csql[15]="";
-$tsql[15]="ALTER TABLE `loginlog` MODIFY COLUMN `user_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
+	$csql[15]="";
+	$tsql[15]="ALTER TABLE `loginlog` MODIFY COLUMN `user_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
 
-$csql[15]="";
-$tsql[15]="ALTER TABLE `news` MODIFY COLUMN `user_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
-$tsql[16]="ALTER TABLE `sim` ADD INDEX `Index_sim_id`(`sim_s_id`);";
-$csql[16]="";
-$tsql[17]="ALTER TABLE `contest_problem` ADD INDEX `Index_contest_id`(`contest_id`);";
-$csql[17]="";
-$tsql[18]="ALTER TABLE `contest_problem` ADD INDEX `Index_problem_id`(`problem_id`);";
-$csql[18]="";
+	$csql[15]="";
+	$tsql[15]="ALTER TABLE `news` MODIFY COLUMN `user_id` varchar(48) NOT NULL DEFAULT ''  COMMENT 'user_id';";
+	$tsql[16]="ALTER TABLE `sim` ADD INDEX `Index_sim_id`(`sim_s_id`);";
+	$csql[16]="";
+	$tsql[17]="ALTER TABLE `contest_problem` ADD INDEX `Index_contest_id`(`contest_id`);";
+	$csql[17]="";
+	$tsql[18]="ALTER TABLE `contest_problem` ADD INDEX `Index_problem_id`(`problem_id`);";
+	$csql[18]="";
 
-$tsql[18]="select 1 from custominput limit 1;";
-$csql[18]="CREATE TABLE  `custominput` (  `solution_id` int(11) NOT NULL DEFAULT '0',  `input_text` text,  PRIMARY KEY (`solution_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+	$tsql[18]="select 1 from custominput limit 1;";
+	$csql[18]="CREATE TABLE  `custominput` (  `solution_id` int(11) NOT NULL DEFAULT '0',  `input_text` text,  PRIMARY KEY (`solution_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 
-$tsql[19]="ALTER TABLE `loginlog` ADD INDEX `user_time_index`(`user_id`, `time`);";
-$csql[19]="";
-$tsql[20]="ALTER TABLE `contest` ADD `password` CHAR( 16 ) NOT NULL DEFAULT '' AFTER `langmask` ";
-$csql[20]="";
-$tsql[21]="create TABLE `source_code_user` like source_code";
-$csql[21]="";
+	$tsql[19]="ALTER TABLE `loginlog` ADD INDEX `user_time_index`(`user_id`, `time`);";
+	$csql[19]="";
+	$tsql[20]="ALTER TABLE `contest` ADD `password` CHAR( 16 ) NOT NULL DEFAULT '' AFTER `langmask` ";
+	$csql[20]="";
+	$tsql[21]="create TABLE `source_code_user` like source_code";
+	$csql[21]="";
 
-$tsql[22]="insert into source_code_user select * from source_code where solution_id not in (select solution_id from source_code_user)  ";
-$csql[22]="";
+	$tsql[22]="insert into source_code_user select * from source_code where solution_id not in (select solution_id from source_code_user)  ";
+	$csql[22]="";
 
-$tsql[23]="select judger from solution limit 1 ";
-$csql[23]="ALTER TABLE `solution` ADD `judger` CHAR(16) NOT NULL DEFAULT 'LOCAL' ;  ";
+	$tsql[23]="select judger from solution limit 1 ";
+	$csql[23]="ALTER TABLE `solution` ADD `judger` CHAR(16) NOT NULL DEFAULT 'LOCAL' ;  ";
 
-$csql[24]="";
-$tsql[24]="alter table solution modify column pass_rate decimal(3,2) NOT NULL DEFAULT 0;";
+	$csql[24]="";
+	$tsql[24]="alter table solution modify column pass_rate decimal(3,2) NOT NULL DEFAULT 0;";
 
-$csql[25]="";
-$tsql[25]="ALTER TABLE  `solution` CHANGE  `ip`  `ip` CHAR( 46 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT  '';";
-$csql[26]="select 1 from printer";
-$tsql[26]="CREATE TABLE  `printer` (
+	$csql[25]="";
+	$tsql[25]="ALTER TABLE  `solution` CHANGE  `ip`  `ip` CHAR( 46 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT  '';";
+	$csql[26]="select 1 from printer";
+	$tsql[26]="CREATE TABLE  `printer` (
   `printer_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` char(48) NOT NULL,
   `in_date` datetime NOT NULL DEFAULT '2018-03-13 19:38:00',
@@ -207,8 +207,8 @@ $tsql[26]="CREATE TABLE  `printer` (
   `content` text NOT NULL ,
   PRIMARY KEY (`printer_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
-$csql[27]="select 1 from balloon";
-$tsql[27]="CREATE TABLE  `balloon` (
+	$csql[27]="select 1 from balloon";
+	$tsql[27]="CREATE TABLE  `balloon` (
   `balloon_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` char(48) NOT NULL,
   `sid` int(11) NOT NULL ,
@@ -218,20 +218,19 @@ $tsql[27]="CREATE TABLE  `balloon` (
   PRIMARY KEY (`balloon_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
 
-if(isset($_POST['do'])){
-	require_once("../include/check_post_key.php");
-	echo "Executing...<br>";
-	for($i=0;isset($tsql[$i]);$i++){
-		if(pdo_query($tsql[$i])){
-				echo $csql[$i]."<br>";
-				pdo_query($csql[$i]);
-		}else{
-				echo $tsql[$i]."<br>";
-		}
-		
+	if (isset($_POST['do'])) {
+	    require_once("../include/check_post_key.php");
+	    echo "Executing...<br>";
+	    for ($i=0;isset($tsql[$i]);$i++) {
+	        if (pdo_query($tsql[$i])) {
+	            echo $csql[$i]."<br>";
+	            pdo_query($csql[$i]);
+	        } else {
+	            echo $tsql[$i]."<br>";
+	        }
+	    }
 	}
-}
-?><b>Update DataBase</b>
+	?><b>Update DataBase</b>
 	Create New Tables ,drop useless columes.
 	<b>Necessary for using plagiarism detection.</b>
 	<form action='update_db.php' method=post>

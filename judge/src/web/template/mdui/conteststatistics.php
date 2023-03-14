@@ -5,7 +5,8 @@
     <?php include('_includes/head.php'); ?>
 
     <?php
-    function formatTimeLength($length) {
+    function formatTimeLength($length)
+    {
         $hour = 0;
         $minute = 0;
         $second = 0;
@@ -15,61 +16,55 @@
 
         if ($length>=60) {
             $second = $length%60;
-            
+
             if ($second>0 && $second<10) {
-                $result = '0'.$second.' '.$MSG_SECONDS;}
-            else if ($second>0) {
+                $result = '0'.$second.' '.$MSG_SECONDS;
+            } elseif ($second>0) {
                 $result = $second.' '.$MSG_SECONDS;
             }
 
             $length = floor($length/60);
             if ($length >= 60) {
                 $minute = $length%60;
-                
+
                 if ($minute==0) {
                     if ($result != '') {
                         $result = '00'.' '.$MSG_MINUTES.' '.$result;
                     }
-                }
-                else if ($minute>0 && $minute<10) {
+                } elseif ($minute>0 && $minute<10) {
                     if ($result != '') {
-                        $result = '0'.$minute.' '.$MSG_MINUTES.' '.$result;}
+                        $result = '0'.$minute.' '.$MSG_MINUTES.' '.$result;
                     }
-                    else {
-                        $result = $minute.' '.$MSG_MINUTES.' '.$result;
-                    }
-                    
-                    $length = floor($length/60);
+                } else {
+                    $result = $minute.' '.$MSG_MINUTES.' '.$result;
+                }
 
-                    if ($length >= 24) {
-                        $hour = $length%24;
+                $length = floor($length/60);
+
+                if ($length >= 24) {
+                    $hour = $length%24;
 
                     if ($hour==0) {
                         if ($result != '') {
                             $result = '00'.' '.$MSG_HOURS.' '.$result;
                         }
-                    }
-                    else if ($hour>0 && $hour<10) {
-                        if($result != '') {
+                    } elseif ($hour>0 && $hour<10) {
+                        if ($result != '') {
                             $result = '0'.$hour.' '.$MSG_HOURS.' '.$result;
                         }
-                    }
-                    else {
+                    } else {
                         $result = $hour.' '.$MSG_HOURS.' '.$result;
                     }
 
                     $length = floor($length / 24);
                     $result = $length .$MSG_DAYS.' '.$result;
-                }
-                else {
+                } else {
                     $result = $length.' '.$MSG_HOURS.' '.$result;
                 }
-            }
-            else {
+            } else {
                 $result = $length.' '.$MSG_MINUTES.' '.$result;
             }
-        }
-        else {
+        } else {
             $result = $length.' '.$MSG_SECONDS;
         }
         return $result;
@@ -92,14 +87,15 @@
 
                 //check contest valid
                 $sql = "SELECT * FROM `contest` WHERE `contest_id`=?";
-                $result = pdo_query($sql,$cid);
+                $result = pdo_query($sql, $cid);
 
                 $rows_cnt = count($result);
                 $contest_ok = true;
                 $password = "";
 
-                if (isset($_POST['password']))
+                if (isset($_POST['password'])) {
                     $password = $_POST['password'];
+                }
 
                 if (false) {
                     $password = stripslashes($password);
@@ -107,22 +103,25 @@
 
                 if ($rows_cnt==0) {
                     $view_title = "比赛已经关闭!";
-                }
-                else{
+                } else {
                     $row = $result[0];
                     $view_private = $row['private'];
 
-                    if ($password!="" && $password==$row['password'])
+                    if ($password!="" && $password==$row['password']) {
                         $_SESSION[$OJ_NAME.'_'.'c'.$cid] = true;
+                    }
 
-                    if ($row['private'] && !isset($_SESSION[$OJ_NAME.'_'.'c'.$cid]))
+                    if ($row['private'] && !isset($_SESSION[$OJ_NAME.'_'.'c'.$cid])) {
                         $contest_ok = false;
+                    }
 
-                    if($row['defunct']=='Y')
+                    if ($row['defunct']=='Y') {
                         $contest_ok = false;
+                    }
 
-                    if (isset($_SESSION[$OJ_NAME.'_'.'administrator']))
+                    if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {
                         $contest_ok = true;
+                    }
 
                     $now = time();
                     $start_time = strtotime($row['start_time']);
@@ -133,7 +132,7 @@
                     $view_end_time = $row['end_time'];
                 }
             }
-            ?>
+    ?>
 
             <?php if (isset($_GET['cid'])) {?>
                 <div class="mdui-card" style="text-align: center;">
@@ -157,7 +156,7 @@
                             <span>状态：</span>
                             <?php if ($now > $end_time) { ?>
                                 <b class="">已结束</b>
-                            <?php } else if ($now < $start_time) { ?>
+                            <?php } elseif ($now < $start_time) { ?>
                                 <b class="">未开始</b>
                             <?php } else { ?>
                                 <b class="">进行中</b>
@@ -204,8 +203,8 @@
                             class="mdui-btn mdui-ripple mdui-color-blue-600">统计</a>
                         <a href="suspect_list.php?cid=<?php echo $view_cid?>"
                             class="mdui-btn mdui-ripple mdui-color-purple">IP验证</a>
-                        <?php if(  isset($_SESSION[$OJ_NAME.'_'.'administrator'])
-                                || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) { ?>
+                        <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])
+                        || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) { ?>
                             <a href="user_set_ip.php?cid=<?php echo $view_cid?>"
                                 class="mdui-btn mdui-ripple mdui-color-red">指定登录IP</a>
                             <a target="_blank" href="../../admin/contest_edit.php?cid=<?php echo $view_cid?>"
@@ -216,7 +215,9 @@
             <?php }?>
             <br>
             <center>
-                <h4><?php if (isset($locked_msg)) echo $locked_msg;?></h4>
+                <h4><?php if (isset($locked_msg)) {
+                    echo $locked_msg;
+                }?></h4>
                 <table id="cs" class="mdui-table mdui-table-hoverable" style="overflow: scroll;" width="90%">
                     <thead>
                         <tr class=toprow>
@@ -232,31 +233,31 @@
                             <th>TR</th>
                             <th>-</th>                            
                             <th>Total</th>
-                            <?php 
+                            <?php
                             $i = 0;
-                            foreach ($language_name as $lang) {
-                                // if (isset($R[$pid_cnt][$i+11]) )    
-                                    echo "<th>$language_name[$i]</th>";
-                                // else
+    foreach ($language_name as $lang) {
+        // if (isset($R[$pid_cnt][$i+11]) )
+        echo "<th>$language_name[$i]</th>";
+        // else
                                 //     echo "<th style='display:none'></th>";
-                                $i++;
-                            }
-                            ?>
+        $i++;
+    }
+    ?>
                         </tr>
                     </thead>
 
                     <tbody>
                         <?php
                         for ($i=0; $i<$pid_cnt; $i++) {
-                            if(!isset($PID[$i]))
+                            if (!isset($PID[$i])) {
                                 $PID[$i] = "";
+                            }
 
-                                echo "<tr>";
+                            echo "<tr>";
 
                             if (time()<$end_time) {  //during contest/exam time
                                 echo "<td><a href=problem.php?cid=$cid&pid=$i>$PID[$i]</a></td>";
-                            }
-                            else {  //over contest/exam time
+                            } else {  //over contest/exam time
                                 //check the problem will be use remained contest/exam
                                 $sql = "SELECT `problem_id` FROM `contest_problem` WHERE (`contest_id`=? AND `num`=?)";
                                 $tresult = pdo_query($sql, $cid, $i);
@@ -269,34 +270,37 @@
                                 )";
                                 $tresult = pdo_query($sql, $tpid);
 
-                                if (intval($tresult) != 0)   //if the problem will be use remained contes/exam */
+                                if (intval($tresult) != 0) {   //if the problem will be use remained contes/exam */
                                     echo "<td>$PID[$i]</td>";
-                                else
+                                } else {
                                     echo "<td><a href='problem.php?id=".$tpid."'>".$PID[$i]."</a></td>";
+                                }
                             }
 
                             for ($j=0; $j<count($language_name)+11; $j++) {
-                                if (!isset($R[$i][$j]))
+                                if (!isset($R[$i][$j])) {
                                     $R[$i][$j]="0";
+                                }
                                 // else {
-                                    echo "<td>".$R[$i][$j]."</td>";
+                                echo "<td>".$R[$i][$j]."</td>";
                                 // }
                             }
                             echo "</tr>";
                         }
 
                         echo "<tr class='evenrow'>";
-                            echo "<td>Total</td>";
+    echo "<td>Total</td>";
 
-                            for ($j=0; $j<count($language_name)+11; $j++) {
-                                if(!isset($R[$i][$j]))
-                                    $R[$i][$j]="0";
-                                
-                                echo "<td>".$R[$i][$j]."</td>";
-                            }
-                        echo "</tr>";
+    for ($j=0; $j<count($language_name)+11; $j++) {
+        if (!isset($R[$i][$j])) {
+            $R[$i][$j]="0";
+        }
 
-                        ?>
+        echo "<td>".$R[$i][$j]."</td>";
+    }
+    echo "</tr>";
+
+    ?>
                     </tbody>
                 </table>
             </center>

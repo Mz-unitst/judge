@@ -9,10 +9,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -21,20 +21,21 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-    $maxfile=min(ini_get("upload_max_filesize"),ini_get("post_max_size"));
-function writable($path){
-	$ret=false;
-	$fp=fopen($path."/testifwritable.tst","w");
-	$ret=!($fp===false);
-	fclose($fp);
-	unlink($path."/testifwritable.tst");
-	return $ret;
-}
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+	    $maxfile=min(ini_get("upload_max_filesize"), ini_get("post_max_size"));
+	function writable($path)
+	{
+	    $ret=false;
+	    $fp=fopen($path."/testifwritable.tst", "w");
+	    $ret=!($fp===false);
+	    fclose($fp);
+	    unlink($path."/testifwritable.tst");
+	    return $ret;
+	}
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -73,24 +74,25 @@ function writable($path){
 								    导入FPS格式的数据,确保文件大小在[<?php echo $maxfile?>]以内<br/>
 或者在php.ini中修改upload_max_filesize和post_max_filesize<br/>
 如果你失败了或者想导入大文件[10M+],尝试在php.ini中加大[memory_limit]的设置<br>
-<?php 
-    $show_form=true;
-   if(!isset($OJ_SAE)||!$OJ_SAE){
-	   if(!writable($OJ_DATA)){
-		   echo " 您需要将$OJ_DATA添加到php.ini的open_basedir设置中<br>或者你需要执行:<br>
+<?php
+	    $show_form=true;
+	if (!isset($OJ_SAE)||!$OJ_SAE) {
+	    if (!writable($OJ_DATA)) {
+	        echo " 您需要将$OJ_DATA添加到php.ini的open_basedir设置中<br>或者你需要执行:<br>
 					   <code>chmod 775 -R $OJ_DATA && chgrp -R www-data $OJ_DATA</code><br>
-					此时不能使用导入函数。<br>"; 
-			$show_form=false;
-	   }
-	   if(!file_exists("../upload"))mkdir("../upload");
-	   if(!writable("../upload")){
-	   	 
-		   echo "../upload 不是可写的, 对它执行<code>chmod 770</code>.<br>";
-		   $show_form=false;
-	   }
-	}	
-	if($show_form){
-?>
+					此时不能使用导入函数。<br>";
+	        $show_form=false;
+	    }
+	    if (!file_exists("../upload")) {
+	        mkdir("../upload");
+	    }
+	    if (!writable("../upload")) {
+	        echo "../upload 不是可写的, 对它执行<code>chmod 770</code>.<br>";
+	        $show_form=false;
+	    }
+	}
+	if ($show_form) {
+	    ?>
 <br>
 <style>
     input[type=file] {
@@ -103,11 +105,10 @@ function writable($path){
 	<?php require_once("../include/set_post_key.php");?><br>
     <button type="submit" class="btn btn-dark btn-outline">导入</button>
 </form>
-<?php 
-  
-   	}
-   
-?>
+<?php
+	}
+
+	?>
 								</div>
 							</div>
 						</div>

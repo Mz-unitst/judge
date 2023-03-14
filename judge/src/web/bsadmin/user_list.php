@@ -9,10 +9,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -21,13 +21,13 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-    
-require_once("../include/set_get_key.php");
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+
+	require_once("../include/set_get_key.php");
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -64,37 +64,40 @@ require_once("../include/set_get_key.php");
 								</div>
 								<div class="card-body">
 								    <?php
-$sql = "SELECT COUNT('user_id') AS ids FROM `users`";
-$result = pdo_query($sql);
-$row = $result[0];
+	$sql = "SELECT COUNT('user_id') AS ids FROM `users`";
+	$result = pdo_query($sql);
+	$row = $result[0];
 
-$ids = intval($row['ids']);
+	$ids = intval($row['ids']);
 
-$idsperpage = 25;
-$pages = intval(ceil($ids/$idsperpage));
+	$idsperpage = 25;
+	$pages = intval(ceil($ids/$idsperpage));
 
-if(isset($_GET['page'])){ $page = intval($_GET['page']);}
-else{ $page = 1;}
+	if (isset($_GET['page'])) {
+	    $page = intval($_GET['page']);
+	} else {
+	    $page = 1;
+	}
 
-$pagesperframe = 5;
-$frame = intval(ceil($page/$pagesperframe));
+	$pagesperframe = 5;
+	$frame = intval(ceil($page/$pagesperframe));
 
-$spage = ($frame-1)*$pagesperframe+1;
-$epage = min($spage+$pagesperframe-1, $pages);
+	$spage = ($frame-1)*$pagesperframe+1;
+	$epage = min($spage+$pagesperframe-1, $pages);
 
-$sid = ($page-1)*$idsperpage;
+	$sid = ($page-1)*$idsperpage;
 
-$sql = "";
-if(isset($_GET['keyword']) && $_GET['keyword']!=""){
-  $keyword = $_GET['keyword'];
-  $keyword = "%$keyword%";
-  $sql = "SELECT `user_id`,`nick`,`reg_time`,`ip`,`school`,`defunct` FROM `users` WHERE (user_id LIKE ?) OR (nick LIKE ?) OR (school LIKE ?) ORDER BY `user_id` DESC";
-  $result = pdo_query($sql,$keyword,$keyword,$keyword);
-}else{
-  $sql = "SELECT `user_id`,`nick`,`reg_time`,`ip`,`school`,`defunct` FROM `users` ORDER BY `reg_time` DESC LIMIT $sid, $idsperpage";
-  $result = pdo_query($sql);
-}
-?>                                        <form>
+	$sql = "";
+	if (isset($_GET['keyword']) && $_GET['keyword']!="") {
+	    $keyword = $_GET['keyword'];
+	    $keyword = "%$keyword%";
+	    $sql = "SELECT `user_id`,`nick`,`reg_time`,`ip`,`school`,`defunct` FROM `users` WHERE (user_id LIKE ?) OR (nick LIKE ?) OR (school LIKE ?) ORDER BY `user_id` DESC";
+	    $result = pdo_query($sql, $keyword, $keyword, $keyword);
+	} else {
+	    $sql = "SELECT `user_id`,`nick`,`reg_time`,`ip`,`school`,`defunct` FROM `users` ORDER BY `reg_time` DESC LIMIT $sid, $idsperpage";
+	    $result = pdo_query($sql);
+	}
+	?>                                        <form>
                                             <div class="form-group">
                                                 <div class="input-group input-group-rounded col-md-4">
                                                     <input type="text" placeholder="键入以搜索" name=keyword class="form-control">
@@ -111,31 +114,30 @@ if(isset($_GET['keyword']) && $_GET['keyword']!=""){
       <td>编辑信息</td>
     </tr>
     <?php
-    foreach($result as $row){
-      echo "<tr>";
-        echo "<td><a href='../userinfo.php?user=".$row['user_id']."'>".$row['user_id']."</a></td>";
-        echo "<td>".$row['nick']."</td>";
-        echo "<td>".$row['reg_time']."</td>";
-        echo "<td><a href=user_df_change.php?cid=".$row['user_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">".($row['defunct']=="N"?"<span class='badge badge-success'>可用</span>":"<span class='badge badge-danger'>不可用</span>")."</a></td>";
-        echo "<td><a href='./user_edit.php?user=".$row['user_id']."'>编辑</a></td>";
-      echo "</tr>";
-    }
-    ?>
+	    foreach ($result as $row) {
+	        echo "<tr>";
+	        echo "<td><a href='../userinfo.php?user=".$row['user_id']."'>".$row['user_id']."</a></td>";
+	        echo "<td>".$row['nick']."</td>";
+	        echo "<td>".$row['reg_time']."</td>";
+	        echo "<td><a href=user_df_change.php?cid=".$row['user_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">".($row['defunct']=="N" ? "<span class='badge badge-success'>可用</span>" : "<span class='badge badge-danger'>不可用</span>")."</a></td>";
+	        echo "<td><a href='./user_edit.php?user=".$row['user_id']."'>编辑</a></td>";
+	        echo "</tr>";
+	    }
+	?>
   </table>
   <?php
-if(!(isset($_GET['keyword']) && $_GET['keyword']!=""))
-{
-  echo "<ul class='pagination pagination-sm'>";
-  echo "<li class='page-item'><a href='user_list.php?page=".(strval(1))."'>&lt;&lt;</a></li>";
-  echo "<li class='page-item'><a href='user_list.php?page=".($page==1?strval(1):strval($page-1))."'>&lt;</a></li>";
-  for($i=$spage; $i<=$epage; $i++){
-    echo "<li class='".($page==$i?"active ":"")."page-item'><a title='go to page' href='user_list.php?page=".$i."'>".$i."</a></li>";
-  }
-  echo "<li class='page-item'><a href='user_list.php?page=".($page==$pages?strval($page):strval($page+1))."'>&gt;</a></li>";
-  echo "<li class='page-item'><a href='user_list.php?page=".(strval($pages))."'>&gt;&gt;</a></li>";
-  echo "</ul>";
+if (!(isset($_GET['keyword']) && $_GET['keyword']!="")) {
+    echo "<ul class='pagination pagination-sm'>";
+    echo "<li class='page-item'><a href='user_list.php?page=".(strval(1))."'>&lt;&lt;</a></li>";
+    echo "<li class='page-item'><a href='user_list.php?page=".($page==1 ? strval(1) : strval($page-1))."'>&lt;</a></li>";
+    for ($i=$spage; $i<=$epage; $i++) {
+        echo "<li class='".($page==$i ? "active " : "")."page-item'><a title='go to page' href='user_list.php?page=".$i."'>".$i."</a></li>";
+    }
+    echo "<li class='page-item'><a href='user_list.php?page=".($page==$pages ? strval($page) : strval($page+1))."'>&gt;</a></li>";
+    echo "<li class='page-item'><a href='user_list.php?page=".(strval($pages))."'>&gt;&gt;</a></li>";
+    echo "</ul>";
 }
-?>
+	?>
 								</div>
 							</div>
 						</div>

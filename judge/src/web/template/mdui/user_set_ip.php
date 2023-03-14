@@ -32,7 +32,7 @@
                         <span>状态：</span>
                         <?php if ($now > $end_time) { ?>
                             <b class="">已结束</b>
-                        <?php } else if ($now < $start_time) { ?>
+                        <?php } elseif ($now < $start_time) { ?>
                             <b class="">未开始</b>
                         <?php } else { ?>
                             <b class="">进行中</b>
@@ -79,7 +79,7 @@
                         class="mdui-btn mdui-ripple mdui-color-blue-600">统计</a>
                     <a href="suspect_list.php?cid=<?php echo $view_cid?>"
                         class="mdui-btn mdui-ripple mdui-color-purple">IP验证</a>
-                    <?php if(  isset($_SESSION[$OJ_NAME.'_'.'administrator'])
+                    <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])
                             || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) { ?>
                         <a href="user_set_ip.php?cid=<?php echo $view_cid?>"
                             class="mdui-btn mdui-ripple mdui-color-red">指定登录IP</a>
@@ -111,9 +111,9 @@
                             <?php if (isset($_POST["user_id"])) { ?>
                                 <input class="mdui-textfield-input" name="user_id" type="text"
                                     value="<?php echo htmlentities($_POST["user_id"], ENT_QUOTES, 'UTF-8'); ?>" required />
-                            <?php } else if (isset($_GET["user_id"])) { ?>
+                            <?php } elseif (isset($_GET["user_id"])) { ?>
                                 <input class="mdui-textfield-input" name="user_id" type="text"
-                                    value="<?php echo htmlentities($_GET["user_id"],ENT_QUOTES,'UTF-8') ; ?>" required />
+                                    value="<?php echo htmlentities($_GET["user_id"], ENT_QUOTES, 'UTF-8') ; ?>" required />
                             <?php } else { ?>
                                 <input class="mdui-textfield-input" name="user_id" type="text" required />
                             <?php } ?>

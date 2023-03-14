@@ -47,7 +47,7 @@ $cur_path = "template/$OJ_TEMPLATE/"
                         <h2><?php echo $MSG_LOGIN?></h2>
                         <input type="text" placeholder="<?php echo $MSG_USER_ID?>" name="user_id"/>
                         <input type="password" placeholder="<?php echo $MSG_PASSWORD?>" name="password" />
-                        <?php  if ($OJ_VCODE){ ?>
+                        <?php  if ($OJ_VCODE) { ?>
                             <input type="text" placeholder="<?php echo $MSG_VCODE?>" name="vcode"/>
                             <img id="vcode-img" src="vcode.php?v=0.1" alt="click to change" onclick="this.src='vcode.php?'+Math.random()"/>
                         <?php } ?>
@@ -64,7 +64,7 @@ $cur_path = "template/$OJ_TEMPLATE/"
                         <input type="text" placeholder="<?php echo $MSG_NICK?>" name="nick" />
                         <input type="password" placeholder="<?php echo $MSG_PASSWORD?>" name="password" />
                         <input type="password" placeholder="<?php echo $MSG_REPEAT_PASSWORD?>" name="rptpassword" />
-                        <?php  if ($OJ_VCODE){ ?>
+                        <?php  if ($OJ_VCODE) { ?>
                             <input type="text" placeholder="<?php echo $MSG_VCODE?>" name="vcode"/>
                             <img id="vcode-img" src="vcode.php?v=0.1" alt="click to change" onclick="this.src='vcode.php?'+Math.random()"/>
                         <?php } ?>

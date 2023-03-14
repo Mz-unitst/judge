@@ -40,7 +40,7 @@
                             <div class="mdui-textfield-error">请输入密码</div>
                         </div>
                     </div>
-                    <?php if($OJ_VCODE) { ?>
+                    <?php if ($OJ_VCODE) { ?>
                         <div class="mdui-row" style="position: relative;">
                             <a class="mdui-btn mdui-btn-icon" style="display: inline-block; position: absolute; top: 40px; left: 10px">
                                 <i class="mdui-icon material-icons">code</i>

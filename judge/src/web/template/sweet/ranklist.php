@@ -27,7 +27,7 @@
       <div class="jumbotron">
           <tr><td colspan=3 align=left >
                   <form class="form-inline" action="ranklist.php">
-                      <?php echo $MSG_USER?><input class="form-control" name="prefix" value="<?php echo htmlentities(isset($_GET['prefix'])?$_GET['prefix']:"",ENT_QUOTES,"utf-8") ?>" >
+                      <?php echo $MSG_USER?><input class="form-control" name="prefix" value="<?php echo htmlentities(isset($_GET['prefix']) ? $_GET['prefix'] : "", ENT_QUOTES, "utf-8") ?>" >
                       <input type=submit class="form-control" value=Search >
                   </form></td><td colspan=3 align=right>
                   <a href=ranklist.php?scope=d>Day</a>
@@ -49,37 +49,39 @@
 <tbody>
 <?php
 $cnt=0;
-$limit = 0;
-foreach($view_rank as $row){
-if ($cnt)
-echo "<tr class='oddrow'>";
-else
-echo "<tr class='evenrow'>";
-foreach($row as $table_cell){
-echo "<td>";
-echo "\t".$table_cell;
-echo "</td>";
-}
-echo "</tr>";
-$cnt=1-$cnt;
-$limit++;
-}
-?>
+    $limit = 0;
+    foreach ($view_rank as $row) {
+        if ($cnt) {
+            echo "<tr class='oddrow'>";
+        } else {
+            echo "<tr class='evenrow'>";
+        }
+        foreach ($row as $table_cell) {
+            echo "<td>";
+            echo "\t".$table_cell;
+            echo "</td>";
+        }
+        echo "</tr>";
+        $cnt=1-$cnt;
+        $limit++;
+    }
+    ?>
 </tbody>
 </table>
 <?php
-echo "<center>";
-for($i = 0; $i <$view_total ; $i += $page_size) {
-echo "<a href='./ranklist.php?start=" . strval ( $i ).($scope?"&scope=$scope":"") . "'>";
-echo strval ( $i + 1 );
-echo "-";
-echo strval ( $i + $page_size );
-echo "</a>&nbsp;";
-if ($i % 250 == 200)
-echo "<br>";
-}
-echo "</center>";
-?>
+    echo "<center>";
+    for ($i = 0; $i <$view_total ; $i += $page_size) {
+        echo "<a href='./ranklist.php?start=" . strval($i).($scope ? "&scope=$scope" : "") . "'>";
+        echo strval($i + 1);
+        echo "-";
+        echo strval($i + $page_size);
+        echo "</a>&nbsp;";
+        if ($i % 250 == 200) {
+            echo "<br>";
+        }
+    }
+    echo "</center>";
+    ?>
       </div>
 
     </div> <!-- /container -->

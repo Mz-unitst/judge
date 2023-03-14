@@ -9,10 +9,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -21,13 +21,13 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-    
-require_once("../include/set_get_key.php");
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+
+	require_once("../include/set_get_key.php");
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -64,37 +64,40 @@ require_once("../include/set_get_key.php");
 								</div>
 								<div class="card-body">
 								    <?php
-$sql = "SELECT COUNT('news_id') AS ids FROM `news`";
-$result = pdo_query($sql);
-$row = $result[0];
+	$sql = "SELECT COUNT('news_id') AS ids FROM `news`";
+	$result = pdo_query($sql);
+	$row = $result[0];
 
-$ids = intval($row['ids']);
+	$ids = intval($row['ids']);
 
-$idsperpage = 25;
-$pages = intval(ceil($ids/$idsperpage));
+	$idsperpage = 25;
+	$pages = intval(ceil($ids/$idsperpage));
 
-if(isset($_GET['page'])){ $page = intval($_GET['page']);}
-else{ $page = 1;}
+	if (isset($_GET['page'])) {
+	    $page = intval($_GET['page']);
+	} else {
+	    $page = 1;
+	}
 
-$pagesperframe = 5;
-$frame = intval(ceil($page/$pagesperframe));
+	$pagesperframe = 5;
+	$frame = intval(ceil($page/$pagesperframe));
 
-$spage = ($frame-1)*$pagesperframe+1;
-$epage = min($spage+$pagesperframe-1, $pages);
+	$spage = ($frame-1)*$pagesperframe+1;
+	$epage = min($spage+$pagesperframe-1, $pages);
 
-$sid = ($page-1)*$idsperpage;
+	$sid = ($page-1)*$idsperpage;
 
-$sql = "";
-if(isset($_GET['keyword']) && $_GET['keyword']!=""){
-  $keyword = $_GET['keyword'];
-  $keyword = "%$keyword%";
-  $sql = "SELECT `news_id`,`user_id`,`title`,`time`,`defunct` FROM `news` WHERE (title LIKE ?) OR (content LIKE ?) ORDER BY `news_id` DESC";
-  $result = pdo_query($sql,$keyword,$keyword);
-}else{
-  $sql = "SELECT `news_id`,`user_id`,`title`,`time`,`defunct` FROM `news` ORDER BY `news_id` DESC LIMIT $sid, $idsperpage";
-  $result = pdo_query($sql);
-}
-?>
+	$sql = "";
+	if (isset($_GET['keyword']) && $_GET['keyword']!="") {
+	    $keyword = $_GET['keyword'];
+	    $keyword = "%$keyword%";
+	    $sql = "SELECT `news_id`,`user_id`,`title`,`time`,`defunct` FROM `news` WHERE (title LIKE ?) OR (content LIKE ?) ORDER BY `news_id` DESC";
+	    $result = pdo_query($sql, $keyword, $keyword);
+	} else {
+	    $sql = "SELECT `news_id`,`user_id`,`title`,`time`,`defunct` FROM `news` ORDER BY `news_id` DESC LIMIT $sid, $idsperpage";
+	    $result = pdo_query($sql);
+	}
+	?>
 <div class="basic-form">
                                         <form>
                                             <div class="form-group">
@@ -113,32 +116,31 @@ if(isset($_GET['keyword']) && $_GET['keyword']!=""){
       <td>复制</td>
     </tr>
     <?php
-    foreach($result as $row){
-      echo "<tr style='height:22px;'>";
-        echo "<td><a href='news_edit.php?id=".$row['news_id']."'>".$row['news_id']."</a></td>";
-        echo "<td><a href='news_edit.php?id=".$row['news_id']."'>".$row['title']."</a>"."</td>";
-        echo "<td>".$row['time']."</td>";
-        echo "<td><a href=news_df_change.php?id=".$row['news_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">".($row['defunct']=="N"?"<span class='badge badge-success'>可用</span>":"<span class='badge badge-danger'>不可用</span>")."</a>"."</td>";
-        echo "<td><a href=news_add_page.php?cid=".$row['news_id'].">复制</a></td>";
-      echo "</tr>";
-    }
-    ?>
+	    foreach ($result as $row) {
+	        echo "<tr style='height:22px;'>";
+	        echo "<td><a href='news_edit.php?id=".$row['news_id']."'>".$row['news_id']."</a></td>";
+	        echo "<td><a href='news_edit.php?id=".$row['news_id']."'>".$row['title']."</a>"."</td>";
+	        echo "<td>".$row['time']."</td>";
+	        echo "<td><a href=news_df_change.php?id=".$row['news_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">".($row['defunct']=="N" ? "<span class='badge badge-success'>可用</span>" : "<span class='badge badge-danger'>不可用</span>")."</a>"."</td>";
+	        echo "<td><a href=news_add_page.php?cid=".$row['news_id'].">复制</a></td>";
+	        echo "</tr>";
+	    }
+	?>
     </form>
   </table>
   <?php
-if(!(isset($_GET['keyword']) && $_GET['keyword']!=""))
-{
-  echo "<ul class='pagination pagination-sm'>";
-  echo "<li class='page-item'><a href='news_list.php?page=".(strval(1))."'>&lt;&lt;</a></li>";
-  echo "<li class='page-item'><a href='news_list.php?page=".($page==1?strval(1):strval($page-1))."'>&lt;</a></li>";
-  for($i=$spage; $i<=$epage; $i++){
-    echo "<li class='".($page==$i?"active ":"")."page-item'><a title='go to page' href='news_list.php?page=".$i."'>".$i."</a></li>";
-  }
-  echo "<li class='page-item'><a href='news_list.php?page=".($page==$pages?strval($page):strval($page+1))."'>&gt;</a></li>";
-  echo "<li class='page-item'><a href='news_list.php?page=".(strval($pages))."'>&gt;&gt;</a></li>";
-  echo "</ul>";
+if (!(isset($_GET['keyword']) && $_GET['keyword']!="")) {
+    echo "<ul class='pagination pagination-sm'>";
+    echo "<li class='page-item'><a href='news_list.php?page=".(strval(1))."'>&lt;&lt;</a></li>";
+    echo "<li class='page-item'><a href='news_list.php?page=".($page==1 ? strval(1) : strval($page-1))."'>&lt;</a></li>";
+    for ($i=$spage; $i<=$epage; $i++) {
+        echo "<li class='".($page==$i ? "active " : "")."page-item'><a title='go to page' href='news_list.php?page=".$i."'>".$i."</a></li>";
+    }
+    echo "<li class='page-item'><a href='news_list.php?page=".($page==$pages ? strval($page) : strval($page+1))."'>&gt;</a></li>";
+    echo "<li class='page-item'><a href='news_list.php?page=".(strval($pages))."'>&gt;&gt;</a></li>";
+    echo "</ul>";
 }
-?>
+	?>
                                     </div>
 								</div>
 							</div>

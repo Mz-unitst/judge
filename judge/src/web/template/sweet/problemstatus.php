@@ -30,33 +30,36 @@
 <table id='statics' >
 <?php
 $cnt=0;
-foreach($view_problem as $row){
-if ($cnt)
-echo "<tr class='oddrow'>";
-else
-echo "<tr class='evenrow'>";
-foreach($row as $table_cell){
-echo "<td>";
-echo "\t".$table_cell;
-echo "</td>";
-}
-echo "</tr>";
-$cnt=1-$cnt;
-}
-?>
+    foreach ($view_problem as $row) {
+        if ($cnt) {
+            echo "<tr class='oddrow'>";
+        } else {
+            echo "<tr class='evenrow'>";
+        }
+        foreach ($row as $table_cell) {
+            echo "<td>";
+            echo "\t".$table_cell;
+            echo "</td>";
+        }
+        echo "</tr>";
+        $cnt=1-$cnt;
+    }
+    ?>
 <tr id=pie bgcolor=white><td colspan=2><div id='PieDiv' style='position:relative;height:150px;width:200px;'></div></tr>
 </table><br>
-<?php if(isset($view_recommand)){?>
+<?php if (isset($view_recommand)) {?>
 <table id=recommand ><tr><td>
 Recommanded Next Problem<br>
 <?php
-$cnt=1;
-foreach($view_recommand as $row){
-echo "<a href=problem.php?id=$row[0]>$row[0]</a>&nbsp;";
-if($cnt%3==0) echo "<br>";
-$cnt++;
-}
-?>
+    $cnt=1;
+    foreach ($view_recommand as $row) {
+        echo "<a href=problem.php?id=$row[0]>$row[0]</a>&nbsp;";
+        if ($cnt%3==0) {
+            echo "<br>";
+        }
+        $cnt++;
+    }
+    ?>
 </td></tr>
 </table>
 <?php }?>
@@ -71,36 +74,37 @@ $cnt++;
 <th ><?php echo $MSG_CODE_LENGTH?>
 <th><?php echo $MSG_SUBMIT_TIME?></tr></thead><tbody>
 <?php
-$cnt=0;
-foreach($view_solution as $row){
-if ($cnt)
-echo "<tr class='oddrow'>";
-else
-echo "<tr class='evenrow'>";
-foreach($row as $table_cell){
-echo "<td>";
-echo "\t".$table_cell;
-echo "</td>";
-}
-echo "</tr>";
-$cnt=1-$cnt;
-}
-?>
+    $cnt=0;
+    foreach ($view_solution as $row) {
+        if ($cnt) {
+            echo "<tr class='oddrow'>";
+        } else {
+            echo "<tr class='evenrow'>";
+        }
+        foreach ($row as $table_cell) {
+            echo "<td>";
+            echo "\t".$table_cell;
+            echo "</td>";
+        }
+        echo "</tr>";
+        $cnt=1-$cnt;
+    }
+    ?>
 </table>
 <?php
-echo "<a href='problemstatus.php?id=$id'>[TOP]</a>";
-echo "&nbsp;&nbsp;<a href='status.php?problem_id=$id'>[STATUS]</a>";
-if ($page>$pagemin){
-$page--;
-echo "&nbsp;&nbsp;<a href='problemstatus.php?id=$id&page=$page'>[PREV]</a>";
-$page++;
-}
-if ($page<$pagemax){
-$page++;
-echo "&nbsp;&nbsp;<a href='problemstatus.php?id=$id&page=$page'>[NEXT]</a>";
-$page--;
-}
-?>
+    echo "<a href='problemstatus.php?id=$id'>[TOP]</a>";
+    echo "&nbsp;&nbsp;<a href='status.php?problem_id=$id'>[STATUS]</a>";
+    if ($page>$pagemin) {
+        $page--;
+        echo "&nbsp;&nbsp;<a href='problemstatus.php?id=$id&page=$page'>[PREV]</a>";
+        $page++;
+    }
+    if ($page<$pagemax) {
+        $page++;
+        echo "&nbsp;&nbsp;<a href='problemstatus.php?id=$id&page=$page'>[NEXT]</a>";
+        $page--;
+    }
+    ?>
 </table>
 <script type="text/javascript" src="include/wz_jsgraphics.js"></script>
 <script type="text/javascript" src="include/pie.js"></script>
