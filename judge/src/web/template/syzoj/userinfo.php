@@ -59,13 +59,13 @@ if ($qq>0) {
                                               <div class="ui bottom attached segment" class="font-content"><?php echo $email?></div>
                                           </div>
                                       </div>
-                                    <div class="row">
-                                        <div class="column">
-                                            <h4 class="ui top attached block header">个性签名</h4>
-                                            
-                                            <div class="ui bottom attached segment" class="font-content"><?php echo $school?></div>
-                                        </div>
-                                    </div>
+<!--                                    <div class="row">-->
+<!--                                        <div class="column">-->
+<!--                                            <h4 class="ui top attached block header">个性签名</h4>-->
+<!--                                            -->
+<!--                                            <div class="ui bottom attached segment" class="font-content">--><?php //echo $school?><!--</div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                     <!-- <div class="row">
                                         <div class="column">
                                             <h4 class="ui top attached block header">注册于</h4>
