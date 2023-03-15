@@ -93,6 +93,14 @@ if ($result=pdo_query($sql, $user)) {
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="column">
+                                            <h4 class="ui top attached block header">注册于</h4>
+                                            <div class="ui bottom attached segment" class="font-content">
+                                                <%= syzoj.utils.formatDate(show_user.register_time) %>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="eight wide column">
