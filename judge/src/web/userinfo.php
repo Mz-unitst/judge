@@ -95,8 +95,6 @@
      $chart_data_ac[$row['md']]=$row['c'];
  }
 
-
-
  /////////////////////////Template
  require("template/".$OJ_TEMPLATE."/userinfo.php");
  /////////////////////////Common foot
