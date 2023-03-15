@@ -95,12 +95,24 @@ if ($result=pdo_query($sql, $user)) {
                                     </div>
                                     <div class="row">
                                         <div class="column">
-                                            <h4 class="ui top attached block header">注册于</h4>
-                                            <div class="ui bottom attached segment" class="font-content">
-                                                <%= syzoj.utils.formatDate(show_user.register_time) %>
+                                            <h4 class="ui top attached block header">推荐题目</h4>
+                                            <div class="ui bottom attached segment">
+                                                <script language='javascript'>
+                                                    function p(id,c){
+                                                        document.write("<a href=problem.php?id="+id+">"+id+" </a>");
+                                                    }
+                                                    <?php $sql="SELECT `problem_id`,count(1) from solution where `user_id`=? and result=4 group by `problem_id` ORDER BY `problem_id` ASC";
+                                                    if ($result=pdo_query($sql, $user)) {
+                                                        foreach ($result as $row) {
+                                                            echo "p($row[0],$row[1]);";
+                                                        }
+                                                    }
+                                                    ?>
+                                                </script>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="eight wide column">
