@@ -1,5 +1,9 @@
 <?php $show_title="用户信息 - $OJ_NAME"; ?>
 <?php include("template/$OJ_TEMPLATE/header.php");?>
+
+<!--连接rds数据库-->
+<?php include("template/$OJ_TEMPLATE/connectrdsdb.php");?>
+
 <style>
 #avatar_container:before {
     content: "";
@@ -7,6 +11,11 @@
     padding-top: 100%;
 }
 </style>
+<script>
+    function findpbyid(id){
+        document.write("<a href=problem.php?id="+id+">"+id+" </a>");
+    }
+</script>
 <div class="padding">
 <div class="ui grid">
     <div class="row">
@@ -59,21 +68,7 @@ if ($qq>0) {
                                               <div class="ui bottom attached segment" class="font-content"><?php echo $email?></div>
                                           </div>
                                       </div>
-<!--                                    <div class="row">-->
-<!--                                        <div class="column">-->
-<!--                                            <h4 class="ui top attached block header">个性签名</h4>-->
-<!--                                            -->
-<!--                                            <div class="ui bottom attached segment" class="font-content">--><?php //echo $school?><!--</div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-                                    <!-- <div class="row">
-                                        <div class="column">
-                                            <h4 class="ui top attached block header">注册于</h4>
-                                            <div class="ui bottom attached segment" class="font-content">
-                                                <%= syzoj.utils.formatDate(show_user.register_time) %>
-                                            </div>
-                                        </div>
-                                    </div> -->
+
                                     <div class="row">
                                         <div class="column">
                                             <h4 class="ui top attached block header">通过的题目</h4>
@@ -95,8 +90,23 @@ if ($result=pdo_query($sql, $user)) {
                                     </div>
 
                                     <div class="row">
+
                                         <div class="column">
                                             <h4 class="ui top attached block header">推荐练习题目</h4>
+
+                                            <table width="320dp" border="1">
+                                                <th width="80dp">标签</th>
+                                                <th>题目</th>
+                                                <?php
+                                                    foreach ($res_tags as $res_tag) {?>
+                                                <tr>
+                                                    <td><?php echo $res_tag["tagname"];?></td>
+                                                    <td><script>findpbyid(1000)</script></td>
+                                                </tr>
+                                                <?php };?>
+
+                                            </table>
+
                                             <div class="ui bottom attached segment">
                                                 <script language='javascript'>
                                                     function p(id,c){
@@ -112,22 +122,6 @@ if ($result=pdo_query($sql, $user)) {
                                                 </script>
                                             </div>
                                         </div>
-<!--                                        <div class="column">-->
-<!--                                            <h4 class="ui top attached block header">推荐练习题目2</h4>-->
-<!--                                            <div class="ui bottom attached segment">-->
-<!--                                                <script language='javascript'>-->
-<!--                                                    function p(id,c){-->
-<!--                                                        document.write("<a href=problem.php?id="+id+">"+id+" </a>");-->
-<!--                                                    }-->
-<!--                                                    --><?php //$sql="SELECT `problem_id`,count(1) from solution where `user_id`=? and result=4 group by `problem_id` ORDER BY `problem_id` ASC";
-//                                                    if ($result=pdo_query($sql, $user)) {
-//                                                        foreach ($result as $row) {
-//                                                            echo "p($row[0],$row[1]);";
-//                                                        }
-//                                                    }
-//                                                    ?>
-<!--                                                </script>-->
-<!--                                            </div>-->
 <!--                                        </div>-->
                                     </div>
 
@@ -151,66 +145,15 @@ if ($result=pdo_query($sql, $user)) {
 
                 </div>
 
-                <!-- <div class="row">
-                    <div class="column">
-                        <h4 class="ui top attached block header">帖子</h4>
-                        <div class="ui bottom attached <% if (!show_user.articles.length) { %>center aligned <% } %>segment">
-													  <% if (!show_user.articles.length) { %>该用户从未发表帖子<% } else { %>
-                            <table class="ui very basic table">
-                                <thead>
-                                    <tr>
-                                        <th>标题</th>
-                                        <th>时间</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for (let article of show_user.articles) { %>
-                                    <tr>
-																			  <td><a href="<%= syzoj.utils.makeUrl(['article', article.id]) %>"><%= article.title %></a></td>
-                                        <td><%= syzoj.utils.formatDate(article.public_time) %></td>
-                                    </tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
-													  <% } %>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <div class="row">
-                    <div class="column">
-                        <h4 class="ui top attached block header">比赛</h4>
-                        <div class="ui bottom attached segment">
-                            <table class="ui very basic table">
-                                <thead>
-                                    <tr>
-                                        <th>比赛</th>
-                                        <th>名次</th>
-                                        <th>积分</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for (const history of ratingHistories) { %>
-                                    <tr>
-                                        <td><%= history.contestName %></td>
-                                        <td><%= history.rank != null ? history.rank + " / " + history.participants : '' %></td>
-                                        <td><%= history.value %> 
-                                            <% if(history.delta != null) { %> 
-                                                <span class="<%= history.delta >= 0 ? 'rating_up' : 'rating_down' %>">
-                                                (<%= (history.delta < 0 ? '' : '+') + history.delta %>)
-                                            <% } %>
-                                        </td>
-                                    </tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
 </div>
 </div>
+<script>
+    $conn_rds->close();
+</script>
+
 <script>
 $(function () {
   $('#user_card .image').dimmer({
