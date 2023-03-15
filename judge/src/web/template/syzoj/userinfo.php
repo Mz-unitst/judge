@@ -95,7 +95,7 @@ if ($result=pdo_query($sql, $user)) {
                                     </div>
                                     <div class="row">
                                         <div class="column">
-                                            <h4 class="ui top attached block header">推荐题目</h4>
+                                            <h4 class="ui top attached block header">推荐练习题目</h4>
                                             <div class="ui bottom attached segment">
                                                 <script language='javascript'>
                                                     function p(id,c){
