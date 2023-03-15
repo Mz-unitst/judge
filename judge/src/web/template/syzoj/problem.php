@@ -92,7 +92,7 @@ div[class*=ace_br] {
                 echo "<a class=\"small ui positive button\" href=\"status.php?problem_id=$PID[$pid]&cid=$cid\">$MSG_SUBMIT_RECORD</a>";
             }
           echo "<a class='small ui primary button' href='#' onclick='transform()' role='button'>$MSG_SHOW_OFF</a>";
-          echo "<a class='small ui positive button' href='#' onclick='transform()' role='button'>相似题目</a>";
+          echo "<a class='small ui positive button' href='\userinfo.php?user=qweqwe'  role='button'>相似题目</a>";
           ?>
           
       </div>
