@@ -56,7 +56,7 @@
           <div class="col-sm-4"><input name="email" class="form-control" placeholder="<?php echo $MSG_EMAIL?>" type="text"></div>
         </div>
 
-        <?php if($OJ_VCODE){?>
+        <?php if ($OJ_VCODE) {?>
         <div class="form-group">
           <label class="col-sm-4 control-label"><?php echo $MSG_VCODE?></label>
           <div class="col-sm-3">

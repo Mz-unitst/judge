@@ -13,16 +13,17 @@
         <div class="five wide column">
             <div class="ui card" style="width: 100%; " id="user_card">
                 <div class="blurring dimmable image" id="avatar_container" style="height:325px">
-                    <?php $default = ""; $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=500"; ?>
-		<?php  
-		    // 如果email填写的是qq邮箱，取QQ头像显示
-                    $qq=stripos($email,"@qq.com");
-                    if($qq>0){
-                         $qq=urlencode(substr($email,0,$qq));
-                         $grav_url="https://q1.qlogo.cn/g?b=qq&nk=$qq&s=5";
-                    };
+                    <?php $default = "";
+                    $grav_url = "https://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "?d=" . urlencode($default) . "&s=500"; ?>
+		<?php
+            // 如果email填写的是qq邮箱，取QQ头像显示
+                    $qq=stripos($email, "@qq.com");
+if ($qq>0) {
+    $qq=urlencode(substr($email, 0, $qq));
+    $grav_url="https://q1.qlogo.cn/g?b=qq&nk=$qq&s=5";
+};
 
-                ?>
+?>
 
                     <img style="margin-top: -100%; " src="<?php echo $grav_url; ?>">
                 </div>
@@ -82,11 +83,12 @@
                                                     document.write("<a href=problem.php?id="+id+">"+id+" </a>");
                                                   }
                                                   <?php $sql="SELECT `problem_id`,count(1) from solution where `user_id`=? and result=4 group by `problem_id` ORDER BY `problem_id` ASC";
-                                                  if ($result=pdo_query($sql,$user)){ 
-                                                      foreach($result as $row)
-                                                      echo "p($row[0],$row[1]);";
-                                                  }
-                                                  ?>
+if ($result=pdo_query($sql, $user)) {
+    foreach ($result as $row) {
+        echo "p($row[0],$row[1]);";
+    }
+}
+?>
                                                 </script>
                                             </div>
                                         </div>
@@ -186,10 +188,10 @@ $(function () {
         {
           data: [
             <?php
-              foreach($view_userstat as $row){
-              echo $row[1].",\n";
+              foreach ($view_userstat as $row) {
+                  echo $row[1].",\n";
               }
-            ?>
+?>
           ],
           backgroundColor: [
             "#32CD32",
@@ -206,10 +208,10 @@ $(function () {
       ],
       labels: [
         <?php
-          foreach($view_userstat as $row){
-          echo "\"".$jresult[$row[0]]."\",\n";
+          foreach ($view_userstat as $row) {
+              echo "\"".$jresult[$row[0]]."\",\n";
           }
-        ?>
+?>
       ]
     },
     options: {

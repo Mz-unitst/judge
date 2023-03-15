@@ -1,7 +1,7 @@
 <?php require_once("admin-header.php");
-  if(isset($OJ_LANG)){
+if (isset($OJ_LANG)) {
     require_once("../lang/$OJ_LANG.php");
-  }
+}
 $sql="select avg(usedtime) delay from (select judgetime-in_date usedtime from solution where result >=4  order by solution_id desc limit 10 ) c";
 $delay=pdo_query($sql);
 
@@ -30,7 +30,7 @@ $delay=pdo_query($sql);
       <td><p><?php echo $MSG_HELP_SEEOJ?></p></td>
     </tr>
 
-  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])){?>
+  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {?>
     <tr>
       <td><center><a class='btn btn-info btn-sm' href="setmsg.php" target="main"><b><?php echo $MSG_NEWS."-".$MSG_SETMESSAGE?></b></a></center></td>
       <td><p><?php echo $MSG_HELP_SETMESSAGE?></p></td>
@@ -45,26 +45,26 @@ $delay=pdo_query($sql);
     </tr>
   <?php }?>
 
-  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset( $_SESSION[$OJ_NAME.'_'.'password_setter'] )){?>
+  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'password_setter'])) {?>
     <tr>
       <td><center><a class='btn btn-primary btn-sm' href="user_list.php" target="main"><b><?php echo $MSG_USER."-".$MSG_LIST?></b></a></center></td>
       <td><p><?php echo $MSG_HELP_USER_LIST?></p></td>
     </tr>
   <?php }?>
-  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])){?>
+  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {?>
     <tr>
       <td><center><a class='btn btn-primary btn-sm' href="user_add.php" target="main"><b><?php echo $MSG_USER."-".$MSG_ADD?></b></a></center></td>
       <td><p><?php echo $MSG_HELP_USER_ADD?></p></td>
     </tr>
   <?php }?>
-  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset( $_SESSION[$OJ_NAME.'_'.'password_setter'] )){?>
+  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'password_setter'])) {?>
     <tr>
       <td><center><a class='btn btn-primary btn-sm' href="changepass.php" target="main"><b><?php echo $MSG_USER."-".$MSG_SETPASSWORD?></b></a></center></td>
       <td><p><?php echo $MSG_HELP_SETPASSWORD?></p></td>
     </tr>
   <?php }?>
 
-  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])){?>
+  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {?>
     <tr>
       <td><center><a class='btn btn-primary btn-sm' href="privilege_list.php" target="main"><b><?php echo $MSG_USER."-".$MSG_PRIVILEGE."-".$MSG_LIST?></b></a></center></td>
       <td><p><?php echo $MSG_HELP_PRIVILEGE_LIST?></p></td>
@@ -75,7 +75,7 @@ $delay=pdo_query($sql);
     </tr>
   <?php }?>
 
-  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])){?>
+  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])) {?>
     <tr>
       <td><center><a class='btn btn-success btn-sm' href="problem_list.php" target="main"><b><?php echo $MSG_PROBLEM."-".$MSG_LIST?></b></a></center></td>
       <td><p><?php echo $MSG_HELP_PROBLEM_LIST?></p></td>
@@ -93,7 +93,7 @@ $delay=pdo_query($sql);
       <td><p><?php echo $MSG_HELP_EXPORT_PROBLEM?></p></td>
     </tr>
   <?php }?>
-  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])){?>
+  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
     <tr>
       <td><center><a class='btn btn-warning btn-sm' href="contest_list.php" target="main"><b><?php echo $MSG_CONTEST."-".$MSG_LIST?></b></a></center></td>
       <td><p><?php echo $MSG_HELP_CONTEST_LIST?></p></td>
@@ -116,7 +116,7 @@ $delay=pdo_query($sql);
     </tr>
   <?php }?>
 
-  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])){?>
+  <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {?>
     <tr>
       <td><center><a class='btn btn-danger btn-sm' href="rejudge.php" target="main"><b><?php echo $MSG_SYSTEM."-".$MSG_REJUDGE?></b></a></center></td>
       <td><p><?php echo $MSG_HELP_REJUDGE?></p></td>
@@ -157,7 +157,7 @@ $delay=pdo_query($sql);
   </tbody>
 </table>
 
-<?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])&&!$OJ_SAE){?>
+<?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])&&!$OJ_SAE) {?>
   <a href="problem_copy.php" target="main" title="Create your own data"><font color="eeeeee">CopyProblem</font></a> <br>
   <a href="problem_changeid.php" target="main" title="Danger,Use it on your own risk"><font color="eeeeee">ReOrderProblem</font></a>
   

@@ -28,16 +28,18 @@
 <nav class="center"><ul class="pagination">
 <li class="page-item"><a href="contest.php?page=1">&lt;&lt;</a></li>
 <?php
-if(!isset($page)) $page=1;
-$page=intval($page);
-$section=8;
-$start=$page>$section?$page-$section:1;
-$end=$page+$section>$view_total_page?$view_total_page:$page+$section;
-for ($i=$start;$i<=$end;$i++){
- echo "<li class='".($page==$i?"active ":"")."page-item'>
-            <a title='go to page' href='contest.php?page=".$i.(isset($_GET['my'])?"&my":"")."'>".$i."</a></li>";
+if (!isset($page)) {
+    $page=1;
 }
-?>
+$page=intval($page);
+    $section=8;
+    $start=$page>$section ? $page-$section : 1;
+    $end=$page+$section>$view_total_page ? $view_total_page : $page+$section;
+    for ($i=$start;$i<=$end;$i++) {
+        echo "<li class='".($page==$i ? "active " : "")."page-item'>
+            <a title='go to page' href='contest.php?page=".$i.(isset($_GET['my']) ? "&my" : "")."'>".$i."</a></li>";
+    }
+    ?>
 <li class="page-item"><a href="contest.php?page=<?php echo $view_total_page?>">&gt;&gt;</a></li>
 </ul></nav>
 
@@ -58,26 +60,26 @@ for ($i=$start;$i<=$end;$i++){
 </thead>
 <tbody>
 <?php
-$cnt=0;
-$limit = 0;
+    $cnt=0;
+    $limit = 0;
 
-foreach($view_contest as $row){
-if ($cnt)
-echo "<tr class='oddrow'>";
-else
-echo "<tr class='evenrow'>";
-foreach($row as $table_cell){
-echo "<td>";
-echo "\t".$table_cell;
-echo "</td>";
-}
-echo "</tr>";
-$cnt=1-$cnt;
+    foreach ($view_contest as $row) {
+        if ($cnt) {
+            echo "<tr class='oddrow'>";
+        } else {
+            echo "<tr class='evenrow'>";
+        }
+        foreach ($row as $table_cell) {
+            echo "<td>";
+            echo "\t".$table_cell;
+            echo "</td>";
+        }
+        echo "</tr>";
+        $cnt=1-$cnt;
 
-    $limit++;
-
-}
-?>
+        $limit++;
+    }
+    ?>
 </tbody>
 </table></center>
      </div>

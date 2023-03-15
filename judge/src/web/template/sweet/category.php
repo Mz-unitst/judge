@@ -31,21 +31,23 @@
         <p>
 
             <?php
-            if (!$result){
+            if (!$result) {
                 $my_category= "<h3>No Category Now!</h3>";
-            }else{
+            } else {
                 $my_category.= "<div class=\"layui-btn-container\">";
 
-                foreach ($category as $cat){
-                    if(trim($cat)=="") continue;
-                    $my_category.= "<button class=\"layui-btn\"><a class='btn btn-primary' href='problemset.php?search=".htmlentities($cat,ENT_QUOTES,'UTF-8')."'>".$cat."</a></button>";
+                foreach ($category as $cat) {
+                    if (trim($cat)=="") {
+                        continue;
+                    }
+                    $my_category.= "<button class=\"layui-btn\"><a class='btn btn-primary' href='problemset.php?search=".htmlentities($cat, ENT_QUOTES, 'UTF-8')."'>".$cat."</a></button>";
                 }
 
                 $my_category.= "</div>";
             }
 
             echo $my_category
-            ?>
+    ?>
 
         </p>
       </div>

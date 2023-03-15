@@ -9,10 +9,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -21,13 +21,13 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-    
-require_once("../include/set_get_key.php");
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+
+	require_once("../include/set_get_key.php");
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -63,27 +63,30 @@ require_once("../include/set_get_key.php");
 									</div>
 								</div>
 								<div class="card-body">
-								    <?php 
-if (isset($_POST['do'])) {
-	require_once("../include/check_post_key.php");
+								    <?php
+	if (isset($_POST['do'])) {
+	    require_once("../include/check_post_key.php");
 
-	$user_id = $_POST['user_id'];
-	$rightstr = $_POST['rightstr'];
-	$valuestr = "true";
-	if(isset($_POST['valuestr']))
-		$valuestr = $_POST['valuestr'];
-	
-	if (isset($_POST['contest']))
-		$rightstr = "c$rightstr";
+	    $user_id = $_POST['user_id'];
+	    $rightstr = $_POST['rightstr'];
+	    $valuestr = "true";
+	    if (isset($_POST['valuestr'])) {
+	        $valuestr = $_POST['valuestr'];
+	    }
 
-	if (isset($_POST['psv']))
-		$rightstr = "s$rightstr";
+	    if (isset($_POST['contest'])) {
+	        $rightstr = "c$rightstr";
+	    }
 
-	$sql = "insert into `privilege`(user_id,rightstr,valuestr,defunct) values(?,?,?,'N')";
-	$rows = pdo_query($sql,$user_id,$rightstr,$valuestr);
-	echo "<center><h4 class='text-danger'>User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')."'s Privilege Added!</h4></center>";
-}
-?>
+	    if (isset($_POST['psv'])) {
+	        $rightstr = "s$rightstr";
+	    }
+
+	    $sql = "insert into `privilege`(user_id,rightstr,valuestr,defunct) values(?,?,?,'N')";
+	    $rows = pdo_query($sql, $user_id, $rightstr, $valuestr);
+	    echo "<center><h4 class='text-danger'>User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')."'s Privilege Added!</h4></center>";
+	}
+	?>
                             <form method=post>
 <?php require("../include/set_post_key.php");?>
 	<b>给用户添加全站权限</b><br />
@@ -91,15 +94,15 @@ if (isset($_POST['do'])) {
 	权限
 	<select name="rightstr"class="form-control" >
 <?php
-$rightarray=array("administrator","problem_editor","source_browser","contest_creator","http_judge","password_setter","printer","balloon" );
-while(list($key, $val)=each($rightarray)) {
-	if (isset($rightstr) && ($rightstr == $val)) {
-		echo '<option value="'.$val.'" selected>'.$val.'</option>';
-	} else {
-		echo '<option value="'.$val.'">'.$val.'</option>';
+	$rightarray=array("administrator","problem_editor","source_browser","contest_creator","http_judge","password_setter","printer","balloon" );
+	while (list($key, $val)=each($rightarray)) {
+	    if (isset($rightstr) && ($rightstr == $val)) {
+	        echo '<option value="'.$val.'" selected>'.$val.'</option>';
+	    } else {
+	        echo '<option value="'.$val.'">'.$val.'</option>';
+	    }
 	}
-}
-?></select><br />
+	?></select><br />
 	<input type='hidden' name='do' value='do'>
 	<button type="submit" class="btn btn-primary">提交</button>
 </form>

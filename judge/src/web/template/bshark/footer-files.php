@@ -17,9 +17,9 @@
 <!-- 主题核心js -->
 <?php
 $url = basename($_SERVER['REQUEST_URI']);
-$realurl = basename($_SERVER['REQUEST_URI']);
-$url = str_replace(strrchr($url, "?"), "", $url);
-if ($url != 'loginpage.php' && $url != 'registerpage.php') { ?>
+        $realurl = basename($_SERVER['REQUEST_URI']);
+        $url = str_replace(strrchr($url, "?"), "", $url);
+        if ($url != 'loginpage.php' && $url != 'registerpage.php') { ?>
         <script src="./template/bshark/main.js"></script>
 <?php } ?>
 

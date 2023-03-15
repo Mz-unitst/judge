@@ -9,10 +9,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -21,34 +21,34 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-    if(isset($_POST['do'])){
-  require_once("../include/check_post_key.php");
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+	    if (isset($_POST['do'])) {
+	        require_once("../include/check_post_key.php");
 
-  $fp = fopen($OJ_SAE?"saestor://web/msg.txt":"msg.txt","w");
-  $msg = $_POST['msg'];
+	        $fp = fopen($OJ_SAE ? "saestor://web/msg.txt" : "msg.txt", "w");
+	        $msg = $_POST['msg'];
 
-  $msg = str_replace("<p>", "", $msg);
-  $msg = str_replace("</p>", "<br />", $msg);
-  $msg = str_replace(",", "&#44;", $msg);
+	        $msg = str_replace("<p>", "", $msg);
+	        $msg = str_replace("</p>", "<br />", $msg);
+	        $msg = str_replace(",", "&#44;", $msg);
 
-  if(false){
-    $title = stripslashes($title);
-  }
+	        if (false) {
+	            $title = stripslashes($title);
+	        }
 
-  $msg = RemoveXSS($msg);
-  fputs($fp,$msg);
-  fclose($fp);
-  echo "Update At ".date('Y-m-d h:i:s');
-}
+	        $msg = RemoveXSS($msg);
+	        fputs($fp, $msg);
+	        fclose($fp);
+	        echo "Update At ".date('Y-m-d h:i:s');
+	    }
 
-$msg = file_get_contents($OJ_SAE?"saestor://web/msg.txt":"msg.txt");
+	$msg = file_get_contents($OJ_SAE ? "saestor://web/msg.txt" : "msg.txt");
 
-include("kindeditor.php");
-?>
+	include("kindeditor.php");
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">

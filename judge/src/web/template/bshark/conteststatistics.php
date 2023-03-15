@@ -16,7 +16,7 @@
         $cid = intval($_GET['cid']);
         $view_cid = $cid;
         //print $cid;
-    
+
         //check contest valid
         $sql = "SELECT * FROM `contest` WHERE `contest_id`=?";
         $result = pdo_query($sql, $cid);
@@ -25,8 +25,9 @@
         $contest_ok = true;
         $password = "";
 
-        if (isset($_POST['password']))
+        if (isset($_POST['password'])) {
             $password = $_POST['password'];
+        }
 
         if (false) {
             $password = stripslashes($password);
@@ -38,17 +39,21 @@
             $row = $result[0];
             $view_private = $row['private'];
 
-            if ($password != "" && $password == $row['password'])
+            if ($password != "" && $password == $row['password']) {
                 $_SESSION[$OJ_NAME . '_' . 'c' . $cid] = true;
+            }
 
-            if ($row['private'] && !isset($_SESSION[$OJ_NAME . '_' . 'c' . $cid]))
+            if ($row['private'] && !isset($_SESSION[$OJ_NAME . '_' . 'c' . $cid])) {
                 $contest_ok = false;
+            }
 
-            if ($row['defunct'] == 'Y')
+            if ($row['defunct'] == 'Y') {
                 $contest_ok = false;
+            }
 
-            if (isset($_SESSION[$OJ_NAME . '_' . 'administrator']))
+            if (isset($_SESSION[$OJ_NAME . '_' . 'administrator'])) {
                 $contest_ok = true;
+            }
 
             $now = time();
             $start_time = strtotime($row['start_time']);
@@ -59,7 +64,7 @@
             $view_end_time = $row['end_time'];
         }
     }
-    ?>
+        ?>
     <div class="ui container bsharkMain">
         <div class="ui stackable grid">
             <div class="eleven wide column">
@@ -68,34 +73,38 @@
                         <h2>C<?php echo $view_cid; ?>: <?php echo $view_title; ?> - <?php echo $MSG_STATISTICS; ?>
                         </h2>
                         <span class="ui label <?php
-                        if ($now > $end_time)
-                            echo "grey";
-                        else if ($now < $start_time)
-                            echo "green";
-                        else
-                            echo "red";
-                        ?>">
+                            if ($now > $end_time) {
+                                echo "grey";
+                            } elseif ($now < $start_time) {
+                                echo "green";
+                            } else {
+                                echo "red";
+                            }
+        ?>">
                             <?php
-                            if ($now > $end_time)
-                                echo $MSG_Ended;
-                            else if ($now < $start_time)
-                                echo "未开始";
-                            else
-                                echo $MSG_Running;
-                            ?>
+            if ($now > $end_time) {
+                echo $MSG_Ended;
+            } elseif ($now < $start_time) {
+                echo "未开始";
+            } else {
+                echo $MSG_Running;
+            }
+        ?>
                         </span>
                         <span class="ui label <?php
-                        if ($view_private == '0')
+                        if ($view_private == '0') {
                             echo "blue";
-                        else
+                        } else {
                             echo "red";
-                        ?>">
+                        }
+        ?>">
                             <?php
-                            if ($view_private == '0')
-                                echo $MSG_Public;
-                            else
-                                echo $MSG_Private;
-                            ?>
+            if ($view_private == '0') {
+                echo $MSG_Public;
+            } else {
+                echo $MSG_Private;
+            }
+        ?>
                         </span>
                         <h3>
                             <?php echo $MSG_CONTEST; ?><?php echo $MSG_TIME; ?>
@@ -124,28 +133,31 @@
                                     <th>|</th>
                                     <th>Total</th>
                                     <?php
-                                    $i = 0;
-                                    foreach ($language_name as $lang) {
-                                        if (isset($R[$pid_cnt][$i + 11]))
-                                            echo "<th>$language_name[$i]</th>";
-                                        else
-                                            echo ""; //"<th></th>";
-                                        $i++;
-                                    }
-                                    ?>
+                $i = 0;
+        foreach ($language_name as $lang) {
+            if (isset($R[$pid_cnt][$i + 11])) {
+                echo "<th>$language_name[$i]</th>";
+            } else {
+                echo "";
+            } //"<th></th>";
+            $i++;
+        }
+        ?>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 <?php
                                 for ($i = 0; $i < $pid_cnt; $i++) {
-                                    if (!isset($PID[$i]))
+                                    if (!isset($PID[$i])) {
                                         $PID[$i] = "";
+                                    }
 
-                                    if ($i & 1)
+                                    if ($i & 1) {
                                         echo "<tr>";
-                                    else
+                                    } else {
                                         echo "<tr>";
+                                    }
 
                                     if (time() < $end_time) { //during contest/exam time
                                         echo "<td><a href=problem.php?cid=$cid&pid=$i>$PID[$i]</a></td>";
@@ -162,35 +174,37 @@
 								)";
                                         $tresult = pdo_query($sql, $tpid);
 
-                                        if (intval($tresult) != 0) //if the problem will be use remained contes/exam */
+                                        if (intval($tresult) != 0) { //if the problem will be use remained contes/exam */
                                             echo "<td>$PID[$i]</td>";
-                                        else
+                                        } else {
                                             echo "<td><a href='problem.php?id=" . $tpid . "'>" . $PID[$i] . "</a></td>";
+                                        }
                                     }
 
                                     for ($j = 0; $j < count($language_name) + 11; $j++) {
                                         //	if (!isset($R[$i][$j]))
                                         //		$R[$i][$j]="";
-                                        if ($j < 11 || isset($R[$pid_cnt][$j]))
+                                        if ($j < 11 || isset($R[$pid_cnt][$j])) {
                                             echo "<td>" . $R[$i][$j] . "</td>";
+                                        }
                                     }
                                     echo "</tr>";
                                 }
 
                                 echo "<tr>";
-                                echo "<td>Total</td>";
+        echo "<td>Total</td>";
 
-                                for ($j = 0; $j < count($language_name) + 11; $j++) {
-                                    //	if(!isset($R[$i][$j]))
-                                    //		$R[$i][$j]="";
-                                
-                                    if ($j < 11 || isset($R[$pid_cnt][$j]))
-                                        echo "<td>" . $R[$i][$j] . "</td>";
+        for ($j = 0; $j < count($language_name) + 11; $j++) {
+            //	if(!isset($R[$i][$j]))
+            //		$R[$i][$j]="";
 
-                                }
-                                echo "</tr>";
+            if ($j < 11 || isset($R[$pid_cnt][$j])) {
+                echo "<td>" . $R[$i][$j] . "</td>";
+            }
+        }
+        echo "</tr>";
 
-                                ?>
+        ?>
                             </tbody>
                         </table>
                     </div>
@@ -212,7 +226,7 @@
                         <a class="active item" href='conteststatistics.php?cid=<?php echo $view_cid ?>'>
                             <?php echo $MSG_STATISTICS; ?>
                         </a>
-                        <?php if(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
+                        <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
                             <a href="suspect_list.php?cid=<?php echo $view_cid?>" class="item"><?php echo $MSG_IP_VERIFICATION?></a>
                             <a href="user_set_ip.php?cid=<?php echo $view_cid?>" class="item"><?php echo $MSG_SET_LOGIN_IP?></a>
                             <a target="_blank" href="../../bsadmin/contest_edit.php?cid=<?php echo $view_cid ?>" class="item"><?php echo $MSG_EDIT.$MSG_CONTEST;?></a>

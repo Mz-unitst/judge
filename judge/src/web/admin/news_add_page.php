@@ -1,8 +1,8 @@
 <?php
 require_once("admin-header.php");
-if(!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-  echo "<a href='../loginpage.php'>Please Login First!</a>";
-  exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 
 echo "<hr>";
@@ -12,25 +12,26 @@ include_once("kindeditor.php");
 ?>
 
 <?php
-if(isset($_GET['cid'])){
-  $cid = intval($_GET['cid']);
-  $sql = "SELECT * FROM news WHERE `news_id`=?";
-  $result = pdo_query($sql,$cid);
-  $row = $result[0];
-  $title = $row['title'];
-  $content = $row['content'];
-  $defunct = $row['defunct'];
+if (isset($_GET['cid'])) {
+    $cid = intval($_GET['cid']);
+    $sql = "SELECT * FROM news WHERE `news_id`=?";
+    $result = pdo_query($sql, $cid);
+    $row = $result[0];
+    $title = $row['title'];
+    $content = $row['content'];
+    $defunct = $row['defunct'];
 }
 $plist = "";
-if(isset($_POST['pid'])){
-	sort($_POST['pid']);
-	foreach($_POST['pid'] as $i){
-	  if($plist)
-	    $plist.=','.intval($i);
-	  else
-	    $plist = $i;
-	}
-	$content="[plist=".$plist."]".htmlentities($_POST['keyword'],ENT_QUOTES,"utf-8")."[/plist]";
+if (isset($_POST['pid'])) {
+    sort($_POST['pid']);
+    foreach ($_POST['pid'] as $i) {
+        if ($plist) {
+            $plist.=','.intval($i);
+        } else {
+            $plist = $i;
+        }
+    }
+    $content="[plist=".$plist."]".htmlentities($_POST['keyword'], ENT_QUOTES, "utf-8")."[/plist]";
 }
 ?>
 
@@ -38,7 +39,7 @@ if(isset($_POST['pid'])){
   <form method=POST action=news_add.php>
     <p align=left>
       <label class="col control-label"><?php echo $MSG_TITLE?></label>
-      <input type=text name=title size=71 value='<?php echo isset($title)?$title."-Copy":""?>'>
+      <input type=text name=title size=71 value='<?php echo isset($title) ? $title."-Copy" : ""?>'>
     </p>
     <p align=left>
       <label class="col control-label"><?php echo $MSG_NEWS_MENU?>
@@ -47,7 +48,7 @@ if(isset($_POST['pid'])){
     </p>
     <p align=left>
       <textarea class=kindeditor name=content rows=41 >
-        <?php echo isset($content)?$content:""?>
+        <?php echo isset($content) ? $content : ""?>
       </textarea>
     </p>
     <p>

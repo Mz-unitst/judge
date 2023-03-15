@@ -9,10 +9,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -21,22 +21,22 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+	?>
 <?php
-if(isset($_GET['cid'])){
-  $cid = intval($_GET['cid']);
-  $sql = "SELECT * FROM news WHERE `news_id`=?";
-  $result = pdo_query($sql,$cid);
-  $row = $result[0];
-  $title = $row['title'];
-  $content = $row['content'];
-  $defunct = $row['defunct'];
+if (isset($_GET['cid'])) {
+    $cid = intval($_GET['cid']);
+    $sql = "SELECT * FROM news WHERE `news_id`=?";
+    $result = pdo_query($sql, $cid);
+    $row = $result[0];
+    $title = $row['title'];
+    $content = $row['content'];
+    $defunct = $row['defunct'];
 }
-?>
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -74,9 +74,9 @@ if(isset($_GET['cid'])){
 								<div class="card-body">
   <form action=news_add.php method='post'>
     <?php require_once("../include/set_post_key.php");?>
-    <label for=title>标题</label><input type="text" name="title" class="form-control" value="<?php echo isset($title)?$title."- 副本":""?>">
+    <label for=title>标题</label><input type="text" name="title" class="form-control" value="<?php echo isset($title) ? $title."- 副本" : ""?>">
     <lable for=content>内容</lable>
-    <textarea name='content' rows=15 class="kindeditor" ><?php echo isset($content)?$content:""?></textarea><br>
+    <textarea name='content' rows=15 class="kindeditor" ><?php echo isset($content) ? $content : ""?></textarea><br>
     <button type='submit' class="btn btn-info btn-addon i"><i class="fa fa-plus"></i>新建</button>
   </form>
 								</div>

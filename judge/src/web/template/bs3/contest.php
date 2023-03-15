@@ -41,39 +41,39 @@
       <?php } ?>
       
       <?php if ($now>$end_time) {
-        echo "<span class=text-muted>$MSG_Ended</span>";
+          echo "<span class=text-muted>$MSG_Ended</span>";
+      } elseif ($now<$start_time) {
+          echo "<span class=text-success>$MSG_Start&nbsp;</span>";
+          echo "<span class=text-success>$MSG_TotalTime</span>"." ".formatTimeLength($end_time-$start_time);
+      } else {
+          echo "<span class=text-danger>$MSG_Running</span>&nbsp;";
+          echo "<span class=text-danger>$MSG_LeftTime</span>"." ".formatTimeLength($end_time-$now);
       }
-      else if ($now<$start_time) {
-        echo "<span class=text-success>$MSG_Start&nbsp;</span>";
-        echo "<span class=text-success>$MSG_TotalTime</span>"." ".formatTimeLength($end_time-$start_time);
-      }
-      else {
-        echo "<span class=text-danger>$MSG_Running</span>&nbsp;";
-        echo "<span class=text-danger>$MSG_LeftTime</span>"." ".formatTimeLength($end_time-$now);
-      }
-      ?>
+  ?>
 
       <br><br>
 
       <?php echo $MSG_CONTEST_STATUS?> : 
       
       <?php
-      if ($now>$end_time)
-        echo "<span class=text-muted>".$MSG_End."</span>";
-      else if ($now<$start_time)
-        echo "<span class=text-success>".$MSG_Start."</span>";
-      else
-        echo "<span class=text-danger>".$MSG_Running."</span>";
-      ?>
+  if ($now>$end_time) {
+      echo "<span class=text-muted>".$MSG_End."</span>";
+  } elseif ($now<$start_time) {
+      echo "<span class=text-success>".$MSG_Start."</span>";
+  } else {
+      echo "<span class=text-danger>".$MSG_Running."</span>";
+  }
+  ?>
       &nbsp;&nbsp;
 
       <?php echo $MSG_CONTEST_OPEN?> : 
 
-      <?php if ($view_private=='0')
-        echo "<span class=text-primary>".$MSG_Public."</span>";
-      else
-        echo "<span class=text-danger>".$MSG_Private."</span>";
-      ?>
+      <?php if ($view_private=='0') {
+          echo "<span class=text-primary>".$MSG_Public."</span>";
+      } else {
+          echo "<span class=text-danger>".$MSG_Private."</span>";
+      }
+  ?>
 
       <br>
 
@@ -88,7 +88,7 @@
         <a href="contestrank.php?cid=<?php echo $view_cid?>" class="btn btn-primary btn-sm"><?php echo $MSG_STANDING?></a>
         <a href="contestrank-oi.php?cid=<?php echo $view_cid?>" class="btn btn-primary btn-sm"><?php echo "OI".$MSG_STANDING?></a>
         <a href="conteststatistics.php?cid=<?php echo $view_cid?>" class="btn btn-primary btn-sm"><?php echo $MSG_STATISTICS?></a>
-        <?php if(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
+        <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])) {?>
           <a href="suspect_list.php?cid=<?php echo $view_cid?>" class="btn btn-warning btn-sm"><?php echo $MSG_IP_VERIFICATION?></a>
           <a href="user_set_ip.php?cid=<?php echo $view_cid?>" class="btn btn-success btn-sm"><?php echo $MSG_SET_LOGIN_IP?></a>
           <a target="_blank" href="../../admin/contest_edit.php?cid=<?php echo $view_cid?>" class="btn btn-success btn-sm"><?php echo "EDIT"?></a>
@@ -109,22 +109,23 @@
       </thead>
       <tbody align='center'>
         <?php
-        $cnt=0;
-        foreach ($view_problemset as $row) {
-          if ($cnt)
-            echo "<tr class='oddrow'>";
-          else
-            echo "<tr class='evenrow'>";
-          
-          foreach ($row as $table_cell) {
-            echo "<td>";
-            echo "\t".$table_cell;
-            echo "</td>";
-          }
-          echo "</tr>";
-          $cnt=1-$cnt;
-        }
-        ?>
+    $cnt=0;
+  foreach ($view_problemset as $row) {
+      if ($cnt) {
+          echo "<tr class='oddrow'>";
+      } else {
+          echo "<tr class='evenrow'>";
+      }
+
+      foreach ($row as $table_cell) {
+          echo "<td>";
+          echo "\t".$table_cell;
+          echo "</td>";
+      }
+      echo "</tr>";
+      $cnt=1-$cnt;
+  }
+  ?>
       </tbody>
     </table>
     </center>

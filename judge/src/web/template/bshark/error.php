@@ -18,7 +18,7 @@
                 {
                     return 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
                 }
-                ?>
+    ?>
                 <p>请求地址:<?php echo GetCurUrl(); ?><br>错误信息:<?php echo $view_errors; ?></p>
                 <hr />
                 <div class="btn-group">

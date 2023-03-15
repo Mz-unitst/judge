@@ -10,10 +10,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -70,9 +70,9 @@ include_once("kindeditor.php");
                                     <span id="sparklinedash"><canvas width="67" height="30" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas></span>
                                 </div>
                                 <div class="visit-count">
-                                    <?php 
-                                    echo count(pdo_query("SELECT * FROM `users`"));
-                                    ?>
+                                    <?php
+	                                    echo count(pdo_query("SELECT * FROM `users`"));
+        ?>
                                 </div>
                             </div>
 
@@ -84,9 +84,9 @@ include_once("kindeditor.php");
                                     <span id="sparklinedash3"><canvas width="67" height="30" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas></span>
                                 </div>
                                 <div class="visit-count">
-                                    <?php 
-                                    echo count(pdo_query("SELECT * FROM `solution`"));
-                                    ?>
+                                    <?php
+        echo count(pdo_query("SELECT * FROM `solution`"));
+        ?>
                                 </div>
                             </div>
                             <div class="card alert nestable-cart single-card">
@@ -97,9 +97,9 @@ include_once("kindeditor.php");
                                     <span id="sparklinedash4"><canvas width="67" height="30" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas></span>
                                 </div>
                                 <div class="visit-count">
-                                    <?php 
-                                    echo count(pdo_query("SELECT * FROM `problem`"));
-                                    ?>
+                                    <?php
+        echo count(pdo_query("SELECT * FROM `problem`"));
+        ?>
                                 </div>
                             </div> 
                             <div class="card alert nestable-cart single-card">
@@ -110,9 +110,9 @@ include_once("kindeditor.php");
                                     <span id="sparklinedash2"><canvas width="67" height="30" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas></span>
                                 </div>
                                 <div class="visit-count">
-                                    <?php 
-                                    echo count(pdo_query("SELECT * FROM `contest`"));
-                                    ?>
+                                    <?php
+        echo count(pdo_query("SELECT * FROM `contest`"));
+        ?>
                                 </div>
                             </div> 
 
@@ -287,24 +287,26 @@ include_once("kindeditor.php");
 									<p>想必破解这个后台地址一定费了不少劲吧！</p>
 									<p>系统已经自动记录下了您的信息！</p>
 									<p>
-									    您的代理信息：<?php 
-                                            echo $_SERVER['HTTP_USER_AGENT'];
-									    ?><br>
+									    您的代理信息：<?php
+                echo $_SERVER['HTTP_USER_AGENT'];
+        ?><br>
 									    您的ip地址：<?php echo $_SERVER["REMOTE_ADDR"];?><br>
-									    以这个ip注册的用户有：<?php 
-									        $youip = $_SERVER["REMOTE_ADDR"];
-									        foreach(pdo_query("SELECT * FROM `users` WHERE `ip`=?",$youip) as $ross) {
-									            echo $ross['user_id'].',';
-									        }
-									    ?><br>
-									    以这个ip登陆过的用户有：<?php 
-									        $isrecord=Array();
-									        $youip = $_SERVER["REMOTE_ADDR"];
-									        foreach(pdo_query("SELECT * FROM `loginlog` WHERE `ip`=?",$youip) as $ross) {
-									            if ($isrecord[$ross['user_id']] != '2333') echo $ross['user_id'].',';
-									            $isrecord[$ross['user_id']] = '2333';
-									        }
-									    ?><br>
+									    以这个ip注册的用户有：<?php
+            $youip = $_SERVER["REMOTE_ADDR"];
+        foreach (pdo_query("SELECT * FROM `users` WHERE `ip`=?", $youip) as $ross) {
+            echo $ross['user_id'].',';
+        }
+        ?><br>
+									    以这个ip登陆过的用户有：<?php
+            $isrecord=array();
+        $youip = $_SERVER["REMOTE_ADDR"];
+        foreach (pdo_query("SELECT * FROM `loginlog` WHERE `ip`=?", $youip) as $ross) {
+            if ($isrecord[$ross['user_id']] != '2333') {
+                echo $ross['user_id'].',';
+            }
+            $isrecord[$ross['user_id']] = '2333';
+        }
+        ?><br>
 									</p>
 								</div>
 							</div>
@@ -445,37 +447,41 @@ include_once("kindeditor.php");
     <script src="assets/js/scripts.js"></script><!-- scripit init-->
     <script>
         
-<?php 
-$day[1] = strtotime(date('Y-m-d',time()));
-$day[0] = $day[1] + 60*60*24;
-$day[2] = $day[1] - 60*60*24;
-$day[3] = $day[2] - 60*60*24;
-$day[4] = $day[3] - 60*60*24;
-$day[5] = $day[4] - 60*60*24;
-$day[6] = $day[5] - 60*60*24;
-$day[7] = $day[6] - 60*60*24;
-$sql ='SELECT * FROM `solution` WHERE UNIX_TIMESTAMP(`in_date`)>=? AND UNIX_TIMESTAMP(`in_date`)<?';
-for ($csadff = 1; $csadff <= 7; ++$csadff) {
-    $subcount[$csadff] = count(pdo_query($sql, $day[$csadff], $day[$csadff - 1]));
-    $account[$csadff] = count(pdo_query($sql.' AND `result`=4', $day[$csadff], $day[$csadff - 1]));
-}
-?>
+<?php
+$day[1] = strtotime(date('Y-m-d', time()));
+	$day[0] = $day[1] + 60*60*24;
+	$day[2] = $day[1] - 60*60*24;
+	$day[3] = $day[2] - 60*60*24;
+	$day[4] = $day[3] - 60*60*24;
+	$day[5] = $day[4] - 60*60*24;
+	$day[6] = $day[5] - 60*60*24;
+	$day[7] = $day[6] - 60*60*24;
+	$sql ='SELECT * FROM `solution` WHERE UNIX_TIMESTAMP(`in_date`)>=? AND UNIX_TIMESTAMP(`in_date`)<?';
+	for ($csadff = 1; $csadff <= 7; ++$csadff) {
+	    $subcount[$csadff] = count(pdo_query($sql, $day[$csadff], $day[$csadff - 1]));
+	    $account[$csadff] = count(pdo_query($sql.' AND `result`=4', $day[$csadff], $day[$csadff - 1]));
+	}
+	?>
     var ctx = document.getElementById("myChart").getContext('2d');
     var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: [<?php for ($i =1 ; $i <= 7; ++$i) {
             echo '\''.date('Y-m-d', $day[8-$i]).'\'';
-            if ($i != 7) echo ',';
+            if ($i != 7) {
+                echo ',';
+            }
         }
-            ?>],
+	?>],
         datasets: [{
             label: '提交',
             data: [<?php for ($i =1 ; $i <= 7; ++$i) {
-            echo $subcount[8-$i];
-            if ($i != 7) echo ',';
-        }
-            ?>],
+                echo $subcount[8-$i];
+                if ($i != 7) {
+                    echo ',';
+                }
+            }
+	?>],
             backgroundColor: '#2185d0',
             borderColor: '#2185d0',
             borderWidth: 1
@@ -483,10 +489,12 @@ for ($csadff = 1; $csadff <= 7; ++$csadff) {
         {
             label: '正确',
             data: [<?php for ($i =1 ; $i <= 7; ++$i) {
-            echo $account[8-$i];
-            if ($i != 7) echo ',';
-        }
-            ?>],
+                echo $account[8-$i];
+                if ($i != 7) {
+                    echo ',';
+                }
+            }
+	?>],
             backgroundColor: '#4caf50',
             borderColor: '#4caf50',
             borderWidth: 1

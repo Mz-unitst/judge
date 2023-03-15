@@ -25,7 +25,7 @@
                 </div>
                 <div class="mdui-card-content">
                     <form id="frmSolution" action="submit.php" method="post" onsubmit='do_submit()'>
-                        <?php if (isset($id)){?>
+                        <?php if (isset($id)) {?>
                             <input id="problem_id" type="hidden" value="<?php echo $id; ?>" name="id">
                         <?php } else { ?>
                             <input id="cid" type="hidden" value="<?php echo $cid?>" name="cid">
@@ -37,35 +37,40 @@
                                 name="language" onChange="reloadtemplate($(this).val());">
                                 <?php
                                     $lang_count=count($language_ext);
-                                    
-                                    if(isset($_GET['langmask']))
-                                    $langmask=$_GET['langmask'];
-                                    else
-                                    $langmask=$OJ_LANGMASK;
-                                    
-                                    $lang=(~((int)$langmask))&((1<<($lang_count))-1);
-                                    
-                                    if(isset($_COOKIE['lastlang'])) $lastlang=$_COOKIE['lastlang'];
-                                    else $lastlang=0;
-                                    
-                                    for($i=0;$i<$lang_count;$i++){
-                                    if($lang&(1<<$i))
-                                        echo"<option value=$i ".( $lastlang==$i?"selected":"").">".$language_name[$i]."</option>";
-                                    }
-                                ?>
+
+    if (isset($_GET['langmask'])) {
+        $langmask=$_GET['langmask'];
+    } else {
+        $langmask=$OJ_LANGMASK;
+    }
+
+    $lang=(~((int)$langmask))&((1<<($lang_count))-1);
+
+    if (isset($_COOKIE['lastlang'])) {
+        $lastlang=$_COOKIE['lastlang'];
+    } else {
+        $lastlang=0;
+    }
+
+    for ($i=0;$i<$lang_count;$i++) {
+        if ($lang&(1<<$i)) {
+            echo"<option value=$i ".($lastlang==$i ? "selected" : "").">".$language_name[$i]."</option>";
+        }
+    }
+    ?>
                             </select>
                         </span>
 
-                        <?php if($OJ_ACE_EDITOR) { ?>
+                        <?php if ($OJ_ACE_EDITOR) { ?>
                             <pre style="width: 90%; height: 600; font-size: 13pt;" cols=180 rows=20
-                                id="source"><?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?></pre>
+                                id="source"><?php echo htmlentities($view_src, ENT_QUOTES, "UTF-8")?></pre>
                             <input type=hidden id="hide_source" name="source" value="" />
                         <?php } else { ?>
                             <textarea style="width:80%; height:600" cols=180 rows=20 id="source"
-                                name="source"><?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?></textarea>
+                                name="source"><?php echo htmlentities($view_src, ENT_QUOTES, "UTF-8")?></textarea>
                         <?php }?>
 
-                        <?php if (isset($OJ_TEST_RUN) && $OJ_TEST_RUN){?>
+                        <?php if (isset($OJ_TEST_RUN) && $OJ_TEST_RUN) {?>
                             <div class="mdui-row-sm-1 mdui-row-md-2 mdui-m-a-2" style="width: 80%; text-align: left;">
                                 <div class="mdui-col mdui-textfield mdui-textfield-floating-label">
                                     <label class="mdui-textfield-label">输入</label>
@@ -78,7 +83,7 @@
                             </div>
                         <?php } ?>
 
-                        <?php if($OJ_VCODE) {?>
+                        <?php if ($OJ_VCODE) {?>
                             <div>
                                 <div class="mdui-textfield mdui-textfield-floating-label" style="max-width: 200px; text-align: left; display: inline-block;">
                                     <label class="mdui-textfield-label">验证码</label>
@@ -98,7 +103,7 @@
                                 <button type="button" class="mdui-btn mdui-ripple mdui-color-teal-500" onclick="do_submit();">提交</button>
                             <?php } ?>
                             </div>
-                            <?php if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN){?>
+                            <?php if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN) {?>
                                 <div class="mdui-float-left" style="display: inline-block;">
                                     <button id="TestRun" class="mdui-btn mdui-ripple mdui-color-deep-purple" type="button"
                                         onclick="do_test_run()">自测调试</button>
@@ -117,8 +122,8 @@
     var i = 0;
     var using_blockly = false;
     var judge_result = [<?php
-      foreach($judge_result as $result){
-        echo "'$result',";
+      foreach ($judge_result as $result) {
+          echo "'$result',";
       }?> ''];
 
     function print_result(solution_id) {
@@ -187,24 +192,28 @@
     var count = 0;
 
     function encoded_submit() {
-        <?php if($OJ_VCODE) { ?>
+        <?php if ($OJ_VCODE) { ?>
         if (!$('#vcode-input').val()) {
             mdui.alert('请输入验证码！');
             return;
         }
         <?php } ?>
         
-        var mark = "<?php echo isset($id)?'problem_id':'cid';?>";
+        var mark = "<?php echo isset($id) ? 'problem_id' : 'cid';?>";
         var problem_id = document.getElementById(mark);
 
         if (typeof(editor) != "undefined") {
             $("#hide_source").val(editor.getValue());
         }
         if (mark == 'problem_id') {
-            problem_id.value = '<?php if(isset($id)) echo $id?>';
+            problem_id.value = '<?php if (isset($id)) {
+                echo $id;
+            }?>';
         }
         else {
-            problem_id.value = '<?php if(isset($cid))echo $cid?>';
+            problem_id.value = '<?php if (isset($cid)) {
+                echo $cid;
+            }?>';
         }
 
         document.getElementById("frmSolution").target = "_self";
@@ -221,14 +230,14 @@
     }
 
     function do_submit() {
-        <?php if($OJ_VCODE) { ?>
+        <?php if ($OJ_VCODE) { ?>
         if (!$('#vcode-input').val()) {
             mdui.alert('请输入验证码！');
             return;
         }
         <?php } ?>
 
-        <?php if($OJ_LONG_LOGIN && isset($_COOKIE[$OJ_NAME."_user"]) && isset($_COOKIE[$OJ_NAME."_check"])) { ?>
+        <?php if ($OJ_LONG_LOGIN && isset($_COOKIE[$OJ_NAME."_user"]) && isset($_COOKIE[$OJ_NAME."_check"])) { ?>
             let xhr = new XMLHttpRequest();
             xhr.open('GET', 'login.php', true);
             xhr.send();
@@ -242,13 +251,17 @@
             $("#hide_source").val(editor.getValue());
         }
 
-        var mark = "<?php echo isset($id)?'problem_id':'cid';?>";
+        var mark = "<?php echo isset($id) ? 'problem_id' : 'cid';?>";
         var problem_id = document.getElementById(mark);
 
         if (mark == 'problem_id')
-            problem_id.value = '<?php if (isset($id))echo $id?>';
+            problem_id.value = '<?php if (isset($id)) {
+                echo $id;
+            }?>';
         else
-            problem_id.value = '<?php if (isset($cid))echo $cid?>';
+            problem_id.value = '<?php if (isset($cid)) {
+                echo $cid;
+            }?>';
 
         document.getElementById("frmSolution").target = "_self";
         document.getElementById("frmSolution").submit();
@@ -257,7 +270,7 @@
     var handler_interval;
 
     function do_test_run() {
-        <?php if($OJ_VCODE) { ?>
+        <?php if ($OJ_VCODE) { ?>
         if (!$('#vcode-input').val()) {
             mdui.alert('请输入验证码！');
             return;
@@ -352,7 +365,7 @@
         var i = url.indexOf("sid=");
         if (i != -1) url = url.substring(0, i - 1);
 
-        <?php if (isset($OJ_APPENDCODE)&&$OJ_APPENDCODE){?>
+        <?php if (isset($OJ_APPENDCODE)&&$OJ_APPENDCODE) {?>
         if (confirm("<?php echo  $MSG_LOAD_TEMPLATE_CONFIRM?>"))
             document.location.href = url;
         <?php }?>
@@ -396,8 +409,8 @@
 
     <script language="Javascript" type="text/javascript" src="include/base64.js"></script>
 
-    <?php if($OJ_ACE_EDITOR){ ?>
-        <?php if(isset($MDUI_OFFLINE) && $MDUI_OFFLINE) { ?>
+    <?php if ($OJ_ACE_EDITOR) { ?>
+        <?php if (isset($MDUI_OFFLINE) && $MDUI_OFFLINE) { ?>
             <script src="<?php echo $OJ_CDN_URL.$path_fix."/"; ?>/ace/ace.min.js"></script>
             <script src="<?php echo $OJ_CDN_URL.$path_fix."/"; ?>/ace/ext-language_tools.min.js"></script>
             <script>

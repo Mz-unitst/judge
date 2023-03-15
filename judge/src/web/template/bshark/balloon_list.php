@@ -1,6 +1,6 @@
-<?php 
-  $show_title="$MSG_ERROR_INFO - $OJ_NAME";
-  include("template/$OJ_TEMPLATE/header.php");
+<?php
+$show_title="$MSG_ERROR_INFO - $OJ_NAME";
+include("template/$OJ_TEMPLATE/header.php");
 ?>
 <div class="ui positive icon message">
   <div class="content">
@@ -20,15 +20,15 @@
 	<table class="table table-striped content-box-header">
 <tr><td>id<td><?php echo $MSG_USER_ID?><td><?php echo $MSG_COLOR?><td><?php echo $MSG_STATUS?><td></tr>
 <?php
-foreach($view_balloon as $row){
-	echo "<tr>\n";
-	foreach($row as $table_cell){
-		echo "<td>";
-		echo $table_cell;
-		echo "</td>";
-	}
-		$i++;
-	echo "</tr>\n";
+foreach ($view_balloon as $row) {
+    echo "<tr>\n";
+    foreach ($row as $table_cell) {
+        echo "<td>";
+        echo $table_cell;
+        echo "</td>";
+    }
+    $i++;
+    echo "</tr>\n";
 }
 ?>
 </table>

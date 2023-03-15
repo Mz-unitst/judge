@@ -1,22 +1,25 @@
 <?php
         require_once(dirname(__FILE__)."/../../include/memcache.php");
-        function checkmail(){  // check if has mail
-          global $OJ_NAME;
-          $sql="SELECT count(1) FROM `mail` WHERE new_mail=1 AND `to_user`=?";
-          $result=pdo_query($sql,$_SESSION[$OJ_NAME.'_'.'user_id']);
-          if(!$result) return false;
-          $row=$result[0];
-          //if(intval($row[0])==0) return false;
-          $retmsg="<span id=red>(".$row[0].")</span>";
-          return $retmsg;
+        function checkmail()  // check if has mail
+        {global $OJ_NAME;
+            $sql="SELECT count(1) FROM `mail` WHERE new_mail=1 AND `to_user`=?";
+            $result=pdo_query($sql, $_SESSION[$OJ_NAME.'_'.'user_id']);
+            if (!$result) {
+                return false;
+            }
+            $row=$result[0];
+            //if(intval($row[0])==0) return false;
+            $retmsg="<span id=red>(".$row[0].")</span>";
+            return $retmsg;
         }
 
-        function get_menu_news() {
+        function get_menu_news()
+        {
             $result = "";
             $sql_news_menu = "select `news_id`,`title` FROM `news` WHERE `menu`=1 AND `title`!='faqs.cn' ORDER BY `importance` ASC,`time` DESC LIMIT 10";
-            $sql_news_menu_result = mysql_query_cache( $sql_news_menu );
-            if ( $sql_news_menu_result ) {
-                foreach ( $sql_news_menu_result as $row ) {
+            $sql_news_menu_result = mysql_query_cache($sql_news_menu);
+            if ($sql_news_menu_result) {
+                foreach ($sql_news_menu_result as $row) {
                     $result .= '<a class="item" href="/viewnews.php?id=' . $row['news_id'] . '">' ."<i class='star icon'></i>" . $row['title'] . '</a>';
                 }
             }
@@ -24,22 +27,24 @@
         }
         $url=basename($_SERVER['REQUEST_URI']);
         $dir=basename(getcwd());
-        if($dir=="discuss3") $path_fix="../";
-        else $path_fix="";
-        if(isset($OJ_NEED_LOGIN)&&$OJ_NEED_LOGIN&&(
-                  $url!='loginpage.php'&&
-                  $url!='lostpassword.php'&&
-                  $url!='lostpassword2.php'&&
-                  $url!='registerpage.php'
-                  ) && !isset($_SESSION[$OJ_NAME.'_'.'user_id'])){
-
-           header("location:".$path_fix."loginpage.php");
-           exit();
+        if ($dir=="discuss3") {
+            $path_fix="../";
+        } else {
+            $path_fix="";
+        }
+        if (isset($OJ_NEED_LOGIN)&&$OJ_NEED_LOGIN&&(
+            $url!='loginpage.php'&&
+            $url!='lostpassword.php'&&
+            $url!='lostpassword2.php'&&
+            $url!='registerpage.php'
+        ) && !isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {
+            header("location:".$path_fix."loginpage.php");
+            exit();
         }
 
-        if($OJ_ONLINE){
-                require_once($path_fix.'include/online.php');
-                $on = new online();
+        if ($OJ_ONLINE) {
+            require_once($path_fix.'include/online.php');
+            $on = new online();
         }
 
         $sql_news_menu_result_html = "";
@@ -50,7 +55,7 @@
                 $redis->connect($OJ_REDISSERVER, $OJ_REDISPORT);
 
                 if (isset($OJ_REDISAUTH)) {
-                  $redis->auth($OJ_REDISAUTH);
+                    $redis->auth($OJ_REDISAUTH);
                 }
                 $redisDataKey = $OJ_REDISQNAME . '_MENU_NEWS_CACHE';
                 if ($redis->exists($redisDataKey)) {
@@ -72,7 +77,7 @@
                 }
             }
         }
-?>
+        ?>
 
 <!DOCTYPE html>
 <html lang="cn" style="position:fixed; width: 100%; overflow: hidden; ">
@@ -108,57 +113,71 @@
 </head>
 
 <?php
-        if(!isset($_GET['spa'])){
-?>
+                if (!isset($_GET['spa'])) {
+                    ?>
     <body style="position: relative; margin-top: 49px; height: calc(100% - 49px); overflow-y: overlay; ">
     <div id="page-header" class="ui fixed borderless menu" style="position: fixed; height: 49px; z-index:99999">
         <div id="menu" class="ui stackable mobile ui container computer" style="margin-left:calc(10%)!important">
             <a class="header item"  href="/"><span
-                    style="font-family: 'Exo 2'; font-size: 1.5em; font-weight: 600; "><?php echo $domain==$DOMAIN?$OJ_NAME:ucwords($OJ_NAME)."'s OJ"?></span></a>
-            <a class="desktop-only item <?php if ($url=="") echo "active";?>" href="/"><i class="home icon"></i> <?php echo $MSG_HOME?></a>
+                    style="font-family: 'Exo 2'; font-size: 1.5em; font-weight: 600; "><?php echo $domain==$DOMAIN ? $OJ_NAME : ucwords($OJ_NAME)."'s OJ"?></span></a>
+            <a class="desktop-only item <?php if ($url=="") {
+                echo "active";
+            }?>" href="/"><i class="home icon"></i> <?php echo $MSG_HOME?></a>
           <?php
-            if(file_exists("moodle"))  // 如果存在moodle目录，自动添加链接
-            {
-              echo '<a class="item" href="moodle"><i class="group icon"></i>Moodle</a>';
+            if (file_exists("moodle")) {  // 如果存在moodle目录，自动添加链接
+                echo '<a class="item" href="moodle"><i class="group icon"></i>Moodle</a>';
             }
-            if(!isset($_GET['cid'])){
-          ?>
+            if (!isset($_GET['cid'])) {
+                ?>
 
-            <a class="item <?php if ($url=="problemset.php") echo "active";?>"
+            <a class="item <?php if ($url=="problemset.php") {
+                echo "active";
+            }?>"
                 href="<?php echo $path_fix?>problemset.php"><i class="list icon"></i><?php echo $MSG_PROBLEMS?> </a>
-            <a class="item <?php if ($url=="category.php") echo "active";?>"
+            <a class="item <?php if ($url=="category.php") {
+                echo "active";
+            }?>"
                 href="<?php echo $path_fix?>category.php"><i class="globe icon"></i><?php echo $MSG_SOURCE?></a>
-            <a class="item <?php if ($url=="contest.php") echo "active";?>" href="<?php echo $path_fix?>contest.php<?php if(isset($_SESSION[$OJ_NAME."_user_id"])) echo "?my" ?>" ><i
+            <a class="item <?php if ($url=="contest.php") {
+                echo "active";
+            }?>" href="<?php echo $path_fix?>contest.php<?php if (isset($_SESSION[$OJ_NAME."_user_id"])) {
+                echo "?my";
+            } ?>" ><i
                     class="trophy icon"></i> <?php echo $MSG_CONTEST?></a>
-            <a class="item <?php if ($url=="status.php") echo "active";?>" href="<?php echo $path_fix?>status.php"><i
+            <a class="item <?php if ($url=="status.php") {
+                echo "active";
+            }?>" href="<?php echo $path_fix?>status.php"><i
                     class="tasks icon"></i><?php echo $MSG_STATUS?></a>
-            <a class="desktop-only item <?php if ($url=="ranklist.php") echo "active";?> "
+            <a class="desktop-only item <?php if ($url=="ranklist.php") {
+                echo "active";
+            }?> "
                 href="<?php echo $path_fix?>ranklist.php"><i class="signal icon"></i> <?php echo $MSG_RANKLIST?></a>
             <!--<a class="item <?php //if ($url=="contest.php") echo "active";?>" href="/discussion/global"><i class="comments icon"></i> 讨论</a>-->
-            <a class="desktop-only item <?php if ($url=="faqs.php") echo "active";?>" href="<?php echo $path_fix?>faqs.php"><i
+            <a class="desktop-only item <?php if ($url=="faqs.php") {
+                echo "active";
+            }?>" href="<?php echo $path_fix?>faqs.php"><i
                     class="help circle icon"></i> <?php echo $MSG_FAQ?></a>
 
-              <?php if (isset($OJ_BBS)&& $OJ_BBS){ ?>
+              <?php if (isset($OJ_BBS)&& $OJ_BBS) { ?>
                   <a class='item' href="discuss.php"><i class="clipboard icon"></i> <?php echo $MSG_BBS?></a>
               <?php }
-
-            }
-                ?>
-            <?php if(isset($_GET['cid'])){
+              }
+                    ?>
+            <?php if (isset($_GET['cid'])) {
                 $cid=intval($_GET['cid']);
-            ?>
+                ?>
             <a id="" class="item" href="<?php echo $path_fix?>contest.php" ><i class="arrow left icon"></i><?php echo $MSG_CONTEST.$MSG_LIST?></a>
             <a id="" class="item active" href="<?php echo $path_fix?>contest.php?cid=<?php echo $cid?>" ><i class="list icon"></i><?php echo $MSG_PROBLEMS.$MSG_LIST?></a>
             <a id="" class="item active" href="<?php echo $path_fix?>status.php?cid=<?php echo $cid?>" ><i class="tasks icon"></i><?php echo $MSG_STATUS.$MSG_LIST?></a>
             <a id="" class="item active" href="<?php echo $path_fix?>contestrank.php?cid=<?php echo $cid?>" ><i class="numbered list icon"></i><?php echo $MSG_RANKLIST?></a>
             <a id="" class="item active" href="<?php echo $path_fix?>contestrank-oi.php?cid=<?php echo $cid?>" ><i class="child icon"></i>OI-<?php echo $MSG_RANKLIST?></a>
-                    <?php if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])){ ?>
+                    <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])) { ?>
                             <a id="" class="item active" href="<?php echo $path_fix?>conteststatistics.php?cid=<?php echo $cid?>" ><i class="eye icon"></i><?php echo $MSG_STATISTICS?></a>
                     <?php }  ?>
             <?php }  ?>
             <?php echo $sql_news_menu_result_html; ?>
             <div class="right menu">
-                <?php if(isset($_SESSION[$OJ_NAME.'_'.'user_id'])) { ?>
+                <?php if (isset($_SESSION[$OJ_NAME.'_'.'user_id'])) { ?>
                 <a href="<?php echo $path_fix?>/userinfo.php?user=<?php echo $_SESSION[$OJ_NAME.'_'.'user_id']?>"
                     style="color: inherit; ">
                     <div class="ui simple dropdown item">
@@ -167,29 +186,32 @@
                         <div class="menu">
                             <a class="item" href="<?php echo $path_fix?>modifypage.php"><i
                                     class="edit icon"></i><?php echo $MSG_REG_INFO;?></a>
-                                <?php if ($OJ_SaaS_ENABLE){ ?>
-                                <?php if($_SERVER['HTTP_HOST']==$DOMAIN)
-                                        echo  "<a class='item' href='http://".  $_SESSION[$OJ_NAME.'_'.'user_id'].".$DOMAIN'><i class='globe icon' ></i>MyOJ</a>";?>
+                                <?php if ($OJ_SaaS_ENABLE) { ?>
+                                <?php if ($_SERVER['HTTP_HOST']==$DOMAIN) {
+                                    echo  "<a class='item' href='http://".  $_SESSION[$OJ_NAME.'_'.'user_id'].".$DOMAIN'><i class='globe icon' ></i>MyOJ</a>";
+                                }?>
                                 <?php } ?>
-                            <?php if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])){ ?>
+                            <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])) { ?>
                             <a class="item" href="admin/"><i class="settings icon"></i><?php echo $MSG_ADMIN;?></a>
                             <?php }
-if(isset($_SESSION[$OJ_NAME.'_'.'balloon'])){
-  echo "<a class=item href='balloon.php'><i class='golf ball icon'></i>$MSG_BALLOON</a>";
-}
-                              if((isset($OJ_EXAM_CONTEST_ID)&&$OJ_EXAM_CONTEST_ID>0)||
-                                     (isset($OJ_ON_SITE_CONTEST_ID)&&$OJ_ON_SITE_CONTEST_ID>0)||
-                                     (isset($OJ_MAIL)&&!$OJ_MAIL)){
-                                      // mail can not use in contest or mail is turned off
-                              }else{
-                                    $mail=checkmail();
-                                    if($mail) echo "<a class='item mail' href=".$path_fix."mail.php><i class='mail icon'></i>$MSG_MAIL$mail</a>";
+                            if (isset($_SESSION[$OJ_NAME.'_'.'balloon'])) {
+                                echo "<a class=item href='balloon.php'><i class='golf ball icon'></i>$MSG_BALLOON</a>";
+                            }
+                              if ((isset($OJ_EXAM_CONTEST_ID)&&$OJ_EXAM_CONTEST_ID>0)||
+                                                                 (isset($OJ_ON_SITE_CONTEST_ID)&&$OJ_ON_SITE_CONTEST_ID>0)||
+                                                                 (isset($OJ_MAIL)&&!$OJ_MAIL)) {
+                                  // mail can not use in contest or mail is turned off
+                              } else {
+                                  $mail=checkmail();
+                                  if ($mail) {
+                                      echo "<a class='item mail' href=".$path_fix."mail.php><i class='mail icon'></i>$MSG_MAIL$mail</a>";
+                                  }
                               }
 
 
 
 
-                            ?>
+                    ?>
                             <a class="item" href="logout.php"><i class="power icon"></i><?php echo $MSG_LOGOUT;?></a>
                         </div>
                     </div>
@@ -201,7 +223,7 @@ if(isset($_SESSION[$OJ_NAME.'_'.'balloon'])){
                     <a class="ui button" style="margin-right: 0.5em; " href="loginpage.php">
                        <?php echo $MSG_LOGIN?>
                     </a>
-                    <?php if(isset($OJ_REGISTER)&&$OJ_REGISTER ){ ?>
+                    <?php if (isset($OJ_REGISTER)&&$OJ_REGISTER) { ?>
                     <a class="ui primary button" href="registerpage.php">
                        <?php echo $MSG_REGISTER?>
                     </a>

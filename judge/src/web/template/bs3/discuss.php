@@ -1,9 +1,9 @@
 <?php $show_title="$MSG_BBS - $OJ_NAME"; ?>
-<?php 
+<?php
 
-   $view_discuss=ob_get_contents();
-    ob_end_clean();
-   require_once(dirname(__FILE__)."/../../lang/$OJ_LANG.php");
+$view_discuss=ob_get_contents();
+ob_end_clean();
+require_once(dirname(__FILE__)."/../../lang/$OJ_LANG.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

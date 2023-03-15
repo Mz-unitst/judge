@@ -10,10 +10,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -22,13 +22,13 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-    
-require_once("../include/set_get_key.php");
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+
+	require_once("../include/set_get_key.php");
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -65,37 +65,40 @@ require_once("../include/set_get_key.php");
 								</div>
 								<div class="card-body">
 								    <?php
-$sql = "SELECT COUNT(*) AS ids FROM privilege WHERE rightstr IN ('administrator','source_browser','contest_creator','http_judge','problem_editor','password_setter','printer','balloon') ORDER BY user_id, rightstr";
-$result = pdo_query($sql);
-$row = $result[0];
+	$sql = "SELECT COUNT(*) AS ids FROM privilege WHERE rightstr IN ('administrator','source_browser','contest_creator','http_judge','problem_editor','password_setter','printer','balloon') ORDER BY user_id, rightstr";
+	$result = pdo_query($sql);
+	$row = $result[0];
 
-$ids = intval($row['ids']);
+	$ids = intval($row['ids']);
 
-$idsperpage = 25;
-$pages = intval(ceil($ids/$idsperpage));
+	$idsperpage = 25;
+	$pages = intval(ceil($ids/$idsperpage));
 
-if(isset($_GET['page'])){ $page = intval($_GET['page']);}
-else{ $page = 1;}
+	if (isset($_GET['page'])) {
+	    $page = intval($_GET['page']);
+	} else {
+	    $page = 1;
+	}
 
-$pagesperframe = 5;
-$frame = intval(ceil($page/$pagesperframe));
+	$pagesperframe = 5;
+	$frame = intval(ceil($page/$pagesperframe));
 
-$spage = ($frame-1)*$pagesperframe+1;
-$epage = min($spage+$pagesperframe-1, $pages);
+	$spage = ($frame-1)*$pagesperframe+1;
+	$epage = min($spage+$pagesperframe-1, $pages);
 
-$sid = ($page-1)*$idsperpage;
+	$sid = ($page-1)*$idsperpage;
 
-$sql = "";
-if(isset($_GET['keyword']) && $_GET['keyword']!=""){
-  $keyword = $_GET['keyword'];
-  $keyword = "%$keyword%";
-  $sql = "SELECT * FROM privilege WHERE (user_id LIKE ?) OR (rightstr LIKE ?) ORDER BY user_id, rightstr";
-  $result = pdo_query($sql,$keyword,$keyword);
-}else{
-  $sql = "SELECT * FROM privilege WHERE rightstr IN ('administrator','source_browser','contest_creator','http_judge','problem_editor','password_setter','printer','balloon') ORDER BY user_id, rightstr LIMIT $sid, $idsperpage";
-  $result = pdo_query($sql);
-}
-?>
+	$sql = "";
+	if (isset($_GET['keyword']) && $_GET['keyword']!="") {
+	    $keyword = $_GET['keyword'];
+	    $keyword = "%$keyword%";
+	    $sql = "SELECT * FROM privilege WHERE (user_id LIKE ?) OR (rightstr LIKE ?) ORDER BY user_id, rightstr";
+	    $result = pdo_query($sql, $keyword, $keyword);
+	} else {
+	    $sql = "SELECT * FROM privilege WHERE rightstr IN ('administrator','source_browser','contest_creator','http_judge','problem_editor','password_setter','printer','balloon') ORDER BY user_id, rightstr LIMIT $sid, $idsperpage";
+	    $result = pdo_query($sql);
+	}
+	?>
                                         <form>
                                             <div class="form-group">
                                                 <div class="input-group input-group-rounded col-md-4">
@@ -111,29 +114,28 @@ if(isset($_GET['keyword']) && $_GET['keyword']!=""){
       <td>移除</td>
     </tr>
     <?php
-    foreach($result as $row){
-      echo "<tr>";
-        echo "<td>".$row['user_id']."</td>";
-        echo "<td>".$row['rightstr']."</td>";
-        echo "<td><a href=privilege_delete.php?uid={$row['user_id']}&rightstr={$row['rightstr']}&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">Delete</a></td>";
-      echo "</tr>";
-    }
-    ?>
+	    foreach ($result as $row) {
+	        echo "<tr>";
+	        echo "<td>".$row['user_id']."</td>";
+	        echo "<td>".$row['rightstr']."</td>";
+	        echo "<td><a href=privilege_delete.php?uid={$row['user_id']}&rightstr={$row['rightstr']}&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">Delete</a></td>";
+	        echo "</tr>";
+	    }
+	?>
   </table>
   <?php
-if(!(isset($_GET['keyword']) && $_GET['keyword']!=""))
-{
-  echo "<ul class='pagination pagination-sm'>";
-  echo "<li class='page-item'><a href='privilege_list.php?page=".(strval(1))."'>&lt;&lt;</a></li>";
-  echo "<li class='page-item'><a href='privilege_list.php?page=".($page==1?strval(1):strval($page-1))."'>&lt;</a></li>";
-  for($i=$spage; $i<=$epage; $i++){
-    echo "<li class='".($page==$i?"active ":"")."page-item'><a title='go to page' href='privilege_list.php?page=".$i."'>".$i."</a></li>";
-  }
-  echo "<li class='page-item'><a href='privilege_list.php?page=".($page==$pages?strval($page):strval($page+1))."'>&gt;</a></li>";
-  echo "<li class='page-item'><a href='privilege_list.php?page=".(strval($pages))."'>&gt;&gt;</a></li>";
-  echo "</ul>";
+if (!(isset($_GET['keyword']) && $_GET['keyword']!="")) {
+    echo "<ul class='pagination pagination-sm'>";
+    echo "<li class='page-item'><a href='privilege_list.php?page=".(strval(1))."'>&lt;&lt;</a></li>";
+    echo "<li class='page-item'><a href='privilege_list.php?page=".($page==1 ? strval(1) : strval($page-1))."'>&lt;</a></li>";
+    for ($i=$spage; $i<=$epage; $i++) {
+        echo "<li class='".($page==$i ? "active " : "")."page-item'><a title='go to page' href='privilege_list.php?page=".$i."'>".$i."</a></li>";
+    }
+    echo "<li class='page-item'><a href='privilege_list.php?page=".($page==$pages ? strval($page) : strval($page+1))."'>&gt;</a></li>";
+    echo "<li class='page-item'><a href='privilege_list.php?page=".(strval($pages))."'>&gt;&gt;</a></li>";
+    echo "</ul>";
 }
-?>
+	?>
 								</div>
 							</div>
 						</div>

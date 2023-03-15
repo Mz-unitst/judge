@@ -15,16 +15,16 @@
                     <tbody>
                         <?php
                         $sql_news = "select * FROM `news` WHERE `defunct`!='Y' AND `title`!='faqs.cn' ORDER BY `importance` ASC,`time` DESC LIMIT 10";
-                        $result_news = mysql_query_cache( $sql_news );
-                        if ( $result_news ) {
-                            foreach ( $result_news as $row ) {
-                                echo "<tr>"."<td>"
-                                    ."<a href=\"viewnews.php?id=".$row["news_id"]."\">"
-                                    .$row["title"]."</a></td>"
-                                    ."<td>".$row["time"]."</td>"."</tr>";
-                            }
-                        }
-                        ?>
+$result_news = mysql_query_cache($sql_news);
+if ($result_news) {
+    foreach ($result_news as $row) {
+        echo "<tr>"."<td>"
+            ."<a href=\"viewnews.php?id=".$row["news_id"]."\">"
+            .$row["title"]."</a></td>"
+            ."<td>".$row["time"]."</td>"."</tr>";
+    }
+}
+?>
                     </tbody>
                 </table>
             </div>
@@ -34,15 +34,15 @@
                     <tbody>
 
                         <?php
-                        $sql_news = "select * FROM `news` WHERE `defunct`!='Y' AND `title`='$OJ_INDEX_NEWS_TITLE' ORDER BY `importance` ASC,`time` DESC LIMIT 10";
-                        $result_news = mysql_query_cache( $sql_news );
-                        if ( $result_news ) {
-                            foreach ( $result_news as $row ) {
-                                echo "<tr>"."<td>"
-                                    .bbcode_to_html($row["content"])."</td></tr>";
-                            }
-                        }
-                        ?>
+$sql_news = "select * FROM `news` WHERE `defunct`!='Y' AND `title`='$OJ_INDEX_NEWS_TITLE' ORDER BY `importance` ASC,`time` DESC LIMIT 10";
+$result_news = mysql_query_cache($sql_news);
+if ($result_news) {
+    foreach ($result_news as $row) {
+        echo "<tr>"."<td>"
+            .bbcode_to_html($row["content"])."</td></tr>";
+    }
+}
+?>
                     </tbody>
                 </table>
             </div>
@@ -59,18 +59,18 @@
                     </thead>
                     <tbody>
                     <?php
-                        $sql_problems = "select * FROM `problem` where defunct='N' ORDER BY `problem_id` DESC LIMIT 5";
-                        $result_problems = mysql_query_cache( $sql_problems );
-                        if ( $result_problems ) {
-                            $i = 1;
-                            foreach ( $result_problems as $row ) {
-                                echo "<tr>"."<td>"
-                                    ."<a href=\"problem.php?id=".$row["problem_id"]."\">"
-                                    .$row["title"]."</a></td>"
-                                    ."<td>".substr($row["in_date"],0,10)."</td>"."</tr>";
-                            }
-                        }
-                    ?>
+$sql_problems = "select * FROM `problem` where defunct='N' ORDER BY `problem_id` DESC LIMIT 5";
+$result_problems = mysql_query_cache($sql_problems);
+if ($result_problems) {
+    $i = 1;
+    foreach ($result_problems as $row) {
+        echo "<tr>"."<td>"
+            ."<a href=\"problem.php?id=".$row["problem_id"]."\">"
+            .$row["title"]."</a></td>"
+            ."<td>".substr($row["in_date"], 0, 10)."</td>"."</tr>";
+    }
+}
+?>
                     </tbody>
                 </table>
             </div>
@@ -97,18 +97,18 @@
                     </thead>
                     <tbody>
                     <?php
-                        $sql_contests = "select * FROM `contest` where defunct='N' ORDER BY `contest_id` DESC LIMIT 5";
-                        $result_contests = mysql_query_cache( $sql_contests );
-                        if ( $result_contests ) {
-                            $i = 1;
-                            foreach ( $result_contests as $row ) {
-                                echo "<tr>"."<td>"
-                                    ."<a href=\"contest.php?cid=".$row["contest_id"]."\">"
-                                    .$row["title"]."</a></td>"
-                                    ."<td>".$row["start_time"]."</td>"."</tr>";
-                            }
-                        }
-                    ?>
+    $sql_contests = "select * FROM `contest` where defunct='N' ORDER BY `contest_id` DESC LIMIT 5";
+$result_contests = mysql_query_cache($sql_contests);
+if ($result_contests) {
+    $i = 1;
+    foreach ($result_contests as $row) {
+        echo "<tr>"."<td>"
+            ."<a href=\"contest.php?cid=".$row["contest_id"]."\">"
+            .$row["title"]."</a></td>"
+            ."<td>".$row["start_time"]."</td>"."</tr>";
+    }
+}
+?>
                     </tbody>
                 </table>
             </div>

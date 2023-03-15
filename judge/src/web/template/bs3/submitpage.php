@@ -20,21 +20,25 @@
 </head>
 
 <body>
-<div <?php if (!isset($_GET['spa'])) echo 'class="container"' ?> >
+<div <?php if (!isset($_GET['spa'])) {
+    echo 'class="container"';
+} ?> >
     <?php include("template/$OJ_TEMPLATE/nav.php");?>     
     <!-- Main component for a primary marketing message or call to action -->
-    <div <?php if (!isset($_GET['spa'])) echo 'class="jumbotron"' ?> >
+    <div <?php if (!isset($_GET['spa'])) {
+        echo 'class="jumbotron"';
+    } ?> >
       <center>
         <script src="<?php echo $OJ_CDN_URL?>include/checksource.js"></script>
         
         <form id=frmSolution action="submit.php" method="post" onsubmit='do_submit()'>
-          <?php if (isset($id)){?>
+          <?php if (isset($id)) {?>
             <?php echo $MSG_PROBLEM_ID." : "?> <span class=blue><?php echo $id?></span>
             <input id=problem_id type='hidden' value='<?php echo $id?>' name="id" >
           <?php } else {
-          //$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-          //if ($pid>25) $pid=25;
-          ?>
+              //$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+              //if ($pid>25) $pid=25;
+              ?>
             <?php echo $MSG_PROBLEM_ID." : "?> <span class=blue><?php echo chr($pid+ord('A'))?></span>
              of Contest <span class=blue> <?php echo $cid?> </span>
             <input id="cid" type='hidden' value='<?php echo $cid?>' name="cid">
@@ -44,48 +48,56 @@
           <span id="language_span"><?php echo $MSG_LANG?>:
             <select id="language" name="language" onChange="reloadtemplate($(this).val());" >
               <?php
-                $lang_count=count($language_ext);
-                
-                if(isset($_GET['langmask']))
-                  $langmask=$_GET['langmask'];
-                else
-                  $langmask=$OJ_LANGMASK;
-                
-                $lang=(~((int)$langmask))&((1<<($lang_count))-1);
-                
-                $lastlang=$_COOKIE['lastlang'];
-                if($lastlang=="undefined") $lastlang=1;    // default C++ 
-                
-                for($i=0;$i<$lang_count;$i++){
-                  if($lang&(1<<$i))
-                    echo"<option value=$i ".( $lastlang==$i?"selected":"").">".$language_name[$i]."</option>";
-                }
-              ?>
+                    $lang_count=count($language_ext);
+
+  if (isset($_GET['langmask'])) {
+      $langmask=$_GET['langmask'];
+  } else {
+      $langmask=$OJ_LANGMASK;
+  }
+
+  $lang=(~((int)$langmask))&((1<<($lang_count))-1);
+
+  $lastlang=$_COOKIE['lastlang'];
+  if ($lastlang=="undefined") {
+      $lastlang=1;
+  }    // default C++
+
+  for ($i=0;$i<$lang_count;$i++) {
+      if ($lang&(1<<$i)) {
+          echo"<option value=$i ".($lastlang==$i ? "selected" : "").">".$language_name[$i]."</option>";
+      }
+  }
+  ?>
             </select>
           </span>
 		
-          <?php if($OJ_VCODE){?>
+          <?php if ($OJ_VCODE) {?>
             <?php echo $MSG_VCODE?>:
             <input name="vcode" size=4 type=text> <img id="vcode" alt="click to change" onclick="this.src='vcode.php?'+Math.random()">*
           <?php }?>
 
           <input id="Submit" class="btn btn-info btn-sm" type=button value="<?php echo $MSG_SUBMIT?>" onclick="do_submit();" >
 		
-          <?php if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN){?>
+          <?php if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN) {?>
             <input id="TestRun" class="btn btn-warning btn-sm" type=button value="<?php echo $MSG_TR?>" onclick=do_test_run();>
             <span class="btn" id=result>状态</span>
           <?php }?>
 
-	  <?php if($OJ_ACE_EDITOR){
-			if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN) $height="400px";else $height="550px";
-		?>
-	    <pre style="width:80%;height:<?php echo $height?>;font-size:13pt" cols=180 rows=20 id="source"><?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?></pre>
+	  <?php if ($OJ_ACE_EDITOR) {
+	      if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN) {
+	          $height="400px";
+	      } else {
+	          $height="550px";
+	      }
+	      ?>
+	    <pre style="width:80%;height:<?php echo $height?>;font-size:13pt" cols=180 rows=20 id="source"><?php echo htmlentities($view_src, ENT_QUOTES, "UTF-8")?></pre>
             <input type=hidden id="hide_source" name="source" value=""/>
-          <?php }else{ ?>
-            <textarea style="width:80%;height:600" cols=180 rows=20 id="source" name="source"> <?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?></textarea>
+          <?php } else { ?>
+            <textarea style="width:80%;height:600" cols=180 rows=20 id="source" name="source"> <?php echo htmlentities($view_src, ENT_QUOTES, "UTF-8")?></textarea>
           <?php }?>
 
-          <?php if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN){?>
+          <?php if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN) {?>
             <?php echo $MSG_Input?>:
             <textarea style="width:30%" cols=40 rows=5 id="input_text" name="input_text" ><?php echo $view_sample_input?></textarea>
 
@@ -94,13 +106,13 @@
           <?php } ?>
 
 
-          <?php if (isset($OJ_ENCODE_SUBMIT)&&$OJ_ENCODE_SUBMIT){?>
+          <?php if (isset($OJ_ENCODE_SUBMIT)&&$OJ_ENCODE_SUBMIT) {?>
             <input class="btn btn-success" title="WAF gives you reset ? try this." type=button value="Encoded <?php echo $MSG_SUBMIT?>"  onclick="encoded_submit();">
             <input type=hidden id="encoded_submit_mark" name="reverse2" value="reverse">
           <?php }?>
 
 
-          <?php if (isset($OJ_BLOCKLY)&&$OJ_BLOCKLY){?>
+          <?php if (isset($OJ_BLOCKLY)&&$OJ_BLOCKLY) {?>
             <input id="blockly_loader" type=button class="btn" onclick="openBlockly()" value="<?php echo $MSG_BLOCKLY_OPEN?>" style="color:white;background-color:rgb(169,91,128)">
             <input id="transrun" type=button  class="btn" onclick="loadFromBlockly() " value="<?php echo $MSG_BLOCKLY_TEST?>" style="display:none;color:white;background-color:rgb(90,164,139)">
             <div id="blockly" class="center">Blockly</div>
@@ -122,8 +134,8 @@
     var i = 0;
     var using_blockly = false;
     var judge_result = [<?php
-      foreach($judge_result as $result){
-        echo "'$result',";
+      foreach ($judge_result as $result) {
+          echo "'$result',";
       }?>''];
     
     function print_result(solution_id)
@@ -208,15 +220,19 @@
     var count=0;
 
     function encoded_submit(){
-      var mark="<?php echo isset($id)?'problem_id':'cid';?>";
+      var mark="<?php echo isset($id) ? 'problem_id' : 'cid';?>";
       var problem_id=document.getElementById(mark);
 
       if(typeof(editor) != "undefined")
         $("#hide_source").val(editor.getValue());
       if(mark=='problem_id')
-        problem_id.value='<?php if(isset($id)) echo $id?>';
+        problem_id.value='<?php if (isset($id)) {
+            echo $id;
+        }?>';
       else
-        problem_id.value='<?php if(isset($cid))echo $cid?>';
+        problem_id.value='<?php if (isset($cid)) {
+            echo $cid;
+        }?>';
 
       document.getElementById("frmSolution").target="_self";
       document.getElementById("encoded_submit_mark").name="encoded_submit";
@@ -234,7 +250,9 @@
     }
 
     function do_submit(){
-      <?php if($OJ_LONG_LOGIN==true&&isset($_COOKIE[$OJ_NAME."_user"])&&isset($_COOKIE[$OJ_NAME."_check"]))echo"let xhr=new XMLHttpRequest();xhr.open('GET','login.php',true);xhr.send();";?>
+      <?php if ($OJ_LONG_LOGIN==true&&isset($_COOKIE[$OJ_NAME."_user"])&&isset($_COOKIE[$OJ_NAME."_check"])) {
+          echo"let xhr=new XMLHttpRequest();xhr.open('GET','login.php',true);xhr.send();";
+      }?>
       if(using_blockly) 
         translate();
      
@@ -242,13 +260,17 @@
         $("#hide_source").val(editor.getValue());
       }
 
-      var mark="<?php echo isset($id)?'problem_id':'cid';?>";
+      var mark="<?php echo isset($id) ? 'problem_id' : 'cid';?>";
       var problem_id=document.getElementById(mark);
 
       if(mark=='problem_id')
-        problem_id.value='<?php if (isset($id))echo $id?>';
+        problem_id.value='<?php if (isset($id)) {
+            echo $id;
+        }?>';
       else
-        problem_id.value='<?php if (isset($cid))echo $cid?>';
+        problem_id.value='<?php if (isset($cid)) {
+            echo $cid;
+        }?>';
 
       document.getElementById("frmSolution").target="_self";
       document.getElementById("frmSolution").submit();
@@ -272,7 +294,7 @@
 
       if(tb!=null) tb.innerHTML=loader;
 
-      var mark="<?php echo isset($id)?'problem_id':'cid';?>";
+      var mark="<?php echo isset($id) ? 'problem_id' : 'cid';?>";
       var problem_id=document.getElementById(mark);
       problem_id.value=-problem_id.value;
       document.getElementById("frmSolution").target="testRun";
@@ -326,7 +348,7 @@
       var i=url.indexOf("sid=");
       if(i!=-1) url=url.substring(0,i-1);
       
-      <?php if (isset($OJ_APPENDCODE)&&$OJ_APPENDCODE){?>
+      <?php if (isset($OJ_APPENDCODE)&&$OJ_APPENDCODE) {?>
         if(confirm("<?php echo  $MSG_LOAD_TEMPLATE_CONFIRM?>"))
           document.location.href=url;
       <?php }?>
@@ -360,7 +382,7 @@
     }
 
    function autoSave(){
-        var mark="<?php echo isset($id)?'problem_id':'cid';?>";
+        var mark="<?php echo isset($id) ? 'problem_id' : 'cid';?>";
         var problem_id=$("#"+mark).val();
 	if(!!localStorage){
 		let key="<?php echo $_SESSION[$OJ_NAME.'_user_id']?>source:"+location.href;
@@ -399,7 +421,7 @@
 
   <script language="Javascript" type="text/javascript" src="<?php echo $OJ_CDN_URL?>include/base64.js"></script>
 
-  <?php if($OJ_ACE_EDITOR){ ?>
+  <?php if ($OJ_ACE_EDITOR) { ?>
     <script src="<?php echo $OJ_CDN_URL?>ace/ace.js"></script>
 
     <script src="<?php echo $OJ_CDN_URL?>ace/ext-language_tools.js"></script>
@@ -408,7 +430,7 @@
       ace.require("<?php echo $OJ_CDN_URL?>ace/ext/language_tools");
       var editor = ace.edit("source");
       editor.setTheme("ace/theme/chrome");
-      switchLang(<?php echo isset($lastlang)?$lastlang:0 ;  ?>);
+      switchLang(<?php echo isset($lastlang) ? $lastlang : 0 ;  ?>);
       editor.setOptions({
         enableBasicAutocompletion: true,
         enableSnippets: true,

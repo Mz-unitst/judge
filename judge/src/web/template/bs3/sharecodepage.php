@@ -25,7 +25,7 @@
       <div class="jumbotron">
 
   <center>
-      <?php if($readOnly) {?>
+      <?php if ($readOnly) {?>
           <br>
           <span class="label label-primary">author:</span> <a href="userinfo.php?user=<?php echo $author ?>"><?php echo $author ?></a>
           <span class="label label-primary">language:</span> <?php echo  $language ?>
@@ -33,7 +33,7 @@
           <br>
       <?php } ?>
 
-<?php if(!$readOnly){?>
+<?php if (!$readOnly) {?>
 <div><label for="#title">Title</label><input type="text" id="title" value="<?php echo $title?>"></div>
 <span id="language_span">Language:
 <select id="language" name="language" >
@@ -48,11 +48,11 @@
 <br>
 </span>
 
-    <pre id="code" cols=180 rows=20 class="ace_editor" style="min-height:600px;width: 80%"><textarea id="source" class="ace_text-input"><?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?></textarea></pre>
-    <?php if(!$readOnly){?>
+    <pre id="code" cols=180 rows=20 class="ace_editor" style="min-height:600px;width: 80%"><textarea id="source" class="ace_text-input"><?php echo htmlentities($view_src, ENT_QUOTES, "UTF-8")?></textarea></pre>
+    <?php if (!$readOnly) {?>
         <button class="btn btn-info" type="button" onclick="submitCode()"><?php echo $MSG_SUBMIT?></button>
     <?php } ?>
-    <?php if($isOwner){?>
+    <?php if ($isOwner) {?>
       <button  class="btn btn-danger" type="button" onclick="deleteCode(<?php echo $sid?>)">DELETE</button>
     <?php } ?>
 </center>
@@ -99,7 +99,7 @@
             editor.session.setMode("ace/mode/" + lan);
         }
 
-        <?php if(!$readOnly){?>
+        <?php if (!$readOnly) {?>
         function submitCode() {
             var code = editor.getValue();
             var title=$("#title").val().trim();
@@ -118,8 +118,8 @@
                 type: "POST",
                 url: "./sharecodepage.php",
                 data: {
-                    <?php if($isOwner){
-                    echo '"sid": '.$sid.',';
+                    <?php if ($isOwner) {
+                        echo '"sid": '.$sid.',';
                     }?>
                     "title":title,
                     "code": code,
@@ -139,8 +139,8 @@
             });
         }
         <?php }?>
-        <?php if($isOwner){?>
-        <?php //如果是作者本人浏览代码，会显示选择语言的selector 这个时候就要初始化一下selector了 ?>
+        <?php if ($isOwner) {?>
+        <?php //如果是作者本人浏览代码，会显示选择语言的selector 这个时候就要初始化一下selector了?>
         editor.session.setMode("ace/mode/<?php echo $language?>");
         $("#language").val("<?php echo $language?>");
         function deleteCode(sid) {

@@ -8,11 +8,11 @@
 	</title>
 	<?php require("./template/bshark/header-files.php"); ?>
 	<?php
-	function deleteFkingOriginStyle($e)
-	{
-		return substr($e, 18, -6);
-	}
-	?>
+    function deleteFkingOriginStyle($e)
+    {
+        return substr($e, 18, -6);
+    }
+		?>
 </head>
 
 <body>
@@ -44,36 +44,38 @@
 				<div class="ui container center aligned">
 					<div class="ui borderless tiny menu pagination">
 						<?php
-						$nowStart = 0;
-						if (isset($_GET["start"]))
-							$nowStart = intval($_GET["start"]);
-						$qs = "";
-						if (isset($_GET['prefix'])) {
-							$qs .= "&prefix=" . htmlentities($_GET['prefix'], ENT_QUOTES, "utf-8");
-						}
-						if (isset($scope)) {
-							$qs .= "&scope=" . htmlentities($scope, ENT_QUOTES, "utf-8");
-						}
+		                    $nowStart = 0;
+		if (isset($_GET["start"])) {
+		    $nowStart = intval($_GET["start"]);
+		}
+		$qs = "";
+		if (isset($_GET['prefix'])) {
+		    $qs .= "&prefix=" . htmlentities($_GET['prefix'], ENT_QUOTES, "utf-8");
+		}
+		if (isset($scope)) {
+		    $qs .= "&scope=" . htmlentities($scope, ENT_QUOTES, "utf-8");
+		}
 
-						for ($i = 0; $i < $view_total; $i += $page_size) {
-							echo "<a class='item";
-							if (strval($i) == $nowStart)
-								echo " active";
-							echo "' href='./ranklist.php?start=" . strval($i) . $qs . "'>";
-							echo strval($i + 1);
-							echo "-";
-							echo strval($i + $page_size);
-							echo "</a>";
-						}
-						?>
+		for ($i = 0; $i < $view_total; $i += $page_size) {
+		    echo "<a class='item";
+		    if (strval($i) == $nowStart) {
+		        echo " active";
+		    }
+		    echo "' href='./ranklist.php?start=" . strval($i) . $qs . "'>";
+		    echo strval($i + 1);
+		    echo "-";
+		    echo strval($i + $page_size);
+		    echo "</a>";
+		}
+		?>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="ui stackable three column grid">
 			<?php
-			foreach ($view_rank as $row) {
-				?>
+            foreach ($view_rank as $row) {
+                ?>
 				<div class="column">
 					<div class="card card-rank">
 						<div class="card-body">
@@ -98,8 +100,8 @@
 					</div>
 				</div>
 			<?php
-			}
-			?>
+            }
+		?>
 		</div>
 	</div>
 	<?php require("./template/bshark/footer.php"); ?>

@@ -7,7 +7,7 @@
         <div class="mdui-toolbar-spacer"></div>
         <div class="mdui-btn" mdui-tooltip="{content: '账户'}" mdui-menu="{target: '#account-menu', position: 'bottom', fixed: true}">
             <i class="mdui-icon material-icons">account_circle</i>
-            <?php if(isset($_SESSION[$OJ_NAME.'_'.'user_id'])) { ?>
+            <?php if (isset($_SESSION[$OJ_NAME.'_'.'user_id'])) { ?>
                 <?php echo $_SESSION[$OJ_NAME.'_'.'user_id']; ?>
             <?php } else { ?>
                 请登录
@@ -15,7 +15,7 @@
         </div>
         <ul class="mdui-menu mdui-menu-cascade" id="account-menu">
             <?php
-            if(isset($_SESSION[$OJ_NAME.'_'.'user_id'])){
+            if (isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {
                 $sid = $_SESSION[$OJ_NAME.'_'.'user_id']; ?>
                 <li class="mdui-menu-item">
                     <a href="<?php echo $path_fix; ?>userinfo.php?user=<?php echo $sid; ?>"
@@ -31,7 +31,7 @@
                 <li class="mdui-menu-item">
                     <a href="<?php echo $path_fix; ?>loginpage.php" class="mdui-ripple">登录</a>
                 </li>
-                <?php if(isset($OJ_REGISTER) && $OJ_REGISTER){ ?>
+                <?php if (isset($OJ_REGISTER) && $OJ_REGISTER) { ?>
                     <li class="mdui-menu-item">
                         <a href="<?php echo $path_fix; ?>registerpage.php" class="mdui-ripple">注册</a>
                     </li>

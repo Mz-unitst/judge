@@ -24,7 +24,7 @@
               <input name="password" placeholder="密码" type="password" id="password">
             </div>
           </div>
-          <?php if($OJ_VCODE){?>
+          <?php if ($OJ_VCODE) {?>
             <div class="field">
               <div class="ui left icon input">
                 <i class="lock icon"></i>

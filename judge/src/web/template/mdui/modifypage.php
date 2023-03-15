@@ -38,7 +38,7 @@
                             style="width: calc(100% - 50px); display: inline-block; margin-left: 45px;">
                             <label class="mdui-textfield-label">昵称</label>
                             <input class="mdui-textfield-input" id="nick" name="nick"
-                                value="<?php echo htmlentities($row['nick'],ENT_QUOTES,"UTF-8")?>" type="text" required />
+                                value="<?php echo htmlentities($row['nick'], ENT_QUOTES, "UTF-8")?>" type="text" required />
                             <div class="mdui-textfield-error">请输入昵称</div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                             style="width: calc(100% - 50px); display: inline-block; margin-left: 45px;">
                             <label class="mdui-textfield-label">邮箱</label>
                             <input class="mdui-textfield-input" id="email" name="email"
-                                type="email" value="<?php echo htmlentities($row['email'],ENT_QUOTES,"UTF-8")?>"/>
+                                type="email" value="<?php echo htmlentities($row['email'], ENT_QUOTES, "UTF-8")?>"/>
                             <div class="mdui-textfield-error">请输入一个合法的邮箱</div>
                         </div>
                     </div>

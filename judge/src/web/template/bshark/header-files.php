@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once("./template/bshark/theme.conf.php");?>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />

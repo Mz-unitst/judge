@@ -6,10 +6,10 @@
 <link rel="icon" href="/favicon.ico">
 
 <!-- Title -->
-<title><?php echo ($page_title?$page_title.' - ':'').$OJ_NAME; ?></title>
+<title><?php echo($page_title ? $page_title.' - ' : '').$OJ_NAME; ?></title>
 
 <!-- MDUI -->
-<?php if($MDUI_OFFLINE) { ?>
+<?php if ($MDUI_OFFLINE) { ?>
     <link rel="stylesheet" href="<?php echo $OJ_CDN_URL.$path_fix."template/$OJ_TEMPLATE"; ?>/assets/css/mdui.min.css">
     <script src="<?php echo $OJ_CDN_URL.$path_fix."template/$OJ_TEMPLATE"; ?>/assets/js/mdui.min.js"></script>
 <?php } else { ?>
@@ -44,7 +44,7 @@ var $ = mdui.$;
 </style>
 
 <!-- Fonts -->
-<?php if(isset($MDUI_OFFLINE) && $MDUI_OFFLINE) { ?>
+<?php if (isset($MDUI_OFFLINE) && $MDUI_OFFLINE) { ?>
     <link rel="stylesheet" href="<?php echo $OJ_CDN_URL.$path_fix."template/$OJ_TEMPLATE"; ?>/assets/css/fonts.css">
 <?php } else { ?>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
@@ -70,16 +70,21 @@ var $ = mdui.$;
     console.log('\n GitHub Homepage: https://github.com/zhblue/hustoj \n Document: https://zhblue.github.io/hustoj \n Bug report URL: https://github.com/zhblue/hustoj/issues \n \n%c ★ Please give us a star on GitHub! ★ %c \n', 'color: red;', '')
 </script>
 
-<?php 
-if(stripos($_SERVER['REQUEST_URI'],"template")!==false) exit();
+<?php
+if (stripos($_SERVER['REQUEST_URI'], "template")!==false) {
+    exit();
+}
 
 $url = basename($_SERVER['REQUEST_URI']);
 $dir = basename(getcwd());
 
-if($dir == "discuss3") $path_fix="../";
-else $path_fix="";
+if ($dir == "discuss3") {
+    $path_fix="../";
+} else {
+    $path_fix="";
+}
 
-if(isset($OJ_NEED_LOGIN) && $OJ_NEED_LOGIN
+if (isset($OJ_NEED_LOGIN) && $OJ_NEED_LOGIN
         && ($url!='loginpage.php' && $url!='lostpassword.php'
             && $url!='lostpassword2.php' && $url!='registerpage.php')
         && !isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {
@@ -89,7 +94,7 @@ if(isset($OJ_NEED_LOGIN) && $OJ_NEED_LOGIN
 
 $_SESSION[$OJ_NAME.'_'.'profile_csrf'] = rand();
 
-if($OJ_ONLINE){
+if ($OJ_ONLINE) {
     require_once($path_fix.'include/online.php');
     $on = new online();
 }
@@ -97,7 +102,7 @@ if($OJ_ONLINE){
 
 <!-- KaTeX -->
 <script> var katex_options = { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false}, {left: '\\[', right: '\\]', display: true} ] }; </script>
-<?php if(isset($MDUI_OFFLINE) && $MDUI_OFFLINE) { ?>
+<?php if (isset($MDUI_OFFLINE) && $MDUI_OFFLINE) { ?>
     <link rel="stylesheet" href="<?php echo $OJ_CDN_URL.$path_fix."template/$OJ_TEMPLATE"; ?>/assets/css/katex.min.css"
         as="style" onload="this.onload=null, this.rel='stylesheet'">
     <script defer src="<?php echo $OJ_CDN_URL.$path_fix."template/$OJ_TEMPLATE"; ?>/assets/js/katex.min.js"></script>
@@ -112,7 +117,7 @@ if($OJ_ONLINE){
 <?php } ?>
 
 <!-- Highlight.js -->
-<?php if(isset($MDUI_OFFLINE) && $MDUI_OFFLINE) { ?>
+<?php if (isset($MDUI_OFFLINE) && $MDUI_OFFLINE) { ?>
     <link rel="stylesheet" href="<?php echo $OJ_CDN_URL.$path_fix."template/$OJ_TEMPLATE"; ?>/assets/css/atom-one-light.min.css">
     <script src="<?php echo $OJ_CDN_URL.$path_fix."template/$OJ_TEMPLATE"; ?>/assets/js/highlight.pack.js"
         onload="hljs.initHighlightingOnLoad();"></script>

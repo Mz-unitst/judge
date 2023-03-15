@@ -1,8 +1,8 @@
 <?php
 require_once("admin-header.php");
-if(!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-  echo "<a href='../loginpage.php'>Please Login First!</a>";
-  exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 
 echo "<hr>";
@@ -12,25 +12,25 @@ include_once("kindeditor.php");
 ?>
 
 <?php
-if(isset($_GET['cid'])){
-  $cid = intval($_GET['cid']);
-  $sql = "SELECT * FROM news WHERE `news_id`=?";
-  $result = pdo_query($sql,$cid);
-  $row = $result[0];
-  $title = $row['title'];
-  $content = $row['content'];
-  $defunct = $row['defunct'];
+if (isset($_GET['cid'])) {
+    $cid = intval($_GET['cid']);
+    $sql = "SELECT * FROM news WHERE `news_id`=?";
+    $result = pdo_query($sql, $cid);
+    $row = $result[0];
+    $title = $row['title'];
+    $content = $row['content'];
+    $defunct = $row['defunct'];
 }
 ?>
 
 <div class="container">
   <form method=POST action=news_add.php>
     <p align=left>
-      <?php echo $MSG_TITLE?>:<input type=text name=title size=71 value='<?php echo isset($title)?$title."-Copy":""?>'>
+      <?php echo $MSG_TITLE?>:<input type=text name=title size=71 value='<?php echo isset($title) ? $title."-Copy" : ""?>'>
     </p>
     <p align=left>
       <textarea class=kindeditor name=content>
-        <?php echo isset($content)?$content:""?>
+        <?php echo isset($content) ? $content : ""?>
       </textarea>
     </p>
     <p>

@@ -1,11 +1,11 @@
 <?php
-          if($pr_flag){
-            $show_title="P$id - ".$row['title']." - $OJ_NAME";
-          }else{
-            $id=$row['problem_id'];
-            $show_title="$MSG_PROBLEM ".$PID[$pid].": ".$row['title']." - $OJ_NAME";
+          if ($pr_flag) {
+              $show_title="P$id - ".$row['title']." - $OJ_NAME";
+          } else {
+              $id=$row['problem_id'];
+              $show_title="$MSG_PROBLEM ".$PID[$pid].": ".$row['title']." - $OJ_NAME";
           }
-?>
+          ?>
 <?php include("template/$OJ_TEMPLATE/header.php");?>
 <style>
 .ace_cursor {
@@ -38,19 +38,20 @@ div[class*=ace_br] {
     <div class="row">
       <h1 class="ui header">
         <?php
-          if($pr_flag){
-            echo "$id: ".$row['title'];
-            // <%= problem.title %><% if (problem.allowedEdit && !problem.is_public) { %><span class="ui tiny red label">未公开</span><% } %>";
-            //echo "<title>$MSG_PROBLEM".$row['problem_id']."--". $row['title']."</title>";
-            //echo "<center><h2><strong>$id: ".$row['title']."</strong></h2>";
-          }else{
-            $id=$row['problem_id'];
-            //echo "<title>$MSG_PROBLEM ".$PID[$pid].": ".$row['title']." </title>";
-            echo "$MSG_PROBLEM ".$PID[$pid].": ".$row['title'];
-          }
-          if($row['defunct']=="Y")
-          echo "<span class=\"p-label ui tiny red label\">$MSG_RESERVED</span>";
-        ?>
+                    if ($pr_flag) {
+                        echo "$id: ".$row['title'];
+                    // <%= problem.title %><% if (problem.allowedEdit && !problem.is_public) { %><span class="ui tiny red label">未公开</span><% } %>";
+                    //echo "<title>$MSG_PROBLEM".$row['problem_id']."--". $row['title']."</title>";
+                    //echo "<center><h2><strong>$id: ".$row['title']."</strong></h2>";
+                    } else {
+                        $id=$row['problem_id'];
+                        //echo "<title>$MSG_PROBLEM ".$PID[$pid].": ".$row['title']." </title>";
+                        echo "$MSG_PROBLEM ".$PID[$pid].": ".$row['title'];
+                    }
+                    if ($row['defunct']=="Y") {
+                        echo "<span class=\"p-label ui tiny red label\">$MSG_RESERVED</span>";
+                    }
+          ?>
       </h1>
     </div>
       <div class="row" style="margin-top: -15px">
@@ -60,7 +61,11 @@ div[class*=ace_br] {
       </div>
       <div class="row" style="margin-top: -23px">
         <!--   <span class="ui label">题目类型：传统</span> -->
-          <span class="ui label"><?php echo $MSG_JUDGE_STYLE ?>：<?php if($row['spj']) echo "$MSG_SPJ"; else echo "$MSG_TEXT_COMPARE" ; ?></span>
+          <span class="ui label"><?php echo $MSG_JUDGE_STYLE ?>：<?php if ($row['spj']) {
+              echo "$MSG_SPJ";
+          } else {
+              echo "$MSG_TEXT_COMPARE" ;
+          } ?></span>
           <span class="ui label"><?php echo $MSG_Creator ?>：<span id='creator'></span></span>
       </div>
       <div class="row" style="margin-top: -23px">
@@ -74,26 +79,27 @@ div[class*=ace_br] {
       <div class="ui buttons">
 
           <?php
-            if($pr_flag){
-              echo "<a id='submit'  class=\"small ui primary button\" href=\"submitpage.php?id=$id\">$MSG_SUBMIT</a>";
-              echo "<a class=\"small ui positive button\" href=\"status.php?problem_id=$id\">$MSG_SUBMIT_RECORD</a>";
-              echo "<a class=\"small ui orange button\" href=\"problemstatus.php?id=$id\">$MSG_STATISTICS</a>";
-	      if($OJ_BBS)echo "<a class=\"small ui red button\" href=\"discuss.php?pid=$id\">$MSG_BBS</a>";
-            }else{
-              echo "<a href=\"contest.php?cid=$cid\" class=\"ui orange button\">$MSG_RETURN_CONTEST</a>";
-              echo "<a id='submit'  class=\"small ui primary button\" href=\"submitpage.php?cid=$cid&pid=$pid&langmask=$langmask\">$MSG_SUBMIT</a>";
-              echo "<a class=\"small ui positive button\" href=\"status.php?problem_id=$PID[$pid]&cid=$cid\">$MSG_SUBMIT_RECORD</a>";
+            if ($pr_flag) {
+                echo "<a id='submit'  class=\"small ui primary button\" href=\"submitpage.php?id=$id\">$MSG_SUBMIT</a>";
+                echo "<a class=\"small ui positive button\" href=\"status.php?problem_id=$id\">$MSG_SUBMIT_RECORD</a>";
+                echo "<a class=\"small ui orange button\" href=\"problemstatus.php?id=$id\">$MSG_STATISTICS</a>";
+                if ($OJ_BBS) {
+                    echo "<a class=\"small ui red button\" href=\"discuss.php?pid=$id\">$MSG_BBS</a>";
+                }
+            } else {
+                echo "<a href=\"contest.php?cid=$cid\" class=\"ui orange button\">$MSG_RETURN_CONTEST</a>";
+                echo "<a id='submit'  class=\"small ui primary button\" href=\"submitpage.php?cid=$cid&pid=$pid&langmask=$langmask\">$MSG_SUBMIT</a>";
+                echo "<a class=\"small ui positive button\" href=\"status.php?problem_id=$PID[$pid]&cid=$cid\">$MSG_SUBMIT_RECORD</a>";
             }
-	      echo "<a class='small ui primary button' href='#' onclick='transform()' role='button'>$MSG_SHOW_OFF</a>";
+          echo "<a class='small ui primary button' href='#' onclick='transform()' role='button'>$MSG_SHOW_OFF</a>";
           ?>
           
       </div>
      
       <?php
-        if ( isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'."p".$row['problem_id']])  ) {  //only  the original editor can edit this  problem
-        
-        require_once("include/set_get_key.php");
-      ?>
+        if (isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME.'_'."p".$row['problem_id']])) {  //only  the original editor can edit this  problem
+            require_once("include/set_get_key.php");
+            ?>
       
         <div class="ui buttons right floated">
             <a class="small ui button" href="admin/problem_edit.php?id=<?php echo $id?>&getkey=<?php echo $_SESSION[$OJ_NAME.'_'.'getkey']?>"><?php echo $MSG_EDIT.$MSG_PROBLEM?></a>
@@ -109,7 +115,7 @@ div[class*=ace_br] {
       <div class="ui bottom attached segment font-content"><?php echo bbcode_to_html($row['description']); ?></div>
     </div>
   </div>
-  <?php if($row['input']){ ?>
+  <?php if ($row['input']) { ?>
     <div class="row">
       <div class="column">
           <h4 class="ui top attached block header"><?php echo $MSG_Input?></h4>
@@ -117,7 +123,7 @@ div[class*=ace_br] {
       </div>
     </div>
   <?php }?>
-  <?php if($row['output']){ ?>
+  <?php if ($row['output']) { ?>
     <div class="row">
         <div class="column">
           <h4 class="ui top attached block header"><?php echo $MSG_Output?></h4>
@@ -127,12 +133,12 @@ div[class*=ace_br] {
   <?php }?>
 
   <?php
-    $sinput=str_replace("<","&lt;",$row['sample_input']);
-    $sinput=str_replace(">","&gt;",$sinput);
-    $soutput=str_replace("<","&lt;",$row['sample_output']);
-    $soutput=str_replace(">","&gt;",$soutput);
-  ?>
-  <?php if(strlen($sinput)){ ?>
+    $sinput=str_replace("<", "&lt;", $row['sample_input']);
+          $sinput=str_replace(">", "&gt;", $sinput);
+          $soutput=str_replace("<", "&lt;", $row['sample_output']);
+          $soutput=str_replace(">", "&gt;", $soutput);
+          ?>
+  <?php if (strlen($sinput)) { ?>
     <div class="row">
         <div class="column">
           <h4 class="ui top attached block header"><?php echo $MSG_Sample_Input?> 
@@ -140,13 +146,13 @@ div[class*=ace_br] {
           </h4>
           <!-- <span class=copy id=\"copyin\" data-clipboard-text=\"".($sinput)."\"><?php echo $MSG_COPY; ?></span> -->
           <div class="ui bottom attached segment font-content">
-            <!-- <pre><?php echo ($sinput); ?></pre> -->
-            <pre style="margin-top: 0; margin-bottom: 0; "><code class="lang-plain"><?php echo ($sinput); ?></code></pre>
+            <!-- <pre><?php echo($sinput); ?></pre> -->
+            <pre style="margin-top: 0; margin-bottom: 0; "><code class="lang-plain"><?php echo($sinput); ?></code></pre>
           </div>
         </div>
     </div>
   <?php }?>
-  <?php if(strlen($sinput)){ ?>
+  <?php if (strlen($sinput)) { ?>
     <div class="row">
         <div class="column">
           <h4 class="ui top attached block header"><?php echo $MSG_Sample_Output?>
@@ -155,13 +161,13 @@ div[class*=ace_br] {
           <!-- <span class=copy id=\"copyout\" data-clipboard-text=\"".($soutput)."\"><?php echo $MSG_COPY; ?></span> -->
           <div class="ui bottom attached segment font-content">
             <!-- <div class="ui existing segment"> -->
-              <pre style="margin-top: 0; margin-bottom: 0; "><code class="lang-plain"><?php echo ($soutput); ?></code></pre>
+              <pre style="margin-top: 0; margin-bottom: 0; "><code class="lang-plain"><?php echo($soutput); ?></code></pre>
             <!-- </div> -->
           </div>
         </div>
     </div>
   <?php }?>
-  <?php if($row['hint']){ ?>
+  <?php if ($row['hint']) { ?>
     <div class="row">
         <div class="column">
           <h4 class="ui top attached block header"><?php echo $MSG_HINT?></h4>
@@ -170,12 +176,12 @@ div[class*=ace_br] {
     </div>
   <?php }?>
   <?php
-    $color=array("blue","teal","orange","pink","olive","red","violet","yellow","green","purple");
-    $tcolor=0;
-  ?>
-  <?php if($row['source'] && !isset($_GET['cid']) ){
-    $cats=explode(" ",$row['source']);
-  ?>
+            $color=array("blue","teal","orange","pink","olive","red","violet","yellow","green","purple");
+          $tcolor=0;
+          ?>
+  <?php if ($row['source'] && !isset($_GET['cid'])) {
+      $cats=explode(" ", $row['source']);
+      ?>
     <div class="row">
       <div class="column">
         <h4 class="ui block header top attached" id="show_tag_title_div" style="margin-bottom: 0; margin-left: -1px; margin-right: -1px; ">
@@ -183,18 +189,21 @@ div[class*=ace_br] {
         </h4>
         <div class="ui bottom attached segment" id="show_tag_div">
 
-          <?php foreach($cats as $cat){
-            if(trim($cat)=="") continue;
-            $label_theme=$color[$tcolor%count($color)];
-            $tcolor++;
-            ?>
+          <?php foreach ($cats as $cat) {
+              if (trim($cat)=="") {
+                  continue;
+              }
+              $label_theme=$color[$tcolor%count($color)];
+              $tcolor++;
+              ?>
             <a href="<?php
-                if(mb_ereg("^http",$cat))    // remote oj pop links
-                        echo htmlentities($cat,ENT_QUOTES,'utf-8').'" target="_blank' ;
-                else
-                        echo "problemset.php?search=".htmlentities($cat,ENT_QUOTES,'utf-8') ;
-            ?>" class="ui medium <?php echo $label_theme; ?> label">
-              <?php echo htmlentities($cat,ENT_QUOTES,'utf-8'); ?>
+                  if (mb_ereg("^http", $cat)) {    // remote oj pop links
+                      echo htmlentities($cat, ENT_QUOTES, 'utf-8').'" target="_blank' ;
+                  } else {
+                      echo "problemset.php?search=".htmlentities($cat, ENT_QUOTES, 'utf-8') ;
+                  }
+              ?>" class="ui medium <?php echo $label_theme; ?> label">
+              <?php echo htmlentities($cat, ENT_QUOTES, 'utf-8'); ?>
             </a>
           <?php } ?>
 
@@ -203,18 +212,20 @@ div[class*=ace_br] {
       <div class="ui buttons">
 
           <?php
-            if($pr_flag){
-              echo "<a id='submit'  class=\"small ui primary button\" href=\"submitpage.php?id=$id\">$MSG_SUBMIT</a>";
-              echo "<a class=\"small ui positive button\" href=\"status.php?problem_id=$id\">$MSG_SUBMIT_RECORD</a>";
-              echo "<a class=\"small ui orange button\" href=\"problemstatus.php?id=$id\">$MSG_STATISTICS</a>";
-	      if($OJ_BBS)echo "<a class=\"small ui red button\" href=\"discuss.php?pid=$id\">$MSG_BBS</a>";
-            }else{
-              echo "<a href=\"contest.php?cid=$cid\" class=\"ui orange button\">$MSG_RETURN_CONTEST</a>";
-              echo "<a id='submit'  class=\"small ui primary button\" href=\"submitpage.php?cid=$cid&pid=$pid&langmask=$langmask\">$MSG_SUBMIT</a>";
-              echo "<a class=\"small ui positive button\" href=\"status.php?problem_id=$PID[$pid]&cid=$cid\">$MSG_SUBMIT_RECORD</a>";
-            }
-	      echo "<a class='small ui primary button' href='#' onclick='transform()' role='button'>$MSG_SHOW_OFF</a>";
-          ?>
+              if ($pr_flag) {
+                  echo "<a id='submit'  class=\"small ui primary button\" href=\"submitpage.php?id=$id\">$MSG_SUBMIT</a>";
+                  echo "<a class=\"small ui positive button\" href=\"status.php?problem_id=$id\">$MSG_SUBMIT_RECORD</a>";
+                  echo "<a class=\"small ui orange button\" href=\"problemstatus.php?id=$id\">$MSG_STATISTICS</a>";
+                  if ($OJ_BBS) {
+                      echo "<a class=\"small ui red button\" href=\"discuss.php?pid=$id\">$MSG_BBS</a>";
+                  }
+              } else {
+                  echo "<a href=\"contest.php?cid=$cid\" class=\"ui orange button\">$MSG_RETURN_CONTEST</a>";
+                  echo "<a id='submit'  class=\"small ui primary button\" href=\"submitpage.php?cid=$cid&pid=$pid&langmask=$langmask\">$MSG_SUBMIT</a>";
+                  echo "<a class=\"small ui positive button\" href=\"status.php?problem_id=$PID[$pid]&cid=$cid\">$MSG_SUBMIT_RECORD</a>";
+              }
+          echo "<a class='small ui primary button' href='#' onclick='transform()' role='button'>$MSG_SHOW_OFF</a>";
+      ?>
           
       </div>
       </div>
@@ -228,10 +239,10 @@ div[class*=ace_br] {
   
   function transform(){
         let height=document.body.clientHeight;
-<?php if ( $row[ 'spj' ]==2 ) {?>
+<?php if ($row[ 'spj' ]==2) {?>
 			let width=parseInt(document.body.clientWidth*0.3);
 			let width2=parseInt(document.body.clientWidth*0.7);
-<?php }else{ ?>
+<?php } else { ?>
 			let width=parseInt(document.body.clientWidth*0.6);
 			let width2=parseInt(document.body.clientWidth*0.4);
 <?php } ?>
@@ -291,7 +302,7 @@ div[class*=ace_br] {
 
   $(document).ready(function(){
     $("#creator").load("problem-ajax.php?pid=<?php echo $id?>");
-<?php if(isset($OJ_MARKDOWN)&&$OJ_MARKDOWN){ ?>
+<?php if (isset($OJ_MARKDOWN)&&$OJ_MARKDOWN) { ?>
                         $("div.md").each(function(){
                                 $(this).html(marked.parse($(this).text()));
                         });
@@ -327,7 +338,7 @@ div[class*=ace_br] {
     });
 
   </script>
-<?php if (isset($OJ_MATHJAX)&&$OJ_MATHJAX){?>
+<?php if (isset($OJ_MATHJAX)&&$OJ_MATHJAX) {?>
     <!--以下为了加载公式的使用而既加入-->
 <script>
   MathJax = {

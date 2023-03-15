@@ -1,13 +1,13 @@
-<?php 
-    require_once("../include/db_info.inc.php");
-    require_once ("../include/my_func.inc.php");
+<?php
+require_once("../include/db_info.inc.php");
+require_once("../include/my_func.inc.php");
 
-	if(isset($OJ_LANG)){
-		require_once("../lang/$OJ_LANG.php");
-	}
-	$url=basename($_SERVER['REQUEST_URI']);
-	$realurl=basename($_SERVER['REQUEST_URI']);
-	$url=str_replace(strrchr($url, "?"),"",$url);
+if (isset($OJ_LANG)) {
+    require_once("../lang/$OJ_LANG.php");
+}
+$url=basename($_SERVER['REQUEST_URI']);
+$realurl=basename($_SERVER['REQUEST_URI']);
+$url=str_replace(strrchr($url, "?"), "", $url);
 ;?>
 <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
 <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
@@ -21,7 +21,7 @@
 <link href="assets/css/style.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.js"></script>
 
-<?php 
+<?php
 if (!$_SESSION[$OJ_NAME.'_'.'administrator'] && !$_SESSION[$OJ_NAME.'_'.'problem_editor'] && !$_SESSION[$OJ_NAME.'_'.'contest_creator']) {
     $mod = 'hacker';
 }

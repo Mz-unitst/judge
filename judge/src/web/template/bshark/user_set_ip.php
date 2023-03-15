@@ -20,34 +20,38 @@
                         <h2>C<?php echo $view_cid; ?>: <?php echo $view_title; ?>
                         </h2>
                         <span class="ui label <?php
-                        if ($now > $end_time)
+                        if ($now > $end_time) {
                             echo "grey";
-                        else if ($now < $start_time)
+                        } elseif ($now < $start_time) {
                             echo "green";
-                        else
+                        } else {
                             echo "red";
-                        ?>">
+                        }
+        ?>">
                             <?php
-                            if ($now > $end_time)
-                                echo $MSG_Ended;
-                            else if ($now < $start_time)
-                                echo "未开始";
-                            else
-                                echo $MSG_Running;
-                            ?>
+            if ($now > $end_time) {
+                echo $MSG_Ended;
+            } elseif ($now < $start_time) {
+                echo "未开始";
+            } else {
+                echo $MSG_Running;
+            }
+        ?>
                         </span>
                         <span class="ui label <?php
-                        if ($view_private == '0')
+                        if ($view_private == '0') {
                             echo "blue";
-                        else
+                        } else {
                             echo "red";
-                        ?>">
+                        }
+        ?>">
                             <?php
-                            if ($view_private == '0')
-                                echo $MSG_Public;
-                            else
-                                echo $MSG_Private;
-                            ?>
+            if ($view_private == '0') {
+                echo $MSG_Public;
+            } else {
+                echo $MSG_Private;
+            }
+        ?>
                         </span>
                         <h3>
                             <?php echo $MSG_CONTEST; ?><?php echo $MSG_TIME; ?>
@@ -69,7 +73,7 @@
                                     <div class="col-sm-3"><input name="user_id" class="form-control"
                                             value="<?php echo htmlentities($_GET['uid'], ENT_QUOTES, 'UTF-8'); ?>"
                                             type="text" required></div>
-                                <?php } else if (isset($_POST['user_id'])) { ?>
+                                <?php } elseif (isset($_POST['user_id'])) { ?>
                                         <div class="col-sm-3"><input name="user_id" class="form-control"
                                                 value="<?php echo htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8'); ?>"
                                                 type="text" required></div>
@@ -104,11 +108,12 @@
                         <div class="ui divider"></div>
 
                         <?php
-                        if ($result2 == "changed")
+                        if ($result2 == "changed") {
                             echo "<h2 style='color:#db2828'>User " . htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8') . "'s Login IP Changed to " . $ip . "</h2>";
-                        else
+                        } else {
                             echo "<h2 style='color:#db2828'>Login IP Change</h2>";
-                        ?>
+                        }
+        ?>
                     </div>
                 </div>
 

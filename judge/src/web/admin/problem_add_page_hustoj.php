@@ -11,9 +11,9 @@
 <?php require_once("../include/db_info.inc.php");?>
 
 <?php require_once("admin-header.php");
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }?>
 <?php
 include_once("kindeditor.php") ;
@@ -31,43 +31,47 @@ include_once("kindeditor.php") ;
 <hr>
 <h1>Add New problem</h1>
 <?php require_once("../include/simple_html_dom.php");
-function getPartByMark($html,$mark1,$mark2){
-   $i=mb_strpos($html,$mark1);
-   $j=mb_strpos($html,$mark2,$i+mb_strlen($mark1)+1);
-  $descriptionHTML=mb_substr($html,$i+ mb_strlen($mark1),$j-($i+ mb_strlen($mark1)));
+function getPartByMark($html, $mark1, $mark2)
+{
+    $i=mb_strpos($html, $mark1);
+    $j=mb_strpos($html, $mark2, $i+mb_strlen($mark1)+1);
+    $descriptionHTML=mb_substr($html, $i+ mb_strlen($mark1), $j-($i+ mb_strlen($mark1)));
 
-   return $descriptionHTML;
+    return $descriptionHTML;
 }
 
-  $url=$_POST ['url'];
+$url=$_POST ['url'];
 
-  if (!$url) $url=$_GET['url'];
-  if (strpos($url, "http") === false){
-	echo "Please Input like http://hustoj.com/oj/problem.php?id=1000";
-	exit(1);
-  }   
-    
-  if (false) {
-	$url = stripslashes ( $url);
-  }
-  $baseurl=substr($url,0,strrpos($url,"/")+1);
+if (!$url) {
+    $url=$_GET['url'];
+}
+if (strpos($url, "http") === false) {
+    echo "Please Input like http://hustoj.com/oj/problem.php?id=1000";
+    exit(1);
+}
+
+if (false) {
+    $url = stripslashes($url);
+}
+$baseurl=substr($url, 0, strrpos($url, "/")+1);
 //  echo $baseurl;
-  $html = file_get_html($url);
-  foreach($html->find('img') as $element)
-        $element->src=$baseurl.$element->src;
-  $element=$html->find('h2',0);
-  $title=$element->plaintext;
-  $i=1;
-  $sample_output=$sample_input=$descriptionHTML="";
-  
-  $html=$html->innertext;
- // echo $i."-".strlen($html);
-  if(strpos($html,"<h2>Description</h2>")>0){
- 	 $descriptionHTML=getPartByMark($html,"<h2>Description</h2>","<h2>Source</h2>");
-  }else{
- 	 $descriptionHTML=getPartByMark($html,"<h2>题目描述</h2>","<h2>来源</h2>");
-  }
- // echo $i."-".strlen($descriptionHTML);
+$html = file_get_html($url);
+foreach ($html->find('img') as $element) {
+    $element->src=$baseurl.$element->src;
+}
+$element=$html->find('h2', 0);
+$title=$element->plaintext;
+$i=1;
+$sample_output=$sample_input=$descriptionHTML="";
+
+$html=$html->innertext;
+// echo $i."-".strlen($html);
+if (strpos($html, "<h2>Description</h2>")>0) {
+    $descriptionHTML=getPartByMark($html, "<h2>Description</h2>", "<h2>Source</h2>");
+} else {
+    $descriptionHTML=getPartByMark($html, "<h2>题目描述</h2>", "<h2>来源</h2>");
+}
+// echo $i."-".strlen($descriptionHTML);
 
 ?>
 <form method=POST action=problem_add.php>
@@ -101,10 +105,11 @@ function getPartByMark($html,$mark1,$mark2){
 <?php $sql="SELECT `contest_id`,`title` FROM `contest` WHERE `start_time`>NOW() order by `contest_id`";
 $result=pdo_query($sql);
 echo "<option value=''>none</option>";
-if (count($result)==0){
-}else{
-	foreach($result as $row)
-			echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+if (count($result)==0) {
+} else {
+    foreach ($result as $row) {
+        echo "<option value='{$row['contest_id']}'>{$row['contest_id']} {$row['title']}</option>";
+    }
 }
 ?>
 	</select>

@@ -10,10 +10,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -22,13 +22,13 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-    
-require_once("../include/set_get_key.php");
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+
+	require_once("../include/set_get_key.php");
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -65,37 +65,40 @@ require_once("../include/set_get_key.php");
 								</div>
 								<div class="card-body">
 								    <?php
-$sql = "SELECT COUNT('contest_id') AS ids FROM `contest`";
-$result = pdo_query($sql);
-$row = $result[0];
+	$sql = "SELECT COUNT('contest_id') AS ids FROM `contest`";
+	$result = pdo_query($sql);
+	$row = $result[0];
 
-$ids = intval($row['ids']);
+	$ids = intval($row['ids']);
 
-$idsperpage = 10;
-$pages = intval(ceil($ids/$idsperpage));
+	$idsperpage = 10;
+	$pages = intval(ceil($ids/$idsperpage));
 
-if(isset($_GET['page'])){ $page = intval($_GET['page']);}
-else{ $page = 1;}
+	if (isset($_GET['page'])) {
+	    $page = intval($_GET['page']);
+	} else {
+	    $page = 1;
+	}
 
-$pagesperframe = 5;
-$frame = intval(ceil($page/$pagesperframe));
+	$pagesperframe = 5;
+	$frame = intval(ceil($page/$pagesperframe));
 
-$spage = ($frame-1)*$pagesperframe+1;
-$epage = min($spage+$pagesperframe-1, $pages);
+	$spage = ($frame-1)*$pagesperframe+1;
+	$epage = min($spage+$pagesperframe-1, $pages);
 
-$sid = ($page-1)*$idsperpage;
+	$sid = ($page-1)*$idsperpage;
 
-$sql = "";
-if(isset($_GET['keyword']) && $_GET['keyword']!=""){
-  $keyword = $_GET['keyword'];
-  $keyword = "%$keyword%";
-  $sql = "SELECT `contest_id`,`title`,`start_time`,`end_time`,`private`,`defunct` FROM `contest` WHERE (title LIKE ?) OR (description LIKE ?) ORDER BY `contest_id` DESC";
-  $result = pdo_query($sql,$keyword,$keyword);
-}else{
-  $sql = "SELECT `contest_id`,`title`,`start_time`,`end_time`,`private`,`defunct` FROM `contest` ORDER BY `contest_id` DESC LIMIT $sid, $idsperpage";
-  $result = pdo_query($sql);
-}
-?>
+	$sql = "";
+	if (isset($_GET['keyword']) && $_GET['keyword']!="") {
+	    $keyword = $_GET['keyword'];
+	    $keyword = "%$keyword%";
+	    $sql = "SELECT `contest_id`,`title`,`start_time`,`end_time`,`private`,`defunct` FROM `contest` WHERE (title LIKE ?) OR (description LIKE ?) ORDER BY `contest_id` DESC";
+	    $result = pdo_query($sql, $keyword, $keyword);
+	} else {
+	    $sql = "SELECT `contest_id`,`title`,`start_time`,`end_time`,`private`,`defunct` FROM `contest` ORDER BY `contest_id` DESC LIMIT $sid, $idsperpage";
+	    $result = pdo_query($sql);
+	}
+	?>
 <div class="basic-form">
                                         <form>
                                             <div class="form-group">
@@ -120,31 +123,31 @@ if(isset($_GET['keyword']) && $_GET['keyword']!=""){
       <td>SUSPECT</td>
     </tr>
     <?php
-    foreach($result as $row){
-      echo "<tr>";
-      echo "<td>".$row['contest_id']."</td>";
-      echo "<td><a href='../contest.php?cid=".$row['contest_id']."'>".$row['title']."</a></td>";
-      echo "<td>".$row['start_time']."</td>";
-      echo "<td>".$row['end_time']."</td>";
-      $cid = $row['contest_id'];
-      if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'."m$cid"])){
-        echo "<td><a href=contest_pr_change.php?cid=".$row['contest_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">".($row['private']=="0"?"<span class='badge badge-info'>$MSG_Public</span>":"<span class='badge badge-warning'>$MSG_Private<span>")."</a></td>";
-        echo "<td><a href=contest_df_change.php?cid=".$row['contest_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">".($row['defunct']=="N"?"<span class='badge badge-success'>Available</span>":"<span class='badge badge-danger'>Reserved</span>")."</a></td>";
-        echo "<td><a href=contest_edit.php?cid=".$row['contest_id'].">$MSG_EDIT</a></td>";
-        echo "<td><a href=contest_add.php?cid=".$row['contest_id'].">COPY</a></td>";
-        if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])){
-          echo "<td><a href=\"problem_export_xml.php?cid=".$row['contest_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey']."\">$MSG_EXPORT</a></td>";
-        }else{
-          echo "<td></td>";
-        }
-        echo "<td> <a href=\"../export_contest_code.php?cid=".$row['contest_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey']."\">LOGS</a></td>";
-      }else{
-        echo "<td colspan=5 align=right><a href=contest_add.php?cid=".$row['contest_id'].">COPY</a><td>";
-      }
-      echo "<td><a href='suspect_list.php?cid=".$row['contest_id']."'>SUSPECT</a></td>";
-      echo "</tr>";
-    }
-  ?>
+	    foreach ($result as $row) {
+	        echo "<tr>";
+	        echo "<td>".$row['contest_id']."</td>";
+	        echo "<td><a href='../contest.php?cid=".$row['contest_id']."'>".$row['title']."</a></td>";
+	        echo "<td>".$row['start_time']."</td>";
+	        echo "<td>".$row['end_time']."</td>";
+	        $cid = $row['contest_id'];
+	        if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'."m$cid"])) {
+	            echo "<td><a href=contest_pr_change.php?cid=".$row['contest_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">".($row['private']=="0" ? "<span class='badge badge-info'>$MSG_Public</span>" : "<span class='badge badge-warning'>$MSG_Private<span>")."</a></td>";
+	            echo "<td><a href=contest_df_change.php?cid=".$row['contest_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey'].">".($row['defunct']=="N" ? "<span class='badge badge-success'>Available</span>" : "<span class='badge badge-danger'>Reserved</span>")."</a></td>";
+	            echo "<td><a href=contest_edit.php?cid=".$row['contest_id'].">$MSG_EDIT</a></td>";
+	            echo "<td><a href=contest_add.php?cid=".$row['contest_id'].">COPY</a></td>";
+	            if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {
+	                echo "<td><a href=\"problem_export_xml.php?cid=".$row['contest_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey']."\">$MSG_EXPORT</a></td>";
+	            } else {
+	                echo "<td></td>";
+	            }
+	            echo "<td> <a href=\"../export_contest_code.php?cid=".$row['contest_id']."&getkey=".$_SESSION[$OJ_NAME.'_'.'getkey']."\">LOGS</a></td>";
+	        } else {
+	            echo "<td colspan=5 align=right><a href=contest_add.php?cid=".$row['contest_id'].">COPY</a><td>";
+	        }
+	        echo "<td><a href='suspect_list.php?cid=".$row['contest_id']."'>SUSPECT</a></td>";
+	        echo "</tr>";
+	    }
+	?>
 </table>
 <script>
 function phpfm(pid){
@@ -158,19 +161,18 @@ function phpfm(pid){
 }
 </script>
 <?php
-if(!(isset($_GET['keyword']) && $_GET['keyword']!=""))
-{
-  echo "<ul class='pagination pagination-sm'>";
-  echo "<li class='page-item'><a href='contest_list.php?page=".(strval(1))."'>&lt;&lt;</a></li>";
-  echo "<li class='page-item'><a href='contest_list.php?page=".($page==1?strval(1):strval($page-1))."'>&lt;</a></li>";
-  for($i=$spage; $i<=$epage; $i++){
-    echo "<li class='".($page==$i?"active ":"")."page-item'><a title='go to page' href='contest_list.php?page=".$i."'>".$i."</a></li>";
-  }
-  echo "<li class='page-item'><a href='contest_list.php?page=".($page==$pages?strval($page):strval($page+1))."'>&gt;</a></li>";
-  echo "<li class='page-item'><a href='contest_list.php?page=".(strval($pages))."'>&gt;&gt;</a></li>";
-  echo "</ul>";
+if (!(isset($_GET['keyword']) && $_GET['keyword']!="")) {
+    echo "<ul class='pagination pagination-sm'>";
+    echo "<li class='page-item'><a href='contest_list.php?page=".(strval(1))."'>&lt;&lt;</a></li>";
+    echo "<li class='page-item'><a href='contest_list.php?page=".($page==1 ? strval(1) : strval($page-1))."'>&lt;</a></li>";
+    for ($i=$spage; $i<=$epage; $i++) {
+        echo "<li class='".($page==$i ? "active " : "")."page-item'><a title='go to page' href='contest_list.php?page=".$i."'>".$i."</a></li>";
+    }
+    echo "<li class='page-item'><a href='contest_list.php?page=".($page==$pages ? strval($page) : strval($page+1))."'>&gt;</a></li>";
+    echo "<li class='page-item'><a href='contest_list.php?page=".(strval($pages))."'>&gt;&gt;</a></li>";
+    echo "</ul>";
 }
-?>
+	?>
                                     </div>
 								</div>
 							</div>

@@ -9,10 +9,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -21,62 +21,62 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
 
-?>
-<?php if(isset($_POST['do'])){
-	require_once("../include/check_post_key.php");
-	if (isset($_POST['rjpid'])){
-		$rjpid=intval($_POST['rjpid']);
-		if($rjpid == 0) {
-		    echo "Rejudge Problem ID should not equal to 0";
-		    exit(1);
-		}
-		$sql="UPDATE `solution` SET `result`=1 WHERE `problem_id`=? and problem_id>0";
-		pdo_query($sql,$rjpid) ;
-		$sql="delete from `sim` WHERE `s_id` in (select solution_id from solution where `problem_id`=?)";
-		pdo_query($sql,$rjpid) ;
-		$url="../status.php?problem_id=".$rjpid;
-		echo "Rejudged Problem ".$rjpid;
-		echo "<script>location.href='$url';</script>";
+	?>
+<?php if (isset($_POST['do'])) {
+	    require_once("../include/check_post_key.php");
+	    if (isset($_POST['rjpid'])) {
+	        $rjpid=intval($_POST['rjpid']);
+	        if ($rjpid == 0) {
+	            echo "Rejudge Problem ID should not equal to 0";
+	            exit(1);
+	        }
+	        $sql="UPDATE `solution` SET `result`=1 WHERE `problem_id`=? and problem_id>0";
+	        pdo_query($sql, $rjpid) ;
+	        $sql="delete from `sim` WHERE `s_id` in (select solution_id from solution where `problem_id`=?)";
+	        pdo_query($sql, $rjpid) ;
+	        $url="../status.php?problem_id=".$rjpid;
+	        echo "Rejudged Problem ".$rjpid;
+	        echo "<script>location.href='$url';</script>";
+	    } elseif (isset($_POST['rjsid'])) {
+	        $rjsid=intval($_POST['rjsid']);
+	        $sql="delete from `sim` WHERE `s_id`=?";
+	        pdo_query($sql, $rjsid) ;
+	        $sql="UPDATE `solution` SET `result`=1 WHERE `solution_id`=? and problem_id>0" ;
+	        pdo_query($sql, $rjsid) ;
+	        $url="../status.php?top=".($rjsid+1);
+	        echo "Rejudged Runid ".$rjsid;
+	        echo "<script>location.href='$url';</script>";
+	    } elseif (isset($_POST['rjcid'])) {
+	        $rjcid=intval($_POST['rjcid']);
+	        $sql="UPDATE `solution` SET `result`=1 WHERE `contest_id`=? and problem_id>0";
+	        pdo_query($sql, $rjcid) ;
+	        $url="../status.php?cid=".($rjcid);
+	        echo "Rejudged Contest id :".$rjcid;
+	        echo "<script>location.href='$url';</script>";
+	    }
+	    echo str_repeat(" ", 4096);
+	    flush();
+	    if ($OJ_REDIS) {
+	        $redis = new Redis();
+	        $redis->connect($OJ_REDISSERVER, $OJ_REDISPORT);
+	        if (isset($OJ_REDISAUTH)) {
+	            $redis->auth($OJ_REDISAUTH);
+	        }
+	        $sql="select solution_id from solution where result=1 and problem_id>0";
+	        $result=pdo_query($sql);
+	        foreach ($result as $row) {
+	            echo $row['solution_id']."\n";
+	            $redis->lpush($OJ_REDISQNAME, $row['solution_id']);
+	        }
+	        $redis->close();
+	    }
 	}
-	else if (isset($_POST['rjsid'])){
-		$rjsid=intval($_POST['rjsid']);
-		$sql="delete from `sim` WHERE `s_id`=?";
-		pdo_query($sql,$rjsid) ;
-		$sql="UPDATE `solution` SET `result`=1 WHERE `solution_id`=? and problem_id>0" ;
-		pdo_query($sql,$rjsid) ;
-		$url="../status.php?top=".($rjsid+1);
-		echo "Rejudged Runid ".$rjsid;
-		echo "<script>location.href='$url';</script>";
-	}else if (isset($_POST['rjcid'])){
-		$rjcid=intval($_POST['rjcid']);
-		$sql="UPDATE `solution` SET `result`=1 WHERE `contest_id`=? and problem_id>0";
-		pdo_query($sql,$rjcid) ;
-		$url="../status.php?cid=".($rjcid);
-		echo "Rejudged Contest id :".$rjcid;
-		echo "<script>location.href='$url';</script>";
-	}
-	echo str_repeat(" ",4096);
-	flush();
-	if($OJ_REDIS){
-           $redis = new Redis();
-           $redis->connect($OJ_REDISSERVER, $OJ_REDISPORT);
-	   if(isset($OJ_REDISAUTH)) $redis->auth($OJ_REDISAUTH);
-                $sql="select solution_id from solution where result=1 and problem_id>0";
-                 $result=pdo_query($sql);
-                 foreach($result as $row){
-                        echo $row['solution_id']."\n";
-                        $redis->lpush($OJ_REDISQNAME,$row['solution_id']);
-                }
-           $redis->close();     
-        }
-
-}
-?>
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">

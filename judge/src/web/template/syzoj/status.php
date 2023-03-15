@@ -15,60 +15,73 @@
         <select class="form-control" size="1" name="language" style="width: 110px;font-size: 1em ">
           <option value="-1">All</option>
           <?php
-          if(isset($_GET['language'])){
-            $selectedLang=intval($_GET['language']);
-          }else{
-            $selectedLang=-1;
+          if (isset($_GET['language'])) {
+              $selectedLang=intval($_GET['language']);
+          } else {
+              $selectedLang=-1;
           }
           $lang_count=count($language_ext);
-          $langmask=$OJ_LANGMASK;
-          $lang=(~((int)$langmask))&((1<<($lang_count))-1);
-          for($i=0;$i<$lang_count;$i++){
-            if($lang&(1<<$i))
-            echo"<option value=$i ".( $selectedLang==$i?"selected":"").">
+$langmask=$OJ_LANGMASK;
+$lang=(~((int)$langmask))&((1<<($lang_count))-1);
+for ($i=0;$i<$lang_count;$i++) {
+    if ($lang&(1<<$i)) {
+        echo"<option value=$i ".($selectedLang==$i ? "selected" : "").">
             ".$language_name[$i]."
             </option>";
-          }
-          ?>
+    }
+}
+?>
         </select>
         <label style="font-size: 1.2em; margin-right: 1px;margin-left: 10px; ">状态：</label>
         <select class="form-control" size="1" name="jresult" style="width: 110px;">
-          <?php if (isset($_GET['jresult'])) $jresult_get=intval($_GET['jresult']);
-          else $jresult_get=-1;
-          if ($jresult_get>=12||$jresult_get<0) $jresult_get=-1;
-          if ($jresult_get==-1) echo "<option value='-1' selected>All</option>";
-          else echo "<option value='-1'>All</option>";
-          for ($j=0;$j<12;$j++){
-          $i=($j+4)%12;
-          if ($i==$jresult_get) echo "<option value='".strval($jresult_get)."' selected>".$jresult[$i]."</option>";
-          else echo "<option value='".strval($i)."'>".$jresult[$i]."</option>";
+          <?php if (isset($_GET['jresult'])) {
+              $jresult_get=intval($_GET['jresult']);
+          } else {
+              $jresult_get=-1;
           }
-          echo "</select>";
-          ?>
-          <?php if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'source_browser'])){
-            if(isset($_GET['showsim']))
-            $showsim=intval($_GET['showsim']);
-            else
-            $showsim=0;
-            echo "<label style=\"font-size: 1.2em; margin-right: 1px;margin-left: 10px; \">相似度：</label>";
-          echo "
+if ($jresult_get>=12||$jresult_get<0) {
+    $jresult_get=-1;
+}
+if ($jresult_get==-1) {
+    echo "<option value='-1' selected>All</option>";
+} else {
+    echo "<option value='-1'>All</option>";
+}
+for ($j=0;$j<12;$j++) {
+    $i=($j+4)%12;
+    if ($i==$jresult_get) {
+        echo "<option value='".strval($jresult_get)."' selected>".$jresult[$i]."</option>";
+    } else {
+        echo "<option value='".strval($i)."'>".$jresult[$i]."</option>";
+    }
+}
+echo "</select>";
+?>
+          <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'source_browser'])) {
+              if (isset($_GET['showsim'])) {
+                  $showsim=intval($_GET['showsim']);
+              } else {
+                  $showsim=0;
+              }
+              echo "<label style=\"font-size: 1.2em; margin-right: 1px;margin-left: 10px; \">相似度：</label>";
+              echo "
           <select id=\"appendedInputButton\" class=\"form-control\" name=showsim onchange=\"document.getElementById('simform').submit();\" style=\"width: 110px;\">
-          <option value=0 ".($showsim==0?'selected':'').">All</option>
-          <option value=50 ".($showsim==50?'selected':'').">50</option>
-          <option value=60 ".($showsim==60?'selected':'').">60</option>
-          <option value=70 ".($showsim==70?'selected':'').">70</option>
-          <option value=80 ".($showsim==80?'selected':'').">80</option>
-          <option value=90 ".($showsim==90?'selected':'').">90</option>
-          <option value=100 ".($showsim==100?'selected':'').">100</option>
+          <option value=0 ".($showsim==0 ? 'selected' : '').">All</option>
+          <option value=50 ".($showsim==50 ? 'selected' : '').">50</option>
+          <option value=60 ".($showsim==60 ? 'selected' : '').">60</option>
+          <option value=70 ".($showsim==70 ? 'selected' : '').">70</option>
+          <option value=80 ".($showsim==80 ? 'selected' : '').">80</option>
+          <option value=90 ".($showsim==90 ? 'selected' : '').">90</option>
+          <option value=100 ".($showsim==100 ? 'selected' : '').">100</option>
           </select>";
           }
-          ?>
+?>
       <button class="ui labeled icon mini green button" type="submit" style="margin-left: 20px;">
         <i class="search icon"></i>
        <?php echo $MSG_SEARCH;?>
       </button>
-                <span class='ui mini grey button'>AWT:<?php echo round($avg_delay,2)?>s </span>
-                 <script>var AWT=<?php echo round($avg_delay*500,0) ?>;</script>
+                <span class='ui mini grey button'>AWT:<?php echo round($avg_delay, 2)?>s </span>
+                 <script>var AWT=<?php echo round($avg_delay*500, 0) ?>;</script>
     </div>
   </form>
 
@@ -89,31 +102,32 @@
         <th><?php echo $MSG_CODE_LENGTH?></th>
         <th><?php echo $MSG_SUBMIT_TIME?></th>
        <?php    if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {
-                                                        echo "<th class='text-left'>";
-                                                                echo $MSG_JUDGER;
-                                                        echo "</th>";
-                                                } ?>
+           echo "<th class='text-left'>";
+           echo $MSG_JUDGER;
+           echo "</th>";
+       } ?>
       </tr>
     </thead>
     <tbody>
       <!-- <tr v-for="item in items" :config="displayConfig" :show-rejudge="false" :data="item" is='submission-item'>
           </tr> -->
     <?php
-    foreach($view_status as $row){
-    $i=0;
-    echo "<tr>";
-    foreach($row as $table_cell){
-      if($i>3&&$i!=8)
-        echo "<td class='hidden-xs'><b>";
-      else
-        echo "<td><b>";
-      echo $table_cell;
-      echo "</b></td>";
-      $i++;
+    foreach ($view_status as $row) {
+        $i=0;
+        echo "<tr>";
+        foreach ($row as $table_cell) {
+            if ($i>3&&$i!=8) {
+                echo "<td class='hidden-xs'><b>";
+            } else {
+                echo "<td><b>";
+            }
+            echo $table_cell;
+            echo "</b></td>";
+            $i++;
+        }
+        echo "</tr>\n";
     }
-    echo "</tr>\n";
-    }
-    ?>
+?>
 
     </tbody>
   </table>
@@ -125,12 +139,13 @@
     Top
           </a>
           <?php
-      if (isset($_GET['prevtop']))
+  if (isset($_GET['prevtop'])) {
       echo "<a class=\"item\" href=\"status.php?".$str2."&top=".intval($_GET['prevtop'])."\">Prev</a>";
-      else
+  } else {
       echo "<a class=\"item\" href=\"status.php?".$str2."&top=".($top+20)."\">Prev</a>";
+  }
 
-      ?>
+?>
 
           <a class="icon item" href="<?php echo "status.php?".$str2."&top=".$bottom."&prevtop=$top"; ?>" id="page_next">
             Next
@@ -142,15 +157,15 @@
 <script>
         var i = 0;
         var judge_result = [<?php
-        foreach ($judge_result as $result) {
-                echo "'$result',";
-        } ?>
+  foreach ($judge_result as $result) {
+      echo "'$result',";
+  } ?>
         ''];
 
         var judge_color = [<?php
-        foreach ($judge_color as $result) {
-                echo "'$result',";
-        } ?>
+  foreach ($judge_color as $result) {
+      echo "'$result',";
+  } ?>
         ''];
 </script>
         <script src="template/bs3/auto_refresh.js?v=0.43" ></script>

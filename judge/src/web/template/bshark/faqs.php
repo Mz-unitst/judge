@@ -201,7 +201,7 @@ A:Here is a list of the judge's replies and their meaning:<br>
 Q:How to attend Online Contests?<br>
 A:Can you submit programs for any practice problems on this Online Judge? If you can, then that is the account you use in an online contest. If you can't, then please <a href=registerpage.php>register</a> an id with password first.<br>
 </div>
-this page can be replaced by add a news which titled "<?php echo htmlentities($faqs_name,ENT_QUOTES,"UTF-8")?>";
+this page can be replaced by add a news which titled "<?php echo htmlentities($faqs_name, ENT_QUOTES, "UTF-8")?>";
     </div>
 </div>
 <?php require("./template/bshark/footer.php");?>

@@ -14,8 +14,8 @@
       <tbody>
       <?php
         $odd=true;
-        foreach($rows as $row) {
-        ?>
+foreach ($rows as $row) {
+    ?>
           <tr>
             <td><?php echo$row['oj']?></td>
             <td><a href="<?php echo$row['link']?>" target="_blank"><?php echo$row['name']?></a></td>

@@ -25,103 +25,107 @@
 						<td class='text-center'><?php echo $MSG_MARK ?></td>
 				
 					<?php
-					for ($i = 0; $i < $pid_cnt; $i++)
-                  				echo "<th><a href=problem.php?id=".$pida[$i].">$PID[$i]</a></th>";
-					?>
+                    for ($i = 0; $i < $pid_cnt; $i++) {
+                        echo "<th><a href=problem.php?id=".$pida[$i].">$PID[$i]</a></th>";
+                    }
+	    ?>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<?php
-				$rank = 1;
-				for ($i = 0; $i < $user_cnt; $i++) {
-					$uuid = $U[$i]->user_id;
-					$nick = $U[$i]->nick;
-					$usolved = $U[$i]->solved;
-					echo "<tr>";
+                $rank = 1;
+	    for ($i = 0; $i < $user_cnt; $i++) {
+	        $uuid = $U[$i]->user_id;
+	        $nick = $U[$i]->nick;
+	        $usolved = $U[$i]->solved;
+	        echo "<tr>";
 
-					echo "<td>";
-					if ($nick[0] != "*") {
-						if ($rank == 1)
-							echo "<div class=\"ui yellow ribbon label\">";
-						else if ($rank == 2)
-							echo "<div class=\"ui ribbon label\">";
-						else if ($rank == 3)
-							echo "<div class=\"ui brown ribbon label\" style=\"background-color: #C47222 !important;\">";
-						else
-							echo "<div>";
-						echo $rank++;
-						echo "</div>";
-					} else
-						echo "*";
-					echo "</td>";
+	        echo "<td>";
+	        if ($nick[0] != "*") {
+	            if ($rank == 1) {
+	                echo "<div class=\"ui yellow ribbon label\">";
+	            } elseif ($rank == 2) {
+	                echo "<div class=\"ui ribbon label\">";
+	            } elseif ($rank == 3) {
+	                echo "<div class=\"ui brown ribbon label\" style=\"background-color: #C47222 !important;\">";
+	            } else {
+	                echo "<div>";
+	            }
+	            echo $rank++;
+	            echo "</div>";
+	        } else {
+	            echo "*";
+	        }
+	        echo "</td>";
 
-					if (isset($_GET['user_id']) && $uuid == $_GET['user_id'])
-						echo "<td bgcolor=#ffff77>";
-					else
-						echo "<td>";
-					echo "<a name=\"$uuid\" href=userinfo.php?user=$uuid>$uuid</a>";
-					echo "</td>";
+	        if (isset($_GET['user_id']) && $uuid == $_GET['user_id']) {
+	            echo "<td bgcolor=#ffff77>";
+	        } else {
+	            echo "<td>";
+	        }
+	        echo "<a name=\"$uuid\" href=userinfo.php?user=$uuid>$uuid</a>";
+	        echo "</td>";
 
-					echo "<td>";
-					echo  htmlentities($U[$i]->nick, ENT_QUOTES, "UTF-8");
-					echo "</td>";
-					
- 					echo "<td>";
-                                        echo  htmlentities($U[$i]->solved, ENT_QUOTES, "UTF-8");
-                                        echo "</td>";
+	        echo "<td>";
+	        echo  htmlentities($U[$i]->nick, ENT_QUOTES, "UTF-8");
+	        echo "</td>";
 
-					echo "<td>";
-					echo sec2str($U[$i]->time);
-					echo "</td>";
+	        echo "<td>";
+	        echo  htmlentities($U[$i]->solved, ENT_QUOTES, "UTF-8");
+	        echo "</td>";
 
-					echo "<td class='ui small header'>";
-					echo "<a href=status.php?user_id=$uuid&cid=$cid>" . ($U[$i]->total) . "</a>";
-					echo "</td>";
+	        echo "<td>";
+	        echo sec2str($U[$i]->time);
+	        echo "</td>";
 
-					for ($k=0;$k<$pid_cnt;$k++){
-						$j=$pida[$k];
-						if (isset($U[$i])) {
-							if (isset($U[$i]->p_ac_sec[$j]) && $U[$i]->p_ac_sec[$j] > 0) {
-								if ($uuid == $first_blood[$j]) {
-									echo "<td style=\"background: rgb(" . (150 + 12 * $U[$i]->p_wa_num[$j]) . ", 255, " . min(230, 150 + 8 * $U[$i]->p_wa_num[$j]) . "); position:relative;\">";
-									echo "<div style=\"position:absolute;width:30%;margin-top: 5%;margin-right: 5%;height:30%;right:0px;top:0px;\"> <font color='red'>※1st</font></div>";
-								} else {
-									echo "<td style=\"background: rgb(" . (150 + 12 * $U[$i]->p_wa_num[$j]) . ", 255, " . min(230, 150 + 8 * $U[$i]->p_wa_num[$j]) . "); \">";
-								}
-								if (isset($U[$i]->p_wa_num[$j]) && $U[$i]->p_wa_num[$j] > 0) {
-									echo "<span class=\"score score_10\">";
-									echo "100";
-									echo "</span>";
-								} else {
-									echo "<span class=\"score score_10\">";
-									echo "100";
-									echo "</span>";
-								}
-								echo "<div class=\"submit_time\">";
-								echo sec2str($U[$i]->p_ac_sec[$j]);
-								echo "</div>";
-							} else if (isset($U[$i]->p_wa_num[$j]) && $U[$i]->p_wa_num[$j] > 0) {
-								echo "<td style=\"background: rgb(255, " . max(130, 240 - 9 * $U[$i]->p_wa_num[$j]) . ", " . max(130, 240 - 9 * $U[$i]->p_wa_num[$j]) . "); \">";
-								echo "<span class=\"score score_0\">";
-								echo $U[$i]->p_pass_rate[$j] * 100;
-								echo "</span>";
-							} else {
-								echo "<td>";
-							}
-						} else {
-							echo "<td>";
-						}
+	        echo "<td class='ui small header'>";
+	        echo "<a href=status.php?user_id=$uuid&cid=$cid>" . ($U[$i]->total) . "</a>";
+	        echo "</td>";
 
-						echo "</td>";
-					}
-					echo "<td>";
+	        for ($k=0;$k<$pid_cnt;$k++) {
+	            $j=$pida[$k];
+	            if (isset($U[$i])) {
+	                if (isset($U[$i]->p_ac_sec[$j]) && $U[$i]->p_ac_sec[$j] > 0) {
+	                    if ($uuid == $first_blood[$j]) {
+	                        echo "<td style=\"background: rgb(" . (150 + 12 * $U[$i]->p_wa_num[$j]) . ", 255, " . min(230, 150 + 8 * $U[$i]->p_wa_num[$j]) . "); position:relative;\">";
+	                        echo "<div style=\"position:absolute;width:30%;margin-top: 5%;margin-right: 5%;height:30%;right:0px;top:0px;\"> <font color='red'>※1st</font></div>";
+	                    } else {
+	                        echo "<td style=\"background: rgb(" . (150 + 12 * $U[$i]->p_wa_num[$j]) . ", 255, " . min(230, 150 + 8 * $U[$i]->p_wa_num[$j]) . "); \">";
+	                    }
+	                    if (isset($U[$i]->p_wa_num[$j]) && $U[$i]->p_wa_num[$j] > 0) {
+	                        echo "<span class=\"score score_10\">";
+	                        echo "100";
+	                        echo "</span>";
+	                    } else {
+	                        echo "<span class=\"score score_10\">";
+	                        echo "100";
+	                        echo "</span>";
+	                    }
+	                    echo "<div class=\"submit_time\">";
+	                    echo sec2str($U[$i]->p_ac_sec[$j]);
+	                    echo "</div>";
+	                } elseif (isset($U[$i]->p_wa_num[$j]) && $U[$i]->p_wa_num[$j] > 0) {
+	                    echo "<td style=\"background: rgb(255, " . max(130, 240 - 9 * $U[$i]->p_wa_num[$j]) . ", " . max(130, 240 - 9 * $U[$i]->p_wa_num[$j]) . "); \">";
+	                    echo "<span class=\"score score_0\">";
+	                    echo $U[$i]->p_pass_rate[$j] * 100;
+	                    echo "</span>";
+	                } else {
+	                    echo "<td>";
+	                }
+	            } else {
+	                echo "<td>";
+	            }
 
-					echo "</td>";
+	            echo "</td>";
+	        }
+	        echo "<td>";
 
-					echo "</tr>";
-				}
-				?>
+	        echo "</td>";
+
+	        echo "</tr>";
+	    }
+	    ?>
 
 			</tbody>
 		</table>

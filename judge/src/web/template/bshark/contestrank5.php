@@ -16,7 +16,7 @@
         $cid = intval($_GET['cid']);
         $view_cid = $cid;
         //print $cid;
-    
+
         //check contest valid
         $sql = "SELECT * FROM `contest` WHERE `contest_id`=?";
         $result = pdo_query($sql, $cid);
@@ -25,8 +25,9 @@
         $contest_ok = true;
         $password = "";
 
-        if (isset($_POST['password']))
+        if (isset($_POST['password'])) {
             $password = $_POST['password'];
+        }
 
         if (false) {
             $password = stripslashes($password);
@@ -38,17 +39,21 @@
             $row = $result[0];
             $view_private = $row['private'];
 
-            if ($password != "" && $password == $row['password'])
+            if ($password != "" && $password == $row['password']) {
                 $_SESSION[$OJ_NAME . '_' . 'c' . $cid] = true;
+            }
 
-            if ($row['private'] && !isset($_SESSION[$OJ_NAME . '_' . 'c' . $cid]))
+            if ($row['private'] && !isset($_SESSION[$OJ_NAME . '_' . 'c' . $cid])) {
                 $contest_ok = false;
+            }
 
-            if ($row['defunct'] == 'Y')
+            if ($row['defunct'] == 'Y') {
                 $contest_ok = false;
+            }
 
-            if (isset($_SESSION[$OJ_NAME . '_' . 'administrator']))
+            if (isset($_SESSION[$OJ_NAME . '_' . 'administrator'])) {
                 $contest_ok = true;
+            }
 
             $now = time();
             $start_time = strtotime($row['start_time']);
@@ -59,7 +64,7 @@
             $view_end_time = $row['end_time'];
         }
     }
-    ?>
+        ?>
     <div class="ui container bsharkMain">
         <div class="ui stackable grid">
             <div class="eleven wide column">
@@ -68,34 +73,38 @@
                         <h2>C<?php echo $view_cid; ?>: <?php echo $view_title; ?>
                         </h2>
                         <span class="ui label <?php
-                        if ($now > $end_time)
-                            echo "grey";
-                        else if ($now < $start_time)
-                            echo "green";
-                        else
-                            echo "red";
-                        ?>">
+                            if ($now > $end_time) {
+                                echo "grey";
+                            } elseif ($now < $start_time) {
+                                echo "green";
+                            } else {
+                                echo "red";
+                            }
+        ?>">
                             <?php
-                            if ($now > $end_time)
-                                echo $MSG_Ended;
-                            else if ($now < $start_time)
-                                echo "未开始";
-                            else
-                                echo $MSG_Running;
-                            ?>
+            if ($now > $end_time) {
+                echo $MSG_Ended;
+            } elseif ($now < $start_time) {
+                echo "未开始";
+            } else {
+                echo $MSG_Running;
+            }
+        ?>
                         </span>
                         <span class="ui label <?php
-                        if ($view_private == '0')
+                        if ($view_private == '0') {
                             echo "blue";
-                        else
+                        } else {
                             echo "red";
-                        ?>">
+                        }
+        ?>">
                             <?php
-                            if ($view_private == '0')
-                                echo $MSG_Public;
-                            else
-                                echo $MSG_Private;
-                            ?>
+            if ($view_private == '0') {
+                echo $MSG_Public;
+            } else {
+                echo $MSG_Private;
+            }
+        ?>
                         </span>
                         <h3>
                             <?php echo $MSG_CONTEST; ?><?php echo $MSG_TIME; ?>

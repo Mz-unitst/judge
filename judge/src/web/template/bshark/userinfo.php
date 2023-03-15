@@ -39,8 +39,9 @@ foreach ($result as $row) {
                             <?php echo $MSG_SUBMIT . $MSG_STATISTICS; ?>
                         </h2>
                         <?php if ($aflag == 0) { ?><canvas id="myChart"></canvas>
-                        <?php } else
-                            echo "OI比赛进行中，暂时无法查看"; ?>
+                        <?php } else {
+                            echo "OI比赛进行中，暂时无法查看";
+                        } ?>
                         <table class="ui very basic table" style="width:100%">
                             <tbody>
                                 <tr>
@@ -61,13 +62,14 @@ foreach ($result as $row) {
                                 foreach ($view_userstat as $row) {
                                     //i++;
                                     echo "<tr><th>" . $jresult[$row[0]] . "</th><td><a href=./status.php?user_id=$user&jresult=" . $row[0] . " >";
-                                    if ($aflag == 0)
+                                    if ($aflag == 0) {
                                         echo $row[1];
-                                    else
+                                    } else {
                                         echo '---';
+                                    }
                                     echo "</a></td></tr>";
                                 }
-                                ?>
+?>
                             </tbody>
                         </table>
                     </div>

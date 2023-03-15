@@ -5,10 +5,11 @@ $realurl = basename($_SERVER['REQUEST_URI']);
 $url = str_replace(strrchr($url, "?"), "", $url);
 
 $dir = basename(getcwd());
-if ($dir == "discuss3")
+if ($dir == "discuss3") {
     $path_fix = "../";
-else
+} else {
     $path_fix = "";
+}
 
 $_SESSION[$OJ_NAME . '_' . 'profile_csrf'] = rand();
 
@@ -33,8 +34,9 @@ if (
                 <?php echo $OJ_NAME; ?>
             </b>
         </a>
-        <a class="item<?php if ($url == '')
-            echo ' active'; ?>" href="<?php echo $OJ_HOME; ?>">
+        <a class="item<?php if ($url == '') {
+            echo ' active';
+        } ?>" href="<?php echo $OJ_HOME; ?>">
             <?php echo $MSG_HOME ?>
         </a>
         <?php
@@ -43,13 +45,14 @@ if (
             <a class="item" href="moodle">Moodle</a>
             <?php
         }
-        ?>
+?>
 
         <?php
-        if (!isset($OJ_ON_SITE_CONTEST_ID)) {
-            ?>
-            <a class="item<?php if ($url == 'faqs.php')
-                echo ' active'; ?>" href="<?php echo $path_fix ?>faqs.php">
+if (!isset($OJ_ON_SITE_CONTEST_ID)) {
+    ?>
+            <a class="item<?php if ($url == 'faqs.php') {
+                echo ' active';
+            } ?>" href="<?php echo $path_fix ?>faqs.php">
                 <?php echo $MSG_FAQ ?>
             </a>
         <?php } ?>
@@ -58,60 +61,69 @@ if (
         <?php
         if (isset($OJ_PRINTER) && $OJ_PRINTER) {
             ?>
-            <a class="item<?php if ($url == "printer.php")
-                echo " active"; ?>" href="<?php echo $path_fix ?>printer.php">
+            <a class="item<?php if ($url == "printer.php") {
+                echo " active";
+            } ?>" href="<?php echo $path_fix ?>printer.php">
                 <?php echo $MSG_PRINTER ?>
             </a>
             <?php
         }
-        ?>
+?>
 
 
         <?php
-        if (!isset($OJ_ON_SITE_CONTEST_ID)) {
-            ?>
+if (!isset($OJ_ON_SITE_CONTEST_ID)) {
+    ?>
             <?php
-            if (isset($OJ_BBS) && $OJ_BBS) {
-                ?>
-                <a class="item<?php if ($dir == "discuss3")
-                    echo " active"; ?>" href="<?php echo $path_fix; ?>bbs.php">
+    if (isset($OJ_BBS) && $OJ_BBS) {
+        ?>
+                <a class="item<?php if ($dir == "discuss3") {
+                    echo " active";
+                } ?>" href="<?php echo $path_fix; ?>bbs.php">
                     <?php echo $MSG_BBS ?>
                 </a>
                 <?php
-            }
-            ?>
-            <a class="item<?php if ($url == 'problemset.php')
-                echo ' active'; ?>" href="<?php echo $path_fix ?>problemset.php">
+    }
+    ?>
+            <a class="item<?php if ($url == 'problemset.php') {
+                echo ' active';
+            } ?>" href="<?php echo $path_fix ?>problemset.php">
                 <?php echo $MSG_PROBLEMS ?>
             </a>
-            <a class="item<?php if ($url == "category.php")
-                echo " active"; ?>" href="<?php echo $path_fix ?>category.php"><span class="glyphicon glyphicon-th"
+            <a class="item<?php if ($url == "category.php") {
+                echo " active";
+            } ?>" href="<?php echo $path_fix ?>category.php"><span class="glyphicon glyphicon-th"
                     aria-hidden="true"></span>
                 <?php echo $MSG_SOURCE ?>
             </a>
-            <a class="item<?php if ($url == 'contest.php')
-                echo ' active'; ?>" href="<?php echo $path_fix ?>contest.php<?php if (isset($_SESSION[$OJ_NAME . "_user_id"]))
-                         echo "?my" ?>">
+            <a class="item<?php if ($url == 'contest.php') {
+                echo ' active';
+            } ?>" href="<?php echo $path_fix ?>contest.php<?php if (isset($_SESSION[$OJ_NAME . "_user_id"])) {
+                echo "?my";
+            } ?>">
                 <?php echo $MSG_CONTEST ?>
             </a>
-            <a class="item<?php if ($url == 'status.php')
-                echo ' active'; ?>" href="<?php echo $path_fix ?>status.php">
+            <a class="item<?php if ($url == 'status.php') {
+                echo ' active';
+            } ?>" href="<?php echo $path_fix ?>status.php">
                 <?php echo $MSG_STATUS ?>
             </a>
-            <a class="item<?php if ($url == 'ranklist.php')
-                echo ' active'; ?>" href="<?php echo $path_fix ?>ranklist.php">
+            <a class="item<?php if ($url == 'ranklist.php') {
+                echo ' active';
+            } ?>" href="<?php echo $path_fix ?>ranklist.php">
                 <?php echo $MSG_RANKLIST ?>
             </a>
             <?php
-        } else {
-            ?>
-            <a class="item<?php if ($url == "contest.php")
-                echo " active"; ?>" href="<?php echo $path_fix ?>contest.php">
+} else {
+    ?>
+            <a class="item<?php if ($url == "contest.php") {
+                echo " active";
+            } ?>" href="<?php echo $path_fix ?>contest.php">
                 <?php echo $MSG_CONTEST ?>
             </a>
             <?php
-        }
-        ?>
+}
+?>
         <div class="right menu">
             <div class="ui dropdown item">
                 <?php echo $MSG_LANG; ?>
@@ -126,8 +138,8 @@ if (
                 </div>
             </div>
             <?php
-            if ($_SESSION[$OJ_NAME . '_' . 'user_id']) {
-                ?>
+    if ($_SESSION[$OJ_NAME . '_' . 'user_id']) {
+        ?>
                 <div class="ui dropdown item">
                     <?php $if_new_mail = count(pdo_query('select * from `mail` where `to_user`=? and `new_mail`=1', $_SESSION[$OJ_NAME . '_' . 'user_id'])) > 0 ? 1 : 0; ?>
                     <?php echo $_SESSION[$OJ_NAME . '_' . 'user_id']; ?>
@@ -150,15 +162,15 @@ if (
                             <?php echo $MSG_LOGOUT; ?>
                         </a>
                         <?php
-                        if ($_SESSION[$OJ_NAME . '_' . 'administrator']) {
-                            ?>
+                if ($_SESSION[$OJ_NAME . '_' . 'administrator']) {
+                    ?>
 
                             <a class="item" href="<?php echo $path_fix ?>swadmin">
                                 <?php echo $MSG_ADMIN; ?>
                             </a>
                             <?php
-                        }
-                        ?>
+                }
+        ?>
                     </div>
                 </div>
             <?php } else { ?>
@@ -217,43 +229,51 @@ if (
         <div class="ui dropdown item">
             <i class="sidebar icon"></i>
             <div class="menu">
-                <a class="item<?php if ($url == '')
-                    echo ' active'; ?>" href="./">
+                <a class="item<?php if ($url == '') {
+                    echo ' active';
+                } ?>" href="./">
                     <?php echo $MSG_HOME ?>
                 </a>
-                <a class="item<?php if ($url == 'faqs.php')
-                    echo ' active'; ?>" href="./faqs.php">
+                <a class="item<?php if ($url == 'faqs.php') {
+                    echo ' active';
+                } ?>" href="./faqs.php">
                     <?php echo $MSG_FAQ ?>
                 </a>
                 <?php
                 if (isset($OJ_BBS) && $OJ_BBS) {
                     ?>
-                    <a class="item<?php if ($dir == "discuss3")
-                        echo " active"; ?>" href="<?php echo $path_fix; ?>bbs.php">
+                    <a class="item<?php if ($dir == "discuss3") {
+                        echo " active";
+                    } ?>" href="<?php echo $path_fix; ?>bbs.php">
                         <?php echo $MSG_BBS ?>
                     </a>
                     <?php
                 }
-                ?>
-                <a class="item<?php if ($url == 'problemset.php')
-                    echo ' active'; ?>" href="./problemset.php">
+?>
+                <a class="item<?php if ($url == 'problemset.php') {
+                    echo ' active';
+                } ?>" href="./problemset.php">
                     <?php echo $MSG_PROBLEMS ?>
                 </a>
-                <a class="item<?php if ($url == "category.php")
-                    echo " active"; ?>" href="<?php echo $path_fix ?>category.php"><span class="glyphicon glyphicon-th"
+                <a class="item<?php if ($url == "category.php") {
+                    echo " active";
+                } ?>" href="<?php echo $path_fix ?>category.php"><span class="glyphicon glyphicon-th"
                         aria-hidden="true"></span>
                     <?php echo $MSG_SOURCE ?>
                 </a>
-                <a class="item<?php if ($url == 'contest.php')
-                    echo ' active'; ?>" href="./contest.php">
+                <a class="item<?php if ($url == 'contest.php') {
+                    echo ' active';
+                } ?>" href="./contest.php">
                     <?php echo $MSG_CONTEST ?>
                 </a>
-                <a class="item<?php if ($url == 'status.php')
-                    echo ' active'; ?>" href="./status.php">
+                <a class="item<?php if ($url == 'status.php') {
+                    echo ' active';
+                } ?>" href="./status.php">
                     <?php echo $MSG_STATUS ?>
                 </a>
-                <a class="item<?php if ($url == 'ranklist.php')
-                    echo ' active'; ?>" href="./ranklist.php">
+                <a class="item<?php if ($url == 'ranklist.php') {
+                    echo ' active';
+                } ?>" href="./ranklist.php">
                     <?php echo $MSG_RANKLIST ?>
                 </a>
                 <div class="divider"></div>
@@ -301,7 +321,7 @@ if (
                                 </a>
                                 <?php
                             }
-                            ?>
+                    ?>
                         </div>
                     </div>
                 <?php } else { ?>

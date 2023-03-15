@@ -1,7 +1,7 @@
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="<?php echo $OJ_CDN_URL.$path_fix."include/"?>jquery-latest.js"></script>
 
-<?php if(isset($OJ_MARKDOWN)&&$OJ_MARKDOWN){ ?>
+<?php if (isset($OJ_MARKDOWN)&&$OJ_MARKDOWN) { ?>
 <script src="<?php echo $OJ_CDN_URL.$path_fix."template/$OJ_TEMPLATE/"?>marked.min.js"></script>
 <?php } ?>
 
@@ -10,15 +10,16 @@
 
 <?php
 $msg_path=realpath(dirname(__FILE__)."/../../admin/msg/$domain.txt");
-if(file_exists($msg_path))
-	$view_marquee_msg=file_get_contents($OJ_SAE?"saestor://web/msg.txt":$msg_path);
-else
-	$view_marquee_msg="";
+if (file_exists($msg_path)) {
+    $view_marquee_msg=file_get_contents($OJ_SAE ? "saestor://web/msg.txt" : $msg_path);
+} else {
+    $view_marquee_msg="";
+}
 ?>
 
 <script>
 $(document).ready(function(){
-	<?php if($view_marquee_msg!="") { ?> 
+	<?php if ($view_marquee_msg!="") { ?> 
   	var msg="<marquee style='margin-top:10px' direction='left' scrollamount=3 scrolldelay=50 onMouseOver='this.stop()'"+
       " onMouseOut='this.start()' class=toprow>"+<?php echo json_encode($view_marquee_msg); ?>+"</marquee>";
   	$(".jumbotron").prepend(msg);
@@ -30,14 +31,16 @@ $(document).ready(function(){
   $("body").append("<center><?php echo $MSG_HELP_HUSTOJ?></center>");  
   $("body").append("<div class=center > <img src='http://cdn.hustoj.com/wx.jpg' width='120px'><img src='http://cdn.hustoj.com/alipay.png' width='120px'><br> 欢迎关注微信公众号onlinejudge</div>");
   
-  <?php if(isset($OJ_BEIAN)&&$OJ_BEIAN){ ?>
+  <?php if (isset($OJ_BEIAN)&&$OJ_BEIAN) { ?>
          $("body").append("<br><center><a href='http://beian.miit.gov.cn/' target='_blank'><?php echo $OJ_BEIAN?></a></center>");
   <?php } ?>
 
 	
-  <?php 
-	if(isset($_SESSION[$OJ_NAME."_administrator"])) echo "admin_mod();";
-  ?>
+  <?php
+    if (isset($_SESSION[$OJ_NAME."_administrator"])) {
+        echo "admin_mod();";
+    }
+?>
 });
 
 $(".hint pre").each(function(){

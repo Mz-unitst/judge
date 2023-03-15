@@ -17,85 +17,94 @@
 				<div class="card">
 					<div class="card-body">
 						<?php
-						if (isset($_GET['cid'])) {
-							$cid = intval($_GET['cid']);
-							$view_cid = $cid;
-							//print $cid;
-						
-							//check contest valid
-							$sql = "SELECT * FROM `contest` WHERE `contest_id`=?";
-							$result = pdo_query($sql, $cid);
+                        if (isset($_GET['cid'])) {
+                            $cid = intval($_GET['cid']);
+                            $view_cid = $cid;
+                            //print $cid;
 
-							$rows_cnt = count($result);
-							$contest_ok = true;
-							$password = "";
+                            //check contest valid
+                            $sql = "SELECT * FROM `contest` WHERE `contest_id`=?";
+                            $result = pdo_query($sql, $cid);
 
-							if (isset($_POST['password']))
-								$password = $_POST['password'];
+                            $rows_cnt = count($result);
+                            $contest_ok = true;
+                            $password = "";
 
-							if (false) {
-								$password = stripslashes($password);
-							}
+                            if (isset($_POST['password'])) {
+                                $password = $_POST['password'];
+                            }
 
-							if ($rows_cnt == 0) {
-								$view_title = "比赛已经关闭!";
-							} else {
-								$row = $result[0];
-								$view_private = $row['private'];
+                            if (false) {
+                                $password = stripslashes($password);
+                            }
 
-								if ($password != "" && $password == $row['password'])
-									$_SESSION[$OJ_NAME . '_' . 'c' . $cid] = true;
+                            if ($rows_cnt == 0) {
+                                $view_title = "比赛已经关闭!";
+                            } else {
+                                $row = $result[0];
+                                $view_private = $row['private'];
 
-								if ($row['private'] && !isset($_SESSION[$OJ_NAME . '_' . 'c' . $cid]))
-									$contest_ok = false;
+                                if ($password != "" && $password == $row['password']) {
+                                    $_SESSION[$OJ_NAME . '_' . 'c' . $cid] = true;
+                                }
 
-								if ($row['defunct'] == 'Y')
-									$contest_ok = false;
+                                if ($row['private'] && !isset($_SESSION[$OJ_NAME . '_' . 'c' . $cid])) {
+                                    $contest_ok = false;
+                                }
 
-								if (isset($_SESSION[$OJ_NAME . '_' . 'administrator']))
-									$contest_ok = true;
+                                if ($row['defunct'] == 'Y') {
+                                    $contest_ok = false;
+                                }
 
-								$now = time();
-								$start_time = strtotime($row['start_time']);
-								$end_time = strtotime($row['end_time']);
-								$view_description = $row['description'];
-								$view_title = $row['title'];
-								$view_start_time = $row['start_time'];
-								$view_end_time = $row['end_time'];
-							}
-						}
-						?>
+                                if (isset($_SESSION[$OJ_NAME . '_' . 'administrator'])) {
+                                    $contest_ok = true;
+                                }
+
+                                $now = time();
+                                $start_time = strtotime($row['start_time']);
+                                $end_time = strtotime($row['end_time']);
+                                $view_description = $row['description'];
+                                $view_title = $row['title'];
+                                $view_start_time = $row['start_time'];
+                                $view_end_time = $row['end_time'];
+                            }
+                        }
+		?>
 						<h2>C<?php echo $view_cid; ?>: <?php echo $view_title; ?>
 						</h2>
 						<span class="ui label <?php
-						if ($now > $end_time)
-							echo "grey";
-						else if ($now < $start_time)
-							echo "green";
-						else
-							echo "red";
-						?>">
+		if ($now > $end_time) {
+		    echo "grey";
+		} elseif ($now < $start_time) {
+		    echo "green";
+		} else {
+		    echo "red";
+		}
+		?>">
 							<?php
-							if ($now > $end_time)
-								echo $MSG_Ended;
-							else if ($now < $start_time)
-								echo "未开始";
-							else
-								echo $MSG_Running;
-							?>
+		    if ($now > $end_time) {
+		        echo $MSG_Ended;
+		    } elseif ($now < $start_time) {
+		        echo "未开始";
+		    } else {
+		        echo $MSG_Running;
+		    }
+		?>
 						</span>
 						<span class="ui label <?php
-						if ($view_private == '0')
-							echo "blue";
-						else
-							echo "red";
-						?>">
+                        if ($view_private == '0') {
+                            echo "blue";
+                        } else {
+                            echo "red";
+                        }
+		?>">
 							<?php
-							if ($view_private == '0')
-								echo $MSG_Public;
-							else
-								echo $MSG_Private;
-							?>
+		    if ($view_private == '0') {
+		        echo $MSG_Public;
+		    } else {
+		        echo $MSG_Private;
+		    }
+		?>
 						</span>
 						<h3>
 							<?php echo $MSG_CONTEST; ?><?php echo $MSG_TIME; ?>
@@ -148,25 +157,27 @@
 							</thead>
 							<tbody>
 								<?php
-								$cnt = 0;
-								foreach ($view_status as $row) {
-									echo "<tr>";
-									$i = 0;
-									foreach ($row as $table_cell) {
-										if ($i > 9)
-											continue;
-										if ($i > 3 && $i != 8 && $i != 6)
-											echo "<td class='hidden-xs'>";
-										else
-											echo "<td>";
-										echo $table_cell;
-										echo "</td>";
-										$i++;
-									}
-									echo "</tr>\n";
-									$cnt = 1 - $cnt;
-								}
-								?>
+		    $cnt = 0;
+		foreach ($view_status as $row) {
+		    echo "<tr>";
+		    $i = 0;
+		    foreach ($row as $table_cell) {
+		        if ($i > 9) {
+		            continue;
+		        }
+		        if ($i > 3 && $i != 8 && $i != 6) {
+		            echo "<td class='hidden-xs'>";
+		        } else {
+		            echo "<td>";
+		        }
+		        echo $table_cell;
+		        echo "</td>";
+		        $i++;
+		    }
+		    echo "</tr>\n";
+		    $cnt = 1 - $cnt;
+		}
+		?>
 							</tbody>
 						</table>
 						<div class="ui container center aligned">
@@ -219,8 +230,9 @@
 				<div class="card">
 					<div class="card-body">
 						<form id=simform class="ui form" action="status.php" method="get">
-							<?php if (isset($cid))
-								echo "<input type='hidden' name='cid' value='$cid'>"; ?>
+							<?php if (isset($cid)) {
+							    echo "<input type='hidden' name='cid' value='$cid'>";
+							} ?>
 							<div class="field">
 								<label>
 									<?php echo $MSG_PROBLEM_ID ?>
@@ -248,21 +260,22 @@
 									<div class="scrollhint menu">
 										<div class="item" data-value="-1">All</div>
 										<?php
-										if (isset($_GET['language'])) {
-											$selectedLang = intval($_GET['language']);
-										} else {
-											$selectedLang = -1;
-										}
-										$lang_count = count($language_ext);
-										$langmask = $OJ_LANGMASK;
-										$lang = (~((int) $langmask)) & ((1 << ($lang_count)) - 1);
-										for ($i = 0; $i < $lang_count; $i++) {
-											if ($lang & (1 << $i))
-												echo "<div  data-value=$i class='item" . ($selectedLang == $i ? "active" : "") . "'>
+                                        if (isset($_GET['language'])) {
+                                            $selectedLang = intval($_GET['language']);
+                                        } else {
+                                            $selectedLang = -1;
+                                        }
+                                        $lang_count = count($language_ext);
+		$langmask = $OJ_LANGMASK;
+		$lang = (~((int) $langmask)) & ((1 << ($lang_count)) - 1);
+		for ($i = 0; $i < $lang_count; $i++) {
+		    if ($lang & (1 << $i)) {
+		        echo "<div  data-value=$i class='item" . ($selectedLang == $i ? "active" : "") . "'>
             " . $language_name[$i] . "
             </div>";
-										}
-										?>
+		    }
+		}
+		?>
 									</div>
 								</div>
 							</div>
@@ -278,33 +291,38 @@
 									</div>
 
 									<div class="scrollhint menu">
-										<?php if (isset($_GET['jresult']))
-											$jresult_get = intval($_GET['jresult']);
-										else
-											$jresult_get = -1;
-										if ($jresult_get >= 12 || $jresult_get < 0)
-											$jresult_get = -1;
-										if ($jresult_get == -1)
-											echo "<div class='item active' data-value='-1'>All</div>";
-										else
-											echo "<div class='item' data-value='-1'>All</div>";
-										for ($j = 0; $j < 12; $j++) {
-											$i = ($j + 4) % 12;
-											if ($i == $jresult_get)
-												echo "<div class='item active' data-value='" . strval($jresult_get) . "'>" . $jresult[$i] . "</div>";
-											else
-												echo "<div class='item' data-value='" . strval($i) . "'>" . $jresult[$i] . "</div>";
+										<?php if (isset($_GET['jresult'])) {
+										    $jresult_get = intval($_GET['jresult']);
+										} else {
+										    $jresult_get = -1;
 										}
-										?>
+		if ($jresult_get >= 12 || $jresult_get < 0) {
+		    $jresult_get = -1;
+		}
+		if ($jresult_get == -1) {
+		    echo "<div class='item active' data-value='-1'>All</div>";
+		} else {
+		    echo "<div class='item' data-value='-1'>All</div>";
+		}
+		for ($j = 0; $j < 12; $j++) {
+		    $i = ($j + 4) % 12;
+		    if ($i == $jresult_get) {
+		        echo "<div class='item active' data-value='" . strval($jresult_get) . "'>" . $jresult[$i] . "</div>";
+		    } else {
+		        echo "<div class='item' data-value='" . strval($i) . "'>" . $jresult[$i] . "</div>";
+		    }
+		}
+		?>
 									</div>
 								</div>
 							</div>
 							<?php if (isset($_SESSION[$OJ_NAME . '_' . 'administrator']) || isset($_SESSION[$OJ_NAME . '_' . 'source_browser'])) {
-								if (isset($_GET['showsim']))
-									$showsim = intval($_GET['showsim']);
-								else
-									$showsim = 0;
-								?>
+							    if (isset($_GET['showsim'])) {
+							        $showsim = intval($_GET['showsim']);
+							    } else {
+							        $showsim = 0;
+							    }
+							    ?>
 								<div class="field">
 									<label>相似度：</label>
 									<div class="ui selection dropdown">
@@ -314,7 +332,7 @@
 										<div class="default text">SIM</div>
 										<div class="scrollhint menu">
 											<?php
-											echo "<div class='item' data-value=0 " . ($showsim == 0 ? 'selected' : '') . ">All</div>
+							                echo "<div class='item' data-value=0 " . ($showsim == 0 ? 'selected' : '') . ">All</div>
 								<div class='item' data-value=50 " . ($showsim == 50 ? 'selected' : '') . ">50</div>
 								<div class='item' data-value=60 " . ($showsim == 60 ? 'selected' : '') . ">60</div>
 								<div class='item' data-value=70 " . ($showsim == 70 ? 'selected' : '') . ">70</div>
@@ -326,7 +344,7 @@
 								</div>
 							<?php
 							}
-							?>
+		?>
 							<button class="ui labeled icon blue button" type="submit" style="margin-left: 20px;">
 								<i class="search icon"></i>
 								<?php echo $MSG_SEARCH; ?>

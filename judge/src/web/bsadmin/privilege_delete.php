@@ -10,10 +10,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -22,11 +22,11 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -63,18 +63,18 @@ include_once("kindeditor.php");
 								</div>
 								<div class="card-body">
 <?php require_once("../include/check_get_key.php");
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
-}
-if(isset($_GET['uid'])){
-	$user_id=$_GET['uid'];
-	$rightstr =$_GET['rightstr'];
-	$sql="delete from `privilege` where user_id=? and rightstr=?";
-	$rows=pdo_query($sql,$user_id,$rightstr);
-	echo "$user_id $rightstr deleted!";
-}
-?>
+	if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+	    echo "<a href='../loginpage.php'>Please Login First!</a>";
+	    exit(1);
+	}
+	if (isset($_GET['uid'])) {
+	    $user_id=$_GET['uid'];
+	    $rightstr =$_GET['rightstr'];
+	    $sql="delete from `privilege` where user_id=? and rightstr=?";
+	    $rows=pdo_query($sql, $user_id, $rightstr);
+	    echo "$user_id $rightstr deleted!";
+	}
+	?>
 
 <script language=javascript>
 	history.go(-1);

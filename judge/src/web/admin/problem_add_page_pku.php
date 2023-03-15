@@ -10,57 +10,60 @@
 <center>
 <?php require_once("../include/db_info.inc.php");?>
 <?php require_once("admin-header.php");
-if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))){
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 ?>
 <?php
 include_once("kindeditor.php") ;
 ?>
 <?php require_once("../include/simple_html_dom.php");
-  $url=$_POST ['url'];
-  $remote_id=mb_substr($url,mb_strpos($url,"=")+1);  
-  if (!$url) $url=$_GET['url'];
-  if (strpos($url, "http") === false){
-	echo "Please Input like http://poj.org/problem?id=1000";
-	exit(1);
-  } 
-  if (false) {
-	$url = stripslashes ( $url);
-  }
-  $baseurl=substr($url,0,strrpos($url,"/")+1);
+$url=$_POST ['url'];
+$remote_id=mb_substr($url, mb_strpos($url, "=")+1);
+if (!$url) {
+    $url=$_GET['url'];
+}
+if (strpos($url, "http") === false) {
+    echo "Please Input like http://poj.org/problem?id=1000";
+    exit(1);
+}
+if (false) {
+    $url = stripslashes($url);
+}
+$baseurl=substr($url, 0, strrpos($url, "/")+1);
 //  echo $baseurl;
-  //$html = file_get_html($url);
-  $html = file_get_html($url, false,null,0, -1,true,true, DEFAULT_TARGET_CHARSET,false);
-  foreach($html->find('img') as $element)
-        $element->src=$baseurl.$element->src;
-        
-  $element=$html->find('div[class=ptt]',0);
-  $title=$element->plaintext;
-  
-  $element=$html->find('div[class=plm]',0);
-  $tlimit=$element->find('td',0);//->next_sibling();
-  $tlimit=substr($tlimit->plaintext,11);
-  $tlimit=substr($tlimit,0,strlen($tlimit)-2);
-  $mlimit=$element->find('td',2);//->nextSibling();
-  $mlimit=substr($mlimit->plaintext,13);
-  $mlimit=substr($mlimit,0,strlen($mlimit)-1);
-  $tlimit/=1000;
-  $mlimit/=1000;
-  
-  $element=$html->find('div[class=ptx]',0);
-  $descriptionHTML=$element->outertext;
-  $element=$html->find('div[class=ptx]',1);
-  $inputHTML=$element->outertext;
-  $element=$html->find('div[class=ptx]',2);
-  $outputHTML=$element->outertext;  
-  $element=$html->find('pre[class=sio]',0);
-  $sample_input=$element->innertext;
-  $element=$html->find('pre[class=sio]',1);
-  $sample_output=$element->innertext;
-  $element=$html->find('div[class=ptx]',3);
-  $hint=htmlentities($element->outertext);  
+//$html = file_get_html($url);
+$html = file_get_html($url, false, null, 0, -1, true, true, DEFAULT_TARGET_CHARSET, false);
+foreach ($html->find('img') as $element) {
+    $element->src=$baseurl.$element->src;
+}
+
+$element=$html->find('div[class=ptt]', 0);
+$title=$element->plaintext;
+
+$element=$html->find('div[class=plm]', 0);
+$tlimit=$element->find('td', 0);//->next_sibling();
+$tlimit=substr($tlimit->plaintext, 11);
+$tlimit=substr($tlimit, 0, strlen($tlimit)-2);
+$mlimit=$element->find('td', 2);//->nextSibling();
+$mlimit=substr($mlimit->plaintext, 13);
+$mlimit=substr($mlimit, 0, strlen($mlimit)-1);
+$tlimit/=1000;
+$mlimit/=1000;
+
+$element=$html->find('div[class=ptx]', 0);
+$descriptionHTML=$element->outertext;
+$element=$html->find('div[class=ptx]', 1);
+$inputHTML=$element->outertext;
+$element=$html->find('div[class=ptx]', 2);
+$outputHTML=$element->outertext;
+$element=$html->find('pre[class=sio]', 0);
+$sample_input=$element->innertext;
+$element=$html->find('pre[class=sio]', 1);
+$sample_output=$element->innertext;
+$element=$html->find('div[class=ptx]', 3);
+$hint=htmlentities($element->outertext);
 ?>
 <form method=POST action=problem_add.php>
 <input type=hidden name=problem_id value=New Problem>

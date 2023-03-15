@@ -55,7 +55,7 @@
                                     }
                                     echo "</tr>";
                                 }
-                                ?>
+        ?>
                             </tbody>
                         </table>
                         <div class="ui container center aligned">
@@ -63,16 +63,17 @@
                                 <a class="icon item" href="contest.php?page=1"><i
                                         class="angle double left icon"></i></a>
                                 <?php
-                                if (!isset($page))
-                                    $page = 1;
-                                $page = intval($page);
-                                $section = 8;
-                                $start = $page > $section ? $page - $section : 1;
-                                $end = $page + $section > $view_total_page ? $view_total_page : $page + $section;
-                                for ($i = $start; $i <= $end; $i++) {
-                                    echo "<a class='" . ($page == $i ? "active " : "") . "item' href='contest.php?page=" . $i . (isset($_GET['my']) ? "&my" : "") . "'>" . $i . "</a>";
-                                }
-                                ?>
+        if (!isset($page)) {
+            $page = 1;
+        }
+        $page = intval($page);
+        $section = 8;
+        $start = $page > $section ? $page - $section : 1;
+        $end = $page + $section > $view_total_page ? $view_total_page : $page + $section;
+        for ($i = $start; $i <= $end; $i++) {
+            echo "<a class='" . ($page == $i ? "active " : "") . "item' href='contest.php?page=" . $i . (isset($_GET['my']) ? "&my" : "") . "'>" . $i . "</a>";
+        }
+        ?>
                                 <a class="item" href="contest.php?page=<?php echo $view_total_page ?>"><i
                                         class="angle double right icon"></i></a>
                             </div>
@@ -95,8 +96,9 @@
                         <form method=post action=contest.php class="form-inline">
                             <div class="ui action fluid input">
                                 <input type="text" name="keyword"
-                                    value="<?php if (isset($_POST['keyword']))
-                                        echo htmlentities($_POST['keyword'], ENT_QUOTES, "UTF-8") ?>"
+                                    value="<?php if (isset($_POST['keyword'])) {
+                                        echo htmlentities($_POST['keyword'], ENT_QUOTES, "UTF-8");
+                                    } ?>"
                                         placeholder="<?php echo $MSG_CONTEST_NAME ?>">
                                 <button type=submit class="ui button">
                                     <?php echo $MSG_SEARCH; ?>

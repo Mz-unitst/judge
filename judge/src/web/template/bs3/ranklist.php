@@ -1,4 +1,6 @@
-<?php	if(stripos($_SERVER['REQUEST_URI'],"template"))exit(); ?>
+<?php	if (stripos($_SERVER['REQUEST_URI'], "template")) {
+    exit();
+} ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,7 +33,7 @@
         <tr align='center'>
           <td>
             <form class=form-inline action=ranklist.php>
-              <input class="form-control" name='prefix' value="<?php echo htmlentities(isset($_GET['prefix'])?$_GET['prefix']:"",ENT_QUOTES,"utf-8") ?>" placeholder="<?php echo $MSG_USER?>">
+              <input class="form-control" name='prefix' value="<?php echo htmlentities(isset($_GET['prefix']) ? $_GET['prefix'] : "", ENT_QUOTES, "utf-8") ?>" placeholder="<?php echo $MSG_USER?>">
               <button class="form-control" type='submit'><?php echo $MSG_SEARCH?></button>
             </form>
           </td>
@@ -66,47 +68,49 @@
         <tbody>
           <?php
           $cnt=0;
-          foreach($view_rank as $row){
-            if ($cnt)
-              echo "<tr class='oddrow'>";
-            else
-              echo "<tr class='evenrow'>";
+foreach ($view_rank as $row) {
+    if ($cnt) {
+        echo "<tr class='oddrow'>";
+    } else {
+        echo "<tr class='evenrow'>";
+    }
 
-            $i = 0;
-            foreach($row as $table_cell){
-              echo "<td class='text-center'>";
-              echo $table_cell;
-              echo "</td>";
-              $i++;
-            }
-            echo "</tr>";
-            $cnt=1-$cnt;
-          }
-          ?>
+    $i = 0;
+    foreach ($row as $table_cell) {
+        echo "<td class='text-center'>";
+        echo $table_cell;
+        echo "</td>";
+        $i++;
+    }
+    echo "</tr>";
+    $cnt=1-$cnt;
+}
+?>
         </tbody>
       </table>
 
       <?php
       echo "<center>";
-      $qs="";
-      if(isset($_GET['prefix'])){
-        $qs.="&prefix=".htmlentities($_GET['prefix'],ENT_QUOTES,"utf-8");
-      }
-      if(isset($scope)){
-        $qs.="&scope=".htmlentities($scope,ENT_QUOTES,"utf-8");
-      }
+$qs="";
+if (isset($_GET['prefix'])) {
+    $qs.="&prefix=".htmlentities($_GET['prefix'], ENT_QUOTES, "utf-8");
+}
+if (isset($scope)) {
+    $qs.="&scope=".htmlentities($scope, ENT_QUOTES, "utf-8");
+}
 
-      for($i = 0; $i <$view_total ; $i += $page_size) {
-        echo "<a href='./ranklist.php?start=" . strval ( $i ).$qs. "'>";
-        echo strval ( $i + 1 );
-        echo "-";
-        echo strval ( $i + $page_size );
-        echo "</a>&nbsp;";
-        if ($i % 250 == 200)
-		      echo "<br>";
-      }
-      echo "</center>";
-      ?>
+for ($i = 0; $i <$view_total ; $i += $page_size) {
+    echo "<a href='./ranklist.php?start=" . strval($i).$qs. "'>";
+    echo strval($i + 1);
+    echo "-";
+    echo strval($i + $page_size);
+    echo "</a>&nbsp;";
+    if ($i % 250 == 200) {
+        echo "<br>";
+    }
+}
+echo "</center>";
+?>
     </div>
   </div> <!-- /container -->
 

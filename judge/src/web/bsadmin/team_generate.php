@@ -9,10 +9,10 @@
 	<!-- Styles -->
 	<?php require("./header-files.php");
 	require_once("../include/my_func.inc.php");
-	
-  require_once("../include/const.inc.php");
-include_once("kindeditor.php");
-?>
+
+	require_once("../include/const.inc.php");
+	include_once("kindeditor.php");
+	?>
     <title><?php echo $OJ_NAME;?> - Admin</title>
 
 
@@ -21,13 +21,13 @@ include_once("kindeditor.php");
 <body>
 
     <?php require("./nav.php");?>
-    <?php 
-    if ($mod=='hacker') {
-        header("Location:index.php");
-    }
-    
-require_once("../include/set_get_key.php");
-?>
+    <?php
+	    if ($mod=='hacker') {
+	        header("Location:index.php");
+	    }
+
+	require_once("../include/set_get_key.php");
+	?>
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -63,54 +63,53 @@ require_once("../include/set_get_key.php");
 									</div>
 								</div>
 								<div class="card-body">
-                                    <?php if(isset($_POST['prefix'])){
-	require_once("../include/check_post_key.php");
-	$prefix=$_POST['prefix'];
-	require_once("../include/my_func.inc.php");
-	if (!is_valid_user_name($prefix)){
-		echo "Prefix is not valid.";
-		exit(0);
-	}
-	$teamnumber=intval($_POST['teamnumber']);
-        $pieces = explode("\n", trim($_POST['ulist']));
-	
-	if ($teamnumber>0){
-		echo "<table class='table table-hover'>";
-		echo "<tr><td colspan=3>账号列表(请复制)</td></tr>";
-		echo "<tr><td>昵称<td>用户名</td><td>密码</td></tr>";
-		for($i=1;$i<=$teamnumber;$i++){
-			
-        $user_id=$prefix.($i<10?('0'.$i):$i);
-			$password=strtoupper(substr(MD5($user_id.rand(0,9999999)),0,10));
-                        if(isset($pieces[$i-1]))
-                        	$nick=$pieces[$i-1];
-                        else
-				$nick="可爱的OIer";
-			if($teamnumber==1) $user_id=$prefix;
+                                    <?php if (isset($_POST['prefix'])) {
+                                        require_once("../include/check_post_key.php");
+                                        $prefix=$_POST['prefix'];
+                                        require_once("../include/my_func.inc.php");
+                                        if (!is_valid_user_name($prefix)) {
+                                            echo "Prefix is not valid.";
+                                            exit(0);
+                                        }
+                                        $teamnumber=intval($_POST['teamnumber']);
+                                        $pieces = explode("\n", trim($_POST['ulist']));
 
-			echo "<tr><td>$nick<td>$user_id</td><td>$password</td></tr>";
-			
-			$password=pwGen($password);
-			$email="a@b";
-                       
-			$school="我是可爱的OIer";
-			$ip = ($_SERVER['REMOTE_ADDR']);
-			if( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ){
-			    $REMOTE_ADDR = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			    $tmp_ip=explode(',',$REMOTE_ADDR);
-			    $ip =(htmlentities($tmp_ip[0],ENT_QUOTES,"UTF-8"));
-			}
-			$sql="INSERT INTO `users`("."`user_id`,`email`,`ip`,`accesstime`,`password`,`reg_time`,`nick`,`school`)".
-			"VALUES(?,?,?,NOW(),?,NOW(),?,?)on DUPLICATE KEY UPDATE `email`=?,`ip`=?,`accesstime`=NOW(),`password`=?,`reg_time`=now(),nick=?,`school`=?, `qq`=?, `backimg`=?, `codeshare`=?, `mailok`=?";
-			pdo_query($sql,$user_id,$email,$ip,$password,$nick,$school,$email,$ip,$password,$nick,$school,'12345678', './template/meto/1.jpg', 'Y', '0') ;
-		}
-		echo  "</table>";
-		
-		
-	}
-	
-}
-?>
+                                        if ($teamnumber>0) {
+                                            echo "<table class='table table-hover'>";
+                                            echo "<tr><td colspan=3>账号列表(请复制)</td></tr>";
+                                            echo "<tr><td>昵称<td>用户名</td><td>密码</td></tr>";
+                                            for ($i=1;$i<=$teamnumber;$i++) {
+                                                $user_id=$prefix.($i<10 ? ('0'.$i) : $i);
+                                                $password=strtoupper(substr(MD5($user_id.rand(0, 9999999)), 0, 10));
+                                                if (isset($pieces[$i-1])) {
+                                                    $nick=$pieces[$i-1];
+                                                } else {
+                                                    $nick="可爱的OIer";
+                                                }
+                                                if ($teamnumber==1) {
+                                                    $user_id=$prefix;
+                                                }
+
+                                                echo "<tr><td>$nick<td>$user_id</td><td>$password</td></tr>";
+
+                                                $password=pwGen($password);
+                                                $email="a@b";
+
+                                                $school="我是可爱的OIer";
+                                                $ip = ($_SERVER['REMOTE_ADDR']);
+                                                if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                                                    $REMOTE_ADDR = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                                                    $tmp_ip=explode(',', $REMOTE_ADDR);
+                                                    $ip =(htmlentities($tmp_ip[0], ENT_QUOTES, "UTF-8"));
+                                                }
+                                                $sql="INSERT INTO `users`("."`user_id`,`email`,`ip`,`accesstime`,`password`,`reg_time`,`nick`,`school`)".
+                                                "VALUES(?,?,?,NOW(),?,NOW(),?,?)on DUPLICATE KEY UPDATE `email`=?,`ip`=?,`accesstime`=NOW(),`password`=?,`reg_time`=now(),nick=?,`school`=?, `qq`=?, `backimg`=?, `codeshare`=?, `mailok`=?";
+                                                pdo_query($sql, $user_id, $email, $ip, $password, $nick, $school, $email, $ip, $password, $nick, $school, '12345678', './template/meto/1.jpg', 'Y', '0') ;
+                                            }
+                                            echo  "</table>";
+                                        }
+                                    }
+	?>
                                 <form action='team_generate.php' method=post class="form">
 	    <label style="width:100px">账号前缀</label><input type='test' name='prefix' value='moj_' placeholder="moj_" class="form-control" style="display:inline;width:60%"><br>
 	    <label style="width:100px">创建</label><input type=input name='teamnumber' class="form-control" style="display:inline;width:30%" value=5 size=3>个账号<br>

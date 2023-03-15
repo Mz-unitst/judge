@@ -1,8 +1,8 @@
 <?php require_once("admin-header.php");
 
 if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
-	echo "<a href='../loginpage.php'>Please Login First!</a>";
-	exit(1);
+    echo "<a href='../loginpage.php'>Please Login First!</a>";
+    exit(1);
 }
 ?>
 
@@ -14,23 +14,26 @@ if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']))) {
 
 <?php
 if (isset($_POST['do'])) {
-	require_once("../include/check_post_key.php");
+    require_once("../include/check_post_key.php");
 
-	$user_id = $_POST['user_id'];
-	$rightstr = $_POST['rightstr'];
-	$valuestr = "true";
-	if(isset($_POST['valuestr']))
-		$valuestr = $_POST['valuestr'];
-	
-	if (isset($_POST['contest']))
-		$rightstr = "c$rightstr";
+    $user_id = $_POST['user_id'];
+    $rightstr = $_POST['rightstr'];
+    $valuestr = "true";
+    if (isset($_POST['valuestr'])) {
+        $valuestr = $_POST['valuestr'];
+    }
 
-	if (isset($_POST['psv']))
-		$rightstr = "s$rightstr";
+    if (isset($_POST['contest'])) {
+        $rightstr = "c$rightstr";
+    }
 
-	$sql = "insert into `privilege`(user_id,rightstr,valuestr,defunct) values(?,?,?,'N')";
-	$rows = pdo_query($sql,$user_id,$rightstr,$valuestr);
-	echo "<center><h4 class='text-danger'>User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')."'s Privilege Added!</h4></center>";
+    if (isset($_POST['psv'])) {
+        $rightstr = "s$rightstr";
+    }
+
+    $sql = "insert into `privilege`(user_id,rightstr,valuestr,defunct) values(?,?,?,'N')";
+    $rows = pdo_query($sql, $user_id, $rightstr, $valuestr);
+    echo "<center><h4 class='text-danger'>User ".htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8')."'s Privilege Added!</h4></center>";
 }
 ?>
 
@@ -40,9 +43,9 @@ if (isset($_POST['do'])) {
 	<center><label class="text-info"><?php echo $MSG_HELP_ADD_PRIVILEGE?></label></center>
 	<div class="form-group">
 		<label class="col-sm-offset-3 col-sm-3 control-label"><?php echo $MSG_USER_ID?></label>
-		<?php if(isset($_GET['uid'])) { ?>
+		<?php if (isset($_GET['uid'])) { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" value="<?php echo htmlentities($_GET['uid'], ENT_QUOTES, 'UTF-8');?>" type="text" required ></div>
-  	<?php } else if(isset($_POST['user_id'])) { ?>
+  	<?php } elseif (isset($_POST['user_id'])) { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" value="<?php echo htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8');?>" type="text" required ></div>
 		<?php } else { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" placeholder="<?php echo $MSG_USER_ID."*"?>" type="text" required ></div>
@@ -53,17 +56,17 @@ if (isset($_POST['do'])) {
 		<label class="col-sm-offset-3 col-sm-3 control-label"><?php echo $MSG_PRIVILEGE_TYPE?></label>
 		<select class="col-sm-3" name="rightstr" onchange="show_value_input(this.value)" >
 		<?php
-			$rightarray = array("administrator","problem_editor","problem_importer","source_browser","contest_creator","http_judge","password_setter","printer","balloon","vip",'problem_start','problem_end');
-			while ($val=current($rightarray)) {
-                                $key=key($rightarray);
-                                if (isset($rightstr) && ($rightstr == $val)) {
-                                        echo '<option value="'.$val.'" selected>'.$val.'</option>';
-                                } else {
-                                        echo '<option value="'.$val.'">'.$val.'</option>';
-                                }
-                                next($rightarray);
-                        }
-		?>
+            $rightarray = array("administrator","problem_editor","problem_importer","source_browser","contest_creator","http_judge","password_setter","printer","balloon","vip",'problem_start','problem_end');
+while ($val=current($rightarray)) {
+    $key=key($rightarray);
+    if (isset($rightstr) && ($rightstr == $val)) {
+        echo '<option value="'.$val.'" selected>'.$val.'</option>';
+    } else {
+        echo '<option value="'.$val.'">'.$val.'</option>';
+    }
+    next($rightarray);
+}
+?>
 		</select>
 		<div class="col-sm-offset-9"><input id='value_input' type="text" class="form-control" name="valuestr" value="true"></div>
 	</div>
@@ -101,9 +104,9 @@ if (isset($_POST['do'])) {
 	<center><label class="text-info"><?php echo $MSG_HELP_ADD_CONTEST_USER?></label></center>
 	<div class="form-group">
 		<label class="col-sm-offset-3 col-sm-3 control-label"><?php echo $MSG_USER_ID?></label>
-		<?php if(isset($_GET['uid'])) { ?>
+		<?php if (isset($_GET['uid'])) { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" value="<?php echo htmlentities($_GET['uid'], ENT_QUOTES, 'UTF-8');?>" type="text" required ></div>
-  	<?php } else if(isset($_POST['user_id'])) { ?>
+  	<?php } elseif (isset($_POST['user_id'])) { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" value="<?php echo htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8');?>" type="text" required ></div>
 		<?php } else { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" placeholder="<?php echo $MSG_USER_ID."*"?>" type="text" required ></div>
@@ -136,9 +139,9 @@ if (isset($_POST['do'])) {
 	<center><label class="text-info"><?php echo $MSG_HELP_ADD_SOLUTION_VIEW?></label></center>
 	<div class="form-group">
 		<label class="col-sm-offset-3 col-sm-3 control-label"><?php echo $MSG_USER_ID?></label>
-		<?php if(isset($_GET['uid'])) { ?>
+		<?php if (isset($_GET['uid'])) { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" value="<?php echo htmlentities($_GET['uid'], ENT_QUOTES, 'UTF-8');?>" type="text" required ></div>
-  	<?php } else if(isset($_POST['user_id'])) { ?>
+  	<?php } elseif (isset($_POST['user_id'])) { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" value="<?php echo htmlentities($_POST['user_id'], ENT_QUOTES, 'UTF-8');?>" type="text" required ></div>
 		<?php } else { ?>
 		<div class="col-sm-3"><input name="user_id" class="form-control" placeholder="<?php echo $MSG_USER_ID."*"?>" type="text" required ></div>

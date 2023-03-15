@@ -35,7 +35,7 @@
         </div>
         <div class="form-group">
           <label class="col-sm-4 control-label"><?php echo $MSG_NICK?></label>
-          <div class="col-sm-4"><input name="nick" class="form-control" value="<?php echo htmlentities($row['nick'],ENT_QUOTES,"UTF-8")?>" type="text"></div>
+          <div class="col-sm-4"><input name="nick" class="form-control" value="<?php echo htmlentities($row['nick'], ENT_QUOTES, "UTF-8")?>" type="text"></div>
         </div>
         <div class="form-group">
           <label class="col-sm-4 control-label"><?php echo $MSG_PASSWORD?></label>
@@ -51,12 +51,14 @@
         </div>
         <div class="form-group">
           <label class="col-sm-4 control-label"><?php echo $MSG_SCHOOL?></label>
-          <div class="col-sm-4"><input name="school" class="form-control" value="<?php echo htmlentities($row['school'],ENT_QUOTES,"UTF-8")?>" type="text"></div>
-          <?php if(isset($_SESSION[$OJ_NAME."_printer"])) echo "$MSG_HELP_BALLOON_SCHOOL";?>
+          <div class="col-sm-4"><input name="school" class="form-control" value="<?php echo htmlentities($row['school'], ENT_QUOTES, "UTF-8")?>" type="text"></div>
+          <?php if (isset($_SESSION[$OJ_NAME."_printer"])) {
+              echo "$MSG_HELP_BALLOON_SCHOOL";
+          }?>
         </div>
         <div class="form-group">
           <label class="col-sm-4 control-label"><?php echo $MSG_EMAIL?></label>
-          <div class="col-sm-4"><input name="email" class="form-control" value="<?php echo htmlentities($row['email'],ENT_QUOTES,"UTF-8")?>" type="text"></div>
+          <div class="col-sm-4"><input name="email" class="form-control" value="<?php echo htmlentities($row['email'], ENT_QUOTES, "UTF-8")?>" type="text"></div>
         </div>
 		<div class="form-group">
           <label class="col-sm-4 control-label"><?php echo $MSG_REFRESH_PRIVILEGE?></label>
@@ -72,7 +74,7 @@
           </div>
         </div>
       </form>
-<?php if ($OJ_SaaS_ENABLE && $domain==$DOMAIN){ ?>
+<?php if ($OJ_SaaS_ENABLE && $domain==$DOMAIN) { ?>
   <div class="center">  <label >My OJ:</label>
           <form action="saasinit.php" method="post" role="form" class="ui form">
                 <div class="field">

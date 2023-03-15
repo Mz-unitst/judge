@@ -87,7 +87,7 @@
                             <input class="mdui-textfield-input" id="school" name="school" type="text" />
                         </div>
                     </div>
-                    <?php if($OJ_VCODE) { ?>
+                    <?php if ($OJ_VCODE) { ?>
                     <div class="mdui-row" style="position: relative;">
                         <a class="mdui-btn mdui-btn-icon"
                             style="display: inline-block; position: absolute; top: 40px; left: 10px">

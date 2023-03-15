@@ -1,4 +1,5 @@
 <?php
+
 $OJ_CACHE_SHARE = true;
 $cache_time = 10;
 require_once('./include/cache_start.php');
@@ -13,7 +14,8 @@ $user_id=$_SESSION[$OJ_NAME.'_'.'user_id'];
 
 
 /************************  数据库  *******************************/
-function getShareCodeListByPage($user_id){
+function getShareCodeListByPage($user_id)
+{
     $sql = "SELECT `share_id`, `title`, `language`, `share_time` FROM share_code WHERE `user_id` = ? ORDER BY share_time DESC";
     $share_list = pdo_query($sql, $user_id);
     return $share_list;
@@ -24,26 +26,26 @@ function getShareCodeListByPage($user_id){
 
 /*****************************  路由 *******************************/
 // 如果有比赛正在进行，则不可用
-if(
+if (
     (isset($OJ_EXAM_CONTEST_ID)&&$OJ_EXAM_CONTEST_ID>0)||
     (isset($OJ_ON_SITE_CONTEST_ID)&&$OJ_ON_SITE_CONTEST_ID>0)||
     (isset($OJ_SHARE_CODE)&&!$OJ_SHARE_CODE)
-){
+) {
     $view_errors= "代码分享功能当前不可用！";
     require("template/".$OJ_TEMPLATE."/error.php");
-    exit (0);
+    exit(0);
 }
 
-if (!isset($_SESSION[$OJ_NAME.'_'.'user_id'])){
+if (!isset($_SESSION[$OJ_NAME.'_'.'user_id'])) {
     $view_errors= "<a href=loginpage.php>$MSG_Login</a>";
     require("template/".$OJ_TEMPLATE."/error.php");
-}else {
+} else {
     // page
-    if(!isset($_GET['page'])){
+    if (!isset($_GET['page'])) {
         $page = 1;
-    }else {
+    } else {
         $page = intval($_GET['page']);
-        if($page <= 0){
+        if ($page <= 0) {
             $page = 1;
         }
     }
@@ -64,6 +66,6 @@ if (!isset($_SESSION[$OJ_NAME.'_'.'user_id'])){
 
 
 /////////////////////////Common foot
-if (file_exists('./include/cache_end.php'))
+if (file_exists('./include/cache_end.php')) {
     require_once('./include/cache_end.php');
-?>
+}

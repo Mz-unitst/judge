@@ -33,13 +33,13 @@
  <center>
 <script src="include/checksource.js"></script>
 <form id=frmSolution action="submit.php" method="post" onsubmit='do_submit()'>
-<?php if (isset($id)){?>
+<?php if (isset($id)) {?>
 Problem <span class=blue><b><?php echo $id?></b></span>
 <input id=problem_id type='hidden' value='<?php echo $id?>' name="id" ><br>
-<?php }else{
-//$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-//if ($pid>25) $pid=25;
-?>
+<?php } else {
+    //$PID="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    //if ($pid>25) $pid=25;
+    ?>
 Problem <span class=blue><b><?php echo chr($pid+ord('A'))?></b></span> of Contest <span class=blue><b><?php echo $cid?></b></span><br>
 <input id="cid" type='hidden' value='<?php echo $cid?>' name="cid">
 <input id="pid" type='hidden' value='<?php echo $pid?>' name="pid">
@@ -47,37 +47,42 @@ Problem <span class=blue><b><?php echo chr($pid+ord('A'))?></b></span> of Contes
 <span id="language_span">Language:
 <select id="language" name="language" onChange="reloadtemplate($(this).val());" >
 <?php
-$lang_count=count($language_ext);
-if(isset($_GET['langmask']))
-$langmask=$_GET['langmask'];
-else
-$langmask=$OJ_LANGMASK;
-$lang=(~((int)$langmask))&((1<<($lang_count))-1);
-if(isset($_COOKIE['lastlang'])) $lastlang=$_COOKIE['lastlang'];
-else $lastlang=0;
-for($i=0;$i<$lang_count;$i++){
-if($lang&(1<<$i))
-echo"<option value=$i ".( $lastlang==$i?"selected":"").">
+    $lang_count=count($language_ext);
+    if (isset($_GET['langmask'])) {
+        $langmask=$_GET['langmask'];
+    } else {
+        $langmask=$OJ_LANGMASK;
+    }
+    $lang=(~((int)$langmask))&((1<<($lang_count))-1);
+    if (isset($_COOKIE['lastlang'])) {
+        $lastlang=$_COOKIE['lastlang'];
+    } else {
+        $lastlang=0;
+    }
+    for ($i=0;$i<$lang_count;$i++) {
+        if ($lang&(1<<$i)) {
+            echo"<option value=$i ".($lastlang==$i ? "selected" : "").">
 ".$language_name[$i]."
 </option>";
-}
-?>
+        }
+    }
+    ?>
 </select>
-<?php if($OJ_VCODE){?>
+<?php if ($OJ_VCODE) {?>
 <?php echo $MSG_VCODE?>:
 <input name="vcode" size=4 type=text><img id="vcode" alt="click to change" src="vcode.php" onclick="this.src='vcode.php?'+Math.random()">
 <?php }?>
 
 <br>
 </span>
-<?php if($OJ_ACE_EDITOR){ ?>
-	<pre style="width:80%;height:600" cols=180 rows=20 id="source"><?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?></pre><br>
+<?php if ($OJ_ACE_EDITOR) { ?>
+	<pre style="width:80%;height:600" cols=180 rows=20 id="source"><?php echo htmlentities($view_src, ENT_QUOTES, "UTF-8")?></pre><br>
 	<input type=hidden id="hide_source" name="source" value=""/>
-<?php }else{ ?>
-	<textarea style="width:80%;height:600" cols=180 rows=20 id="source" name="source"><?php echo htmlentities($view_src,ENT_QUOTES,"UTF-8")?></textarea><br>
+<?php } else { ?>
+	<textarea style="width:80%;height:600" cols=180 rows=20 id="source" name="source"><?php echo htmlentities($view_src, ENT_QUOTES, "UTF-8")?></textarea><br>
 <?php }?>
 
-<?php if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN){?>
+<?php if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN) {?>
 <?php echo $MSG_Input?>:<textarea style="width:30%" cols=40 rows=5 id="input_text" name="input_text" ><?php echo $view_sample_input?></textarea>
 <?php echo $MSG_Output?>:
 <textarea style="width:30%" cols=10 rows=5 id="out" name="out" >SHOULD BE:
@@ -86,16 +91,16 @@ echo"<option value=$i ".( $lastlang==$i?"selected":"").">
 <br>
 <?php } ?>
 <input id="Submit" class="btn btn-info" type=button value="<?php echo $MSG_SUBMIT?>" onclick="do_submit();" >
-<?php if (isset($OJ_ENCODE_SUBMIT)&&$OJ_ENCODE_SUBMIT){?>
+<?php if (isset($OJ_ENCODE_SUBMIT)&&$OJ_ENCODE_SUBMIT) {?>
 <input class="btn btn-success" title="WAF gives you reset ? try this." type=button value="Encoded <?php echo $MSG_SUBMIT?>"  onclick="encoded_submit();">
 <input type=hidden id="encoded_submit_mark" name="reverse2" value="reverse"/>
 <?php }?>
 
-<?php if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN){?>
+<?php if (isset($OJ_TEST_RUN)&&$OJ_TEST_RUN) {?>
 <input id="TestRun" class="btn btn-info" type=button value="<?php echo $MSG_TR?>" onclick=do_test_run();>
 <span class="btn" id=result>状态</span>
 <?php }?>
-<?php if (isset($OJ_BLOCKLY)&&$OJ_BLOCKLY){?>
+<?php if (isset($OJ_BLOCKLY)&&$OJ_BLOCKLY) {?>
 	<input id="blockly_loader" type=button class="btn" onclick="openBlockly()" value="<?php echo $MSG_BLOCKLY_OPEN?>" style="color:white;background-color:rgb(169,91,128)">
 	<input id="transrun" type=button  class="btn" onclick="loadFromBlockly() " value="<?php echo $MSG_BLOCKLY_TEST?>" style="display:none;color:white;background-color:rgb(90,164,139)">
 <div id="blockly" class="center">Blockly</div>
@@ -116,10 +121,10 @@ var sid=0;
 var i=0;
 var using_blockly=false;
 var judge_result=[<?php
-foreach($judge_result as $result){
-echo "'$result',";
+foreach ($judge_result as $result) {
+    echo "'$result',";
 }
-?>''];
+    ?>''];
 function print_result(solution_id)
 {
 sid=solution_id;
@@ -196,15 +201,19 @@ var count=0;
 	 
 function encoded_submit(){
 
-      var mark="<?php echo isset($id)?'problem_id':'cid';?>";
+      var mark="<?php echo isset($id) ? 'problem_id' : 'cid';?>";
         var problem_id=document.getElementById(mark);
 
 	if(typeof(editor) != "undefined")
 		$("#hide_source").val(editor.getValue());
         if(mark=='problem_id')
-                problem_id.value='<?php if(isset($id)) echo $id?>';
+                problem_id.value='<?php if (isset($id)) {
+                    echo $id;
+                }?>';
         else
-                problem_id.value='<?php if(isset($cid))echo $cid?>';
+                problem_id.value='<?php if (isset($cid)) {
+                    echo $cid;
+                }?>';
 
         document.getElementById("frmSolution").target="_self";
         document.getElementById("encoded_submit_mark").name="encoded_submit";
@@ -226,12 +235,16 @@ function do_submit(){
 	if(typeof(editor) != "undefined"){ 
 		$("#hide_source").val(editor.getValue());
 	}
-	var mark="<?php echo isset($id)?'problem_id':'cid';?>";
+	var mark="<?php echo isset($id) ? 'problem_id' : 'cid';?>";
 	var problem_id=document.getElementById(mark);
 	if(mark=='problem_id')
-	problem_id.value='<?php if (isset($id))echo $id?>';
+	problem_id.value='<?php if (isset($id)) {
+	    echo $id;
+	}?>';
 	else
-	problem_id.value='<?php if (isset($cid))echo $cid?>';
+	problem_id.value='<?php if (isset($cid)) {
+	    echo $cid;
+	}?>';
 	document.getElementById("frmSolution").target="_self";
 	document.getElementById("frmSolution").submit();
 }
@@ -248,7 +261,7 @@ function do_test_run(){
 	if(source.length<10) return alert("too short!");
 	if(tb!=null)tb.innerHTML=loader;
 
-	var mark="<?php echo isset($id)?'problem_id':'cid';?>";
+	var mark="<?php echo isset($id) ? 'problem_id' : 'cid';?>";
 	var problem_id=document.getElementById(mark);
 	problem_id.value=-problem_id.value;
 	document.getElementById("frmSolution").target="testRun";
@@ -327,7 +340,7 @@ function loadFromBlockly(){
 }
 </script>
 <script language="Javascript" type="text/javascript" src="include/base64.js"></script>
-<?php if($OJ_ACE_EDITOR){ ?>
+<?php if ($OJ_ACE_EDITOR) { ?>
 <script src="ace/ace.js"></script>
 <script src="ace/ext-language_tools.js"></script>
 <script>

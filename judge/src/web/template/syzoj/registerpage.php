@@ -32,7 +32,7 @@
                     <label for="email">邮箱*</label>
                     <input name="email" placeholder="" type="text">
                 </div>
-                <?php if($OJ_VCODE){?>
+                <?php if ($OJ_VCODE) {?>
                   <div class="field">
                     <label for="email">验证码*</label>
                     <input name="vcode" class="form-control" placeholder="" type="text">

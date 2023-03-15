@@ -35,17 +35,17 @@
     <table class="table table-striped content-box-header">
 <tr><td>id<td><?php echo $MSG_USER_ID?><td><?php echo $MSG_STATUS?><td></tr>
 <?php
-foreach($view_printer as $row){
+foreach ($view_printer as $row) {
     echo "<tr>\n";
-    foreach($row as $table_cell){
+    foreach ($row as $table_cell) {
         echo "<td>";
         echo $table_cell;
         echo "</td>";
     }
-        $i++;
+    $i++;
     echo "</tr>\n";
 }
-?>
+    ?>
 </table>
 
         <p>
