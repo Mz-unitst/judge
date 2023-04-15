@@ -27,7 +27,12 @@ require_once('./include/db_info.inc.php');
 </head>
 <body>
 <h1>班级信息</h1>
-<a>
+<!--todo
+将表格换位学习通那样的？
+添加链接功能
+添加封面功能？
+改为只接收所需数据，界面显示放到template中
+-->
     <table>
         <thead>
         <tr>
@@ -83,7 +88,7 @@ require_once('./include/db_info.inc.php');
         ?>
         </tbody>
     </table>
-</a>
+
 
 </body>
 </html>
