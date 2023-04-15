@@ -152,11 +152,11 @@
                 echo "active";
             }?> "
                 href="<?php echo $path_fix?>ranklist.php"><i class="signal icon"></i> <?php echo $MSG_RANKLIST?></a>
-            <!--<a class="item <?php //if ($url=="contest.php") echo "active";?>" href="/discussion/global"><i class="comments icon"></i> 讨论</a>-->
             <a class="desktop-only item <?php if ($url=="faqs.php") {
                 echo "active";
             }?>" href="<?php echo $path_fix?>faqs.php"><i
                     class="help circle icon"></i> <?php echo $MSG_FAQ?></a>
+
 
               <?php if (isset($OJ_BBS)&& $OJ_BBS) { ?>
                   <a class='item' href="discuss.php"><i class="clipboard icon"></i> <?php echo $MSG_BBS?></a>
@@ -180,12 +180,14 @@
                 <?php if (isset($_SESSION[$OJ_NAME.'_'.'user_id'])) { ?>
                 <a href="<?php echo $path_fix?>/userinfo.php?user=<?php echo $_SESSION[$OJ_NAME.'_'.'user_id']?>"
                     style="color: inherit; ">
+
                     <div class="ui simple dropdown item">
                         <?php echo $_SESSION[$OJ_NAME.'_'.'user_id']; ?>
                         <i class="dropdown icon"></i>
+                        <!--                    下滑框-->
                         <div class="menu">
-                            <a class="item" href="<?php echo $path_fix?>modifypage.php"><i
-                                    class="edit icon"></i><?php echo $MSG_REG_INFO;?></a>
+                            <a class="item" href="<?php echo $path_fix?>modifypage.php">
+                                <i class="edit icon"></i><?php echo $MSG_REG_INFO;?></a>
                                 <?php if ($OJ_SaaS_ENABLE) { ?>
                                 <?php if ($_SERVER['HTTP_HOST']==$DOMAIN) {
                                     echo  "<a class='item' href='http://".  $_SESSION[$OJ_NAME.'_'.'user_id'].".$DOMAIN'><i class='globe icon' ></i>MyOJ</a>";
@@ -207,13 +209,12 @@
                                       echo "<a class='item mail' href=".$path_fix."mail.php><i class='mail icon'></i>$MSG_MAIL$mail</a>";
                                   }
                               }
-
-
-
-
                     ?>
+                            <a class="item" href="myclasses.php"><i class="file icon"></i><?php echo $MSG_MYCLASSES;?></a>
                             <a class="item" href="logout.php"><i class="power icon"></i><?php echo $MSG_LOGOUT;?></a>
+
                         </div>
+
                     </div>
                 </a>
                 <?php } else { ?>

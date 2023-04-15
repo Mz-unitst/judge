@@ -2,9 +2,6 @@
 <?php $show_title="用户信息 - $OJ_NAME"; ?>
 <?php include("template/$OJ_TEMPLATE/header.php");?>
 
-<!--连接rds数据库-->
-<?php include("template/$OJ_TEMPLATE/connectrdsdb.php");?>
-
 <style>
 #avatar_container:before {
     content: "";
@@ -152,7 +149,6 @@ if ($qq>0) {
 </div>
 </div>
 <script>
-    $conn_rds->close();
 </script>
 
 <script>
