@@ -1,3 +1,4 @@
+
 <?php $show_title="用户信息 - $OJ_NAME"; ?>
 <?php include("template/$OJ_TEMPLATE/header.php");?>
 
@@ -78,12 +79,12 @@ if ($qq>0) {
                                                     document.write("<a href=problem.php?id="+id+">"+id+" </a>");
                                                   }
                                                   <?php $sql="SELECT `problem_id`,count(1) from solution where `user_id`=? and result=4 group by `problem_id` ORDER BY `problem_id` ASC";
-if ($result=pdo_query($sql, $user)) {
-    foreach ($result as $row) {
-        echo "p($row[0],$row[1]);";
-    }
-}
-?>
+                                                        if ($result=pdo_query($sql, $user)) {
+                                                            foreach ($result as $row) {
+                                                                echo "p($row[0],$row[1]);";
+                                                            }
+                                                        }
+                                                        ?>
                                                 </script>
                                             </div>
                                         </div>

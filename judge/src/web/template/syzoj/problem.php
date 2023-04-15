@@ -7,6 +7,8 @@
           }
           ?>
 <?php include("template/$OJ_TEMPLATE/header.php");?>
+<?php //include("template/$OJ_TEMPLATE/pdo.php");?>
+<?php //include("include/pdo.php");?>
 <style>
 .ace_cursor {
   border-left-width: 1px !important;
@@ -116,6 +118,9 @@ div[class*=ace_br] {
       <div class="ui bottom attached segment font-content"><?php echo bbcode_to_html($row['description']); ?></div>
     </div>
   </div>
+
+
+
   <?php if ($row['input']) { ?>
     <div class="row">
       <div class="column">
@@ -226,13 +231,40 @@ div[class*=ace_br] {
                   echo "<a class=\"small ui positive button\" href=\"status.php?problem_id=$PID[$pid]&cid=$cid\">$MSG_SUBMIT_RECORD</a>";
               }
           echo "<a class='small ui primary button' href='#' onclick='transform()' role='button'>$MSG_SHOW_OFF</a>";
+          echo "<a class='small ui positive button' href='\userinfo.php?user=qweqwe'  role='button'>相似题目</a>";
       ?>
           
       </div>
       </div>
+
+
     </div>
+
+      <div class="row">
+          <div class="column">
+              <h4 class="ui top attached block header">相似的题目</h4>
+              <div class="ui bottom attached segment">
+                  <script language='javascript'>
+                      function p(id,c){
+                          document.write("<a href=problem.php?id="+id+">"+id+" </a>");
+                      }
+                      <?php $sql="SELECT `problem_id`,count(1) from solution  group by `problem_id` ORDER BY `problem_id` ASC";
+                      if ($result=pdo_query($sql, $user)) {
+                          foreach ($result as $row) {
+                              echo "p($row[0],$row[1]);";
+                          }
+                      }
+                      ?>
+                  </script>
+              </div>
+          </div>
+      </div>
+
+
+
   <?php } ?>
-  
+
+
     
 </div>
 
