@@ -18,7 +18,7 @@
     float: right;
 }
 
-.comments {
+#comments {
     font-size: 20px;
     margin-top: 20px;
 }
@@ -27,6 +27,11 @@
 }
 </style>
 
+<script>
+    function show_comments(){
+        document.getElementById("comments").innerText=<?php echo json_encode( "教师评语： ".$res_get_comments); ?> ;
+    }
+</script>
 <div class="padding">
     <h1>Contest<?php echo $view_cid?> - <?php echo $view_title ?></h1>
     <div class="ui pointing below left label"><?php echo $view_start_time?></div>
@@ -43,7 +48,7 @@
                     <a class="ui small blue button" href="contestrank.php?cid=<?php echo $view_cid?>">ACM排行榜</a>
                     <a class="ui small yellow button" href="contestrank-oi.php?cid=<?php echo $view_cid?>">OI排行榜</a>
                     <a class="ui small positive button" href="status.php?cid=<?php echo $view_cid?>">提交记录</a>
-                     <a class="ui small pink button" href="conteststatistics.php?cid=<?php echo $view_cid?>">比赛统计</a>
+                     <a class="ui small pink button" onclick="show_comments()">显示评语</a>
                 </div>
                 <div class="ui buttons right floated">
 
@@ -109,7 +114,7 @@ if ($view_private=='0') {
                     </tbody>
                 </table>
 
-                <p class="comments">教师评语：<?php echo $res_get_comments;?></p>
+                <p  id="comments"></p>
             </div>
 
         </div>
