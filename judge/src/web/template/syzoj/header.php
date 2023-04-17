@@ -210,7 +210,7 @@
                                   }
                               }
                     ?>
-                            <a class="item" href="myclasses.php"><i class="file icon"></i><?php echo $MSG_MYCLASSES;?></a>
+                            <a class="item" href="mycourses.php"><i class="file icon"></i><?php echo $MSG_MYCLASSES;?></a>
                             <a class="item" href="logout.php"><i class="power icon"></i><?php echo $MSG_LOGOUT;?></a>
 
                         </div>
