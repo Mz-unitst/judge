@@ -77,7 +77,7 @@ require_once('./include/db_info.inc.php');
                 }
 //                echo $teachers_id[0]['user_id'];
                 echo "<tr>";
-                echo "<td><a href='contest.php'> " . $res[$i]["course_name"] . "</a></td>";
+                echo "<td><a href='../contest.php'> " . $res[$i]["course_name"] . "</a></td>";
                 echo "<td>" . $teachers_names . "</td>\n";
                 echo "<td>" . $n_students . "</td>\n";
                 echo "</tr>";

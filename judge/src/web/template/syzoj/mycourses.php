@@ -26,14 +26,19 @@ include("template/$OJ_TEMPLATE/header.php");
             background-color: #f5f5f5;
         }
 
-        .btn_add_course{width:104px;height:36px;background:url(../image/btn_addcourse.png) no-repeat 0 0;border:none; margin-bottom: 20px;}
+        .btn_add_course{width:104px;height:36px;background:url(../image/btn_addcourse.png) no-repeat 0 0;border:none; margin-bottom: 20px;margin-left: 10px;}
         .btn_add_course:hover{background-position:0 -48px;}
         .btn_add_course:active{background-position:left -96px}
+
+        .dataSearch_input{ width:170px; height:34px;font-size:14px; color:#131B26;  border:1px solid #D5D7D9;background:none;z-index:2;padding:0 14px; border-radius:40px;}
+        .dataSearch_input:hover{border: 1px solid #3A8BFF;}
+        .dataSearch_input:focus {outline:none;border: 1px solid #3A8BFF;/*box-shadow: 0 0 4px 0 #75BAFF;*/border-radius: 40px;}
 
     </style>
 
 </head>
 <body>
+
 <script >
     $(document).ready(function() {
         $("#form_add_course").submit(function(event) {
@@ -55,15 +60,10 @@ include("template/$OJ_TEMPLATE/header.php");
 </script>
 <h1>课程信息</h1>
 
-<!--todo
-将表格换位学习通那样的？
-添加链接功能
-添加封面功能？
-改为只接收所需数据，界面显示放到template中
--->
+
 <form id="form_add_course" method="post">
-    <input type="text" id="course_id" name="course_id" placeholder="课程号" required />
-    <button type="submit"   class="btn_add_course"  >TEST</button>
+    <input type="text" id="course_id" name="course_id" placeholder="课程号" class="dataSearch_input" required />
+    <button type="submit"   class="btn_add_course"  >加入课程</button>
 </form>
 <div id="result"></div>
 <table>
@@ -94,3 +94,4 @@ include("template/$OJ_TEMPLATE/header.php");
 
 </body>
 </html>
+<?php include("template/$OJ_TEMPLATE/footer.php");?>

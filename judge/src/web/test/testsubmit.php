@@ -1,5 +1,5 @@
 <?php
-require_once ('./include/db_info.inc.php');
+require_once('./include/db_info.inc.php');
 echo "success";
 //$sql_add_course3="insert ignore into course_user (course_id,user_id,isteacher) values (2,'qweqwe',0)";
 //$res_add_course3=pdo_query($sql_add_course3);
