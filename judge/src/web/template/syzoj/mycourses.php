@@ -1,13 +1,13 @@
 <?php
+$show_title = "课程信息 - $OJ_NAME";
 include("template/$OJ_TEMPLATE/header.php");
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>课程信息</title>
+
     <style>
-        /*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*/
         table {
             border-collapse: collapse;
             width: 100%;

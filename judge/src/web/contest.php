@@ -83,7 +83,13 @@ if(isset($_GET['course_id']) && isset($_SESSION[$OJ_NAME.'_'.'user_id']) ){
     $course_id=$_GET['course_id'];
     $user_id=$_SESSION[$OJ_NAME.'_'.'user_id'];
     $sql_check_course_id="select count(*) from course_user where course_id=? and user_id=?";
+    $sql_get_course_name="select course_name from course where course_id=?";
+
     $res_check_course_id=pdo_query($sql_check_course_id,array($course_id,$user_id))[0][0];
+    $course_name=pdo_query($sql_get_course_name,$course_id)[0][0];
+//    $res_check_course_id=count($course_name);
+//    $course_name=$res_check_course_id[0][0];
+
 //    echo $sql_check_course_id;
 }
 if (isset($_GET['cid'])) {
