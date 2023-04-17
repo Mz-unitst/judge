@@ -8,7 +8,7 @@ include("template/$OJ_TEMPLATE/header.php");
 <head>
     <title>课程信息</title>
     <style>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        /*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*/
         table {
             border-collapse: collapse;
             width: 100%;
@@ -47,6 +47,7 @@ include("template/$OJ_TEMPLATE/header.php");
                 success: function(response) {
                     // $("#result").html(response); // 将服务器返回的结果显示在result div中
                     alert(response);
+                    location.reload(); // 刷新当前页面
                 }
             });
         });
