@@ -79,7 +79,13 @@ function formatTimeLength($length)
     return $result;
 }
 $now = time();
-
+if(isset($_GET['course_id']) && isset($_SESSION[$OJ_NAME.'_'.'user_id']) ){
+    $course_id=$_GET['course_id'];
+    $user_id=$_SESSION[$OJ_NAME.'_'.'user_id'];
+    $sql_check_course_id="select count(*) from course_user where course_id=? and user_id=?";
+    $res_check_course_id=pdo_query($sql_check_course_id,array($course_id,$user_id))[0][0];
+//    echo $sql_check_course_id;
+}
 if (isset($_GET['cid'])) {
     $cid = intval($_GET['cid']);
     $view_cid = $cid;
@@ -306,10 +312,21 @@ if (isset($_GET['cid'])) {
 
         $result = pdo_query($sql, $keyword);
     } else {
-        $sql = "SELECT *  FROM contest WHERE contest.defunct='N' $wheremy  ORDER BY contest_id DESC";
+        if($res_check_course_id==1){
+            $where_course_id="and course_id=?";
+            $sql="SELECT *  FROM contest WHERE contest.defunct='N' $wheremy and course_id=? ORDER BY contest_id DESC";
+        }else{
+            $sql = "SELECT *  FROM contest WHERE contest.defunct='N' $wheremy  ORDER BY contest_id DESC";
+        }
         $sql .= " limit ".strval($pstart).",".strval($pend);
         //echo $sql;
-        $result = mysql_query_cache($sql);
+        if($sql_check_course_id){
+            $result = mysql_query_cache($sql,$course_id);
+        }else{
+            $result = mysql_query_cache($sql);
+        }
+
+
     }
 
     $view_contest = array();
@@ -359,7 +376,9 @@ if (isset($_GET['cid'])) {
 /////////////////////////Template
 if (isset($_GET['cid'])) {
     require("template/".$OJ_TEMPLATE."/contest.php");
-} else {
+} else if(isset($_GET['course_id'])){
+    require("template/".$OJ_TEMPLATE."/coursecontest.php");
+}else{
     require("template/".$OJ_TEMPLATE."/contestset.php");
 }
 /////////////////////////Common foot

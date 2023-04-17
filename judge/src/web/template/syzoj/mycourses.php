@@ -1,5 +1,4 @@
 <?php
-require_once('./include/db_info.inc.php');
 include("template/$OJ_TEMPLATE/header.php");
 ?>
 
@@ -17,10 +16,6 @@ include("template/$OJ_TEMPLATE/header.php");
             padding: 8px;
             text-align: left;
             border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
         }
         tr:hover {
             background-color: #f5f5f5;
@@ -66,7 +61,7 @@ include("template/$OJ_TEMPLATE/header.php");
     <button type="submit"   class="btn_add_course"  >加入课程</button>
 </form>
 <div id="result"></div>
-<table>
+<table class="ui selectable celled table">
 
     <thead>
     <tr>
