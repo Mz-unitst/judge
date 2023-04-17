@@ -75,9 +75,9 @@ include("template/$OJ_TEMPLATE/header.php");
     if ($courseCount > 0) {
         for($courseIndex=0;$courseIndex<$courseCount;$courseIndex++){
             echo "<tr>";
-            echo "<td><a href='contest.php'> " . $coursetable[$courseIndex][0] . "</a></td>";
-            echo "<td>" . $coursetable[$courseIndex][1] . "</td>\n";
+            echo "<td><a href='contest.php?course_id=".$coursetable[$courseIndex][0]."'> " . $coursetable[$courseIndex][1] . "</a></td>";
             echo "<td>" . $coursetable[$courseIndex][2] . "</td>\n";
+            echo "<td>" . $coursetable[$courseIndex][3] . "</td>\n";
             echo "</tr>";
         }
     } else {

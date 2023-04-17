@@ -38,9 +38,10 @@ require_once('./include/db_info.inc.php');
                     $teachers_names=$teachers_names.$res_teacher_nicks[0]['nick'];
                 }
             }
-            $coursetable[$courseIndex][0]=$courseRes[$courseIndex]["course_name"];
-            $coursetable[$courseIndex][1]=$teachers_names;
-            $coursetable[$courseIndex][2]=$studentCount;
+            $coursetable[$courseIndex][0]=$courseRes[$courseIndex]["course_id"];
+            $coursetable[$courseIndex][1]=$courseRes[$courseIndex]["course_name"];
+            $coursetable[$courseIndex][2]=$teachers_names;
+            $coursetable[$courseIndex][3]=$studentCount;
         }
     }
 
