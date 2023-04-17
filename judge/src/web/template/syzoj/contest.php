@@ -18,6 +18,10 @@
     float: right;
 }
 
+.comments {
+    font-size: 20px;
+    margin-top: 20px;
+}
 #back_to_contest {
     display: none;
 }
@@ -39,7 +43,7 @@
                     <a class="ui small blue button" href="contestrank.php?cid=<?php echo $view_cid?>">ACM排行榜</a>
                     <a class="ui small yellow button" href="contestrank-oi.php?cid=<?php echo $view_cid?>">OI排行榜</a>
                     <a class="ui small positive button" href="status.php?cid=<?php echo $view_cid?>">提交记录</a>
-                    <!-- <a class="ui small pink button" href="conteststatistics.php?cid=<?php echo $view_cid?>">比赛统计</a> -->
+                     <a class="ui small pink button" href="conteststatistics.php?cid=<?php echo $view_cid?>">比赛统计</a>
                 </div>
                 <div class="ui buttons right floated">
 
@@ -104,7 +108,10 @@ if ($view_private=='0') {
                        
                     </tbody>
                 </table>
+
+                <p class="comments">教师评语：<?php echo $res_get_comments;?></p>
             </div>
+
         </div>
     </div>
 </div>

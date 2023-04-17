@@ -87,10 +87,8 @@ if(isset($_GET['course_id']) && isset($_SESSION[$OJ_NAME.'_'.'user_id']) ){
 
     $res_check_course_id=pdo_query($sql_check_course_id,array($course_id,$user_id))[0][0];
     $course_name=pdo_query($sql_get_course_name,$course_id)[0][0];
-//    $res_check_course_id=count($course_name);
-//    $course_name=$res_check_course_id[0][0];
 
-//    echo $sql_check_course_id;
+
 }
 if (isset($_GET['cid'])) {
     $cid = intval($_GET['cid']);
@@ -110,6 +108,12 @@ if (isset($_GET['cid'])) {
         $view_title = $row['title'];
         $view_start_time = $row['start_time'];
         $view_end_time = $row['end_time'];
+        if(isset($_SESSION[$OJ_NAME.'_'.'user_id'])){
+            $sql_get_comments="select * from comments where contest_id=? and user_id=?";
+            $res_get_comments=pdo_query($sql_get_comments,array($cid,$_SESSION[$OJ_NAME.'_'.'user_id']))[0]['comments'];
+        }
+
+
     }
     $contest_ok = true;
     $password = "";
