@@ -1,0 +1,1 @@
+a:8:{s:10:"access_key";s:10:"Access key";s:12:"configplugin";s:15:"Amazon S3设置";s:8:"endpoint";s:16:"Amazon S3 端点";s:13:"needaccesskey";s:22:"必须提供access key";s:10:"pluginname";s:9:"Amazon S3";s:10:"secret_key";s:10:"Secret key";s:7:"s3:view";s:21:"查看Amazon s3容器";s:16:"privacy:metadata";s:106:"Amazon S3 存储库插件不存储任何个人数据，但将用户数据从Moodle传输到远程系统。";}

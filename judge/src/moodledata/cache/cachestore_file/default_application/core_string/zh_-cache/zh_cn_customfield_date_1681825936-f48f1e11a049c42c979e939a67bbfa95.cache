@@ -1,0 +1,1 @@
+a:9:{s:12:"errormaxdate";s:34:"请输入不晚于{$a}的日期。";s:12:"errormindate";s:43:"请输入一个在{$a}或其之后的日期";s:11:"includetime";s:12:"包括时间";s:7:"maxdate";s:9:"最大值";s:7:"mindate";s:9:"最小值";s:15:"mindateaftermax";s:33:"最小值不能大于最大值。";s:10:"pluginname";s:15:"日期和时间";s:16:"privacy:metadata";s:97:"日期和时间字段类型插件不存储任何个人数据；它使用在core中定义的表。";s:16:"specificsettings";s:27:"日期和时间字段设置";}

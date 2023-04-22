@@ -1,0 +1,9 @@
+a:13:{s:6:"copied";s:12:"已复制！";s:4:"copy";s:6:"复制";s:15:"copytoclipboard";s:18:"复制到剪贴板";s:9:"installer";s:539:"<h3>组件库设置</h3>
+<p>在查看组件库的内容之前，您需要具有Moodle安装的shell访问权限，并且能够写入文件夹/管理员/工具/组件库，并在Moodle服务器上安装npm</p>
+<p>如果满足这些要求，可以导航到Moodle根文件夹并运行：</p>
+<pre>$ npm install</pre>
+<pre>$ npm install grunt</pre>
+<p>这将获取构建组件库文档所需的所有包</p>
+<p>安装后您可以运行：</p>
+<pre>$ grunt componentlibrary</pre>
+<p>有关更多信息请参阅此插件中的README.md文件</p>";s:10:"pluginname";s:11:"UI组件库";s:16:"privacy:metadata";s:45:"组件库插件不存储任何个人数据。";s:8:"runjsdoc";s:77:"JavaScript文档单独生成到组件库。要生成它请运行'grunt jsdoc`";s:8:"showboth";s:12:"同时显示";s:11:"showdefault";s:15:"显示默认值";s:8:"showhelp";s:21:"与帮助一起显示";s:9:"showmixed";s:15:"显示混合型";s:12:"showrequired";s:15:"按要求显示";s:14:"toggleviewinfo";s:30:"切换该表单实例的视图";}

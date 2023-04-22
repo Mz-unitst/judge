@@ -84,7 +84,7 @@ if(isset($_GET['course_id']) && isset($_SESSION[$OJ_NAME.'_'.'user_id']) ){
     $user_id=$_SESSION[$OJ_NAME.'_'.'user_id'];
     $sql_check_course_id="select count(*) from course_user where course_id=? and user_id=?";
     $sql_get_course_name="select course_name from course where course_id=?";
-
+//    $sql_get_problem="select * from contest_problem where "
     $res_check_course_id=pdo_query($sql_check_course_id,array($course_id,$user_id))[0][0];
     $course_name=pdo_query($sql_get_course_name,$course_id)[0][0];
 
@@ -343,13 +343,32 @@ if (isset($_GET['cid'])) {
     $i = 0;
 
     foreach ($result as $row) {
-        $view_contest[$i][0] = $row['contest_id'];
+        // row是一个contest的内容
+        $contest_id= $row['contest_id'];
+//        echo 'contest_id:'.$contest_id.'<br>';
+        $sql_get_contest_problem="select * from contest_problem where contest_id=?";
+        $res_get_contest_problem=pdo_query($sql_get_contest_problem,$contest_id);
+        $count_contest_problem=count($res_get_contest_problem);
+//        echo $count_contest_problem;
+        $tmp_ac=0;
+        foreach ($res_get_contest_problem as $item) {
+            $cur_problem_id=$item['problem_id'];
+            $sql_get_count_ac_contest_problem="select count(distinct (problem_id)) from solution where user_id='".$user_id."' and problem_id=? and result=4 ";
+//            echo $sql_get_count_ac_contest_problem;
+//            echo $cur_problem_id;
+            $res_get_count_ac_contest_problem=pdo_query($sql_get_count_ac_contest_problem,$cur_problem_id)[0][0];
+            $tmp_ac+=$res_get_count_ac_contest_problem;
+        }
+//        alert($tmp_ac);
+        echo $tmp_ac;
+
 
         if (trim($row['title'])=="") {
             $row['title'] = $MSG_CONTEST.$row['contest_id'];
         }
 
-        $view_contest[$i][1] = "<a href='contest.php?cid=".$row['contest_id']."'>".$row['title']."</a>";
+        $view_contest[$i][0] = "<a href='contest.php?cid=".$row['contest_id']."'>".$row['title']."</a>";
+        $view_contest[$i][1] = "<span >".$tmp_ac.' / '.$count_contest_problem."</span>";
         $start_time = strtotime($row['start_time']);
         $end_time = strtotime($row['end_time']);
         $now = time();

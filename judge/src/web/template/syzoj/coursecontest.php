@@ -1,5 +1,7 @@
 <?php $show_title="$course_name - $OJ_NAME"; ?>
 <?php include("template/$OJ_TEMPLATE/header.php");?>
+<script src="echarts.min.js"></script>
+
 <div class="padding">
     <div class="ui grid" style="margin-bottom: 10px; ">
         <div class="row" style="white-space: nowrap; ">
@@ -63,8 +65,8 @@
     <table class="ui very basic center aligned table">
         <thead>
         <tr>
-            <th><?php echo $MSG_CONTEST_ID?></th>
             <th><?php echo $MSG_CONTEST_NAME?></th>
+            <th><?php echo $MSG_CONTEST_PROBLEM_STATUS?></th>
             <th><?php echo $MSG_TIME?></th>
             <th><?php echo $MSG_CONTEST_OPEN?></th>
             <th><?php echo $MSG_CONTEST_CREATOR?></th>
@@ -76,6 +78,7 @@
             echo "<tr>";
             foreach ($row as $table_cell) {
                 echo "<td>";
+
                 echo "\t".$table_cell;
                 echo "</td>";
             }
@@ -83,14 +86,10 @@
         }
         ?>
 
-
-
-        <!-- <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><%= contest.title %> <%- tag %></a></td>
-        <td><%= syzoj.utils.formatDate(contest.start_time) %></td>
-        <td><%= syzoj.utils.formatDate(contest.end_time) %></td>
-        <td class="font-content"><%- contest.subtitle %></td> -->
         </tbody>
     </table>
 </div>
 
 <?php include("template/$OJ_TEMPLATE/footer.php");?>
+<script src="echarts.min.js"></script>
+

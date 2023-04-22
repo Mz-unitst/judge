@@ -1,0 +1,1 @@
+a:7:{s:26:"errordefaultvaluenotinlist";s:51:"默认值必须是上述列表中的选项之一。";s:21:"errornotenoughoptions";s:69:"请提供至少两个选项，每个选项分别位于新的一行。";s:13:"invalidoption";s:21:"选择的选项无效";s:11:"menuoptions";s:30:"菜单选项（每行一个）";s:10:"pluginname";s:12:"下拉菜单";s:16:"privacy:metadata";s:94:"下拉菜单字段类型插件不存储任何个人数据；它使用在core中定义的表。";s:16:"specificsettings";s:24:"下拉菜单字段设置";}

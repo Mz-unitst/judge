@@ -56,8 +56,8 @@
        $langmask = ((1<<count($language_ext))-1)&(~$langmask);
        //echo $langmask;
 
-       $sql = "INSERT INTO `contest`(`title`,`start_time`,`end_time`,`private`,`langmask`,`description`,`password`,`user_id`)
-          VALUES(?,?,?,?,?,?,?,?)";
+       $sql = "INSERT INTO `contest`(`title`,`start_time`,`end_time`,`private`,`langmask`,`description`,`password`,`user_id`,'course_id')
+          VALUES(?,?,?,?,?,?,?,?,1)";
 
        $description = str_replace("<p>", "", $description);
        $description = str_replace("</p>", "<br />", $description);

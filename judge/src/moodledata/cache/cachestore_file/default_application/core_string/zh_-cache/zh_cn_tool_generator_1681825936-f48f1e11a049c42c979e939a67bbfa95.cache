@@ -1,0 +1,23 @@
+a:64:{s:7:"bigfile";s:13:"大文件{$a}";s:17:"courseexplanation";s:738:"此工具创建标准测试课程，其中包括许多章节、活动和文件。
+
+这旨在提供一个标准化措施，以检查可靠性和各种系统组件（如备份和恢复）的性能。
+
+这项测试很重要，因为之前有很多案例，当面对现实生活中的情况（例如一门包含1000项活动的课程）时，该系统不起作用。
+
+使用此功能创建的课程可能会占用大量数据库和文件系统空间（数十GB）。您需要删除这些课程（并等待各种清理运行）以再次释放此空间。
+
+**请勿在实时系统上使用此功能**。仅在开发人员服务器上使用。（为避免意外使用，此功能将被禁用，除非您还选择了开发人员调试级别。）";s:12:"coursesize_0";s:33:"XS（~10KB；在~1秒内创建）";s:12:"coursesize_1";s:32:"S（~10MB；在30秒内创建）";s:12:"coursesize_2";s:38:"M（~100MB；约在2分钟内创建）";s:12:"coursesize_3";s:37:"L（~1GB；约在30分钟内创建）";s:12:"coursesize_4";s:38:"XL（~10GB；约在2小时内创建）";s:12:"coursesize_5";s:39:"XXL（~20GB；约在4小时内创建）";s:18:"coursewithoutusers";s:24:"所选课程没有用户";s:12:"createcourse";s:12:"创建课程";s:14:"createtestplan";s:18:"创建测试计划";s:8:"creating";s:12:"创建课程";s:4:"done";s:20:"已完成（{$a}s）";s:16:"downloadtestplan";s:18:"下载测试计划";s:17:"downloadusersfile";s:18:"下载用户文件";s:15:"error_nocourses";s:33:"没有生成测试计划的课程";s:24:"error_noforumdiscussions";s:36:"所选课程不含有论坛讨论区";s:22:"error_noforuminstances";s:39:"所选课程不包含论坛模块实例";s:20:"error_noforumreplies";s:33:"所选课程不包含论坛回复";s:23:"error_nonexistingcourse";s:24:"指定的课程不存在";s:21:"error_nopageinstances";s:39:"所选课程不包含页面模块实例";s:18:"error_notdebugging";s:69:"此服务器上不可用，因为调试未设置为“开发人员”";s:21:"error_nouserspassword";s:87:"您需要在config.php中设置$CFG->tool_generator_users_password来生成测试计划";s:8:"fullname";s:25:"测试课程：{$a->size}";s:14:"maketestcourse";s:18:"制作测试课程";s:12:"maketestplan";s:24:"制定JMeter测试计划";s:14:"notenoughusers";s:33:"所选课程没有足够的用户";s:10:"pluginname";s:21:"随机课程生成器";s:22:"progress_checkaccounts";s:34:"正在检查用户帐户（{$a}）";s:24:"progress_coursecompleted";s:26:"完成的课程（{$a}s）";s:23:"progress_createaccounts";s:43:"创建用户帐户（{$a->from}-{$a->to}）";s:26:"progress_createassignments";s:28:"正在创建作业（{$a}）";s:23:"progress_createbigfiles";s:25:"创建大文件（{$a}）";s:21:"progress_createcourse";s:22:"正在创建课程{$a}";s:20:"progress_createforum";s:28:"创建论坛（{$a}帖子）";s:20:"progress_createpages";s:28:"正在创建页面（{$a}）";s:25:"progress_createsmallfiles";s:25:"创建小文件（{$a}）";s:14:"progress_enrol";s:34:"为用户报名课程（{$a}）。";s:22:"progress_sitecompleted";s:26:"完成的站点（{$a}s）";s:11:"shortsize_0";s:6:"特小";s:11:"shortsize_1";s:3:"小";s:11:"shortsize_2";s:3:"中";s:11:"shortsize_3";s:3:"大";s:11:"shortsize_4";s:6:"特大";s:11:"shortsize_5";s:9:"超特大";s:10:"sitesize_0";s:46:"XS（~10MB；3门课程，约30秒内创建）";s:10:"sitesize_1";s:47:"S（~50MB；8门课程，约2分钟内创建）";s:10:"sitesize_2";s:50:"M（~200MB；73门课程，约10分钟内创建）";s:10:"sitesize_3";s:52:"L（~1'5GB；277门课程，约1.5小时内创建）";s:10:"sitesize_4";s:51:"XL（~10GB；1065门课程，约5小时内创建）";s:10:"sitesize_5";s:53:"XXL（~20GB；4177门课程，约10小时内创建）";s:4:"size";s:12:"课程大小";s:10:"smallfiles";s:9:"小文件";s:12:"targetcourse";s:18:"测试目标课程";s:19:"testplanexplanation";s:1481:"此工具将创建JMeter测试计划文件以及用户凭据文件。
+
+此测试计划设计为与{$a}配合使用，这使得在特定Moodle环境中运行测试计划变得更容易，收集有关运行的信息并比较结果，因此您需要下载它并使用它的test_runner.sh脚本，或者按照安装和使用说明进行操作。
+
+您需要在config.php中为课程用户设置密码（例如$CFG->tool_generator_users_password='moodle'）。此密码没有默认值以防止意外使用该工具。您需要使用更新密码选项，以防止您的课程用户有其他密码，或者他们是由tool_generator生成的但未设置$CFG->tool_ generator_users_password 的值，
+
+它是tool_generator的一部分，因此它可以很好地与课程和站点生成器生成的课程配合使用，也可用于至少包含以下内容的任何课程：
+
+* 足够的注册用户（取决于您选择的测试计划大小），密码重置为“moodle”
+* 页面模块实例
+* 至少包含一个讨论和一个回复的论坛模块实例
+
+在运行大型测试计划时，您可能会考虑您的服务器容量，因为JMeter生成的负载量将会特别大。我们已经根据线程（用户）的数量调整了爬升周期，以减少这种情况，但负担仍然很大。
+
+**不要在实时系统上运行测试计划**。此功能仅创建用于馈送JMeter的文件，因此不会对JMeter造成危险，但请您不要在生产站点中运行此测试计划。";s:14:"testplansize_0";s:68:"XS（{$a->users}用户、{$a->loops}循环和{$a->ramup}加速期）";s:14:"testplansize_1";s:67:"S（{$a->users}用户、{$a->loops}循环和{$a->ramup}加速期）";s:14:"testplansize_2";s:68:"M（{$a->users}用户，{$a->loops}循环和{$a->rampup}加速期）";s:14:"testplansize_3";s:67:"L（{$a->users}用户，{$a->loops}循环和{$a->ramup}加速期）";s:14:"testplansize_4";s:69:"XL（{$a->users}用户、{$a->loops}循环和{$a->rampup}加速期）";s:14:"testplansize_5";s:70:"XXL（{$a->users}用户、{$a->loops}循环和{$a->rampup}加速期）";s:19:"updateuserspassword";s:24:"更新课程用户密码";s:24:"updateuserspassword_help";s:369:"JMeter需要以课程用户身份登录，您可以在config.php中使用$CFG->tool_generator_users_password设置用户密码；此设置根据$CFG->tool_generator_users_password更新课程用户的密码。如果您使用的课程不是由tool_generator生成的，或者创建测试课程时未设置$CFG->tool_generator_users_password，则此选项非常有用。";s:16:"privacy:metadata";s:57:"开发数据生成器插件不存储任何个人数据。";}
