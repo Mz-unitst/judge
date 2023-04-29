@@ -1,13 +1,14 @@
 <?php
 
-function addproblem($title, $time_limit, $memory_limit, $description, $input, $output, $sample_input, $sample_output, $hint, $source, $spj, $OJ_DATA)
+function addproblem($title, $time_limit, $memory_limit, $description, $input, $output, $sample_input, $sample_output, $hint, $source, $spj, $OJ_DATA,$problem_difficulty)
 {
     //$spj=($spj);
     $sql = "INSERT INTO `problem` (`title`,`time_limit`,`memory_limit`,`description`,`input`,`output`,`sample_input`,`sample_output`,`hint`,`source`,`spj`,`in_date`,`defunct`) VALUES(?,?,?,?,?,?,?,?,?,?,?,NOW(),'Y')";
     //echo $sql;
     $pid = pdo_query($sql, $title, $time_limit, $memory_limit, $description, $input, $output, $sample_input, $sample_output, $hint, $source, $spj);
-
-    echo "&nbsp;&nbsp;- Problem ID $pid added!<br>";
+    $sql_insert_problem_difficulty="insert into jol.problem_difficulty (problem_id,difficulty) values (?,?)";
+    $res_insert_problem_difficulty=pdo_query($sql_insert_problem_difficulty,$pid,$problem_difficulty);
+    echo "&nbsp;&nbsp;- Problem ID $pid added! <br>";
 
     if (isset($_POST['contest_id']) && intval($_POST['contest_id'])>0) {
         $cid = intval($_POST['contest_id']);

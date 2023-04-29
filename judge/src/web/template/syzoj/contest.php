@@ -22,6 +22,11 @@
     font-size: 20px;
     margin-top: 20px;
 }
+#teacherr {
+    font-size: 25px;
+    margin-top: 20px;
+}
+
 #back_to_contest {
     display: none;
 }
@@ -29,7 +34,8 @@
 
 <script>
     function show_comments(){
-        document.getElementById("comments").innerText=<?php echo json_encode( "教师评语： ".$res_get_comments); ?> ;
+        document.getElementById("teacherr").innerText=<?php   echo json_encode("导师评语：");?> ;
+        document.getElementById("comments").innerText=<?php   echo json_encode( strip_tags($res_get_comments));?> ;
     }
 </script>
 <div class="padding">
@@ -113,7 +119,7 @@ if ($view_private=='0') {
                        
                     </tbody>
                 </table>
-
+                <p  id="teacherr"> </p>
                 <p  id="comments"></p>
             </div>
 

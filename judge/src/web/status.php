@@ -153,10 +153,12 @@ if (isset($_GET['cid'])) {
         if (isset($_SESSION[$OJ_NAME.'_'.'source_browser'])) {
             $sql="WHERE problem_id>0  ";                               // 默认只有管理员可以在练习状态看所有人的比赛提交，其他人只能在特意查询时查到自己的比赛提交
         } elseif ($_SESSION[$OJ_NAME.'_'.'user_id']!="guest") {
-            $sql="WHERE (contest_id=0 or contest_id is null)  ";      // 如果希望所有人能在练习状态直接查看自己的比赛提交，这里改成 where problem_id>0
+//            $sql="WHERE (contest_id=0 or contest_id is null)  ";      // 如果希望所有人能在练习状态直接查看自己的比赛提交，这里改成 where problem_id>0
+            $sql="WHERE problem_id>0  ";      // 如果希望所有人能在练习状态直接查看自己的比赛提交，这里改成 where problem_id>0
         }
     } else {
-        $sql="WHERE problem_id>0 and (contest_id=0 or contest_id is null) "; // 如果希望所有人能在练习状态直接查看别人的比赛提交，这里改成 where problem_id>0
+//        $sql="WHERE problem_id>0 and (contest_id=0 or contest_id is null) "; // 如果希望所有人能在练习状态直接查看别人的比赛提交，这里改成 where problem_id>0
+        $sql="WHERE problem_id>0 and (contest_id=0 or contest_id is null) ";
     }
 }
 

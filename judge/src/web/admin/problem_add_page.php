@@ -18,7 +18,7 @@ if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME
 echo "<center><h3>".$MSG_PROBLEM."-".$MSG_ADD."</h3></center>";
 include_once("kindeditor.php") ;
 $source=pdo_query("select source from problem order by problem_id desc limit 1"); //默认续用最后一次的分类标签
-if (is_array($source)&&isset($source[0])) {
+if (is_array($source)&&isset($source[0])) { //判空
     $source=$source[0][0];
 }
 
@@ -37,6 +37,8 @@ if (is_array($source)&&isset($source[0])) {
           <input class="input input-mini" type=number min="0.001" max="300" step="0.001" name=time_limit size=20 value=1> sec<br><br>
           <?php echo $MSG_Memory_Limit?><br>
           <input class="input input-mini" type=number min="1" max="2048" step="1" name=memory_limit size=20 value=128> MiB<br><br>
+            <?php echo $MSG_PROBLEM_DIFFICULTY?><br>
+            <input class="input input-mini"  name=problem_difficulty size=20 value="<?php echo "简单"?>"> <br><br>
         </p>
  
         <p align=left>

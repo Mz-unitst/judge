@@ -18,6 +18,7 @@ if (!(isset($_SESSION[$OJ_NAME.'_'.'administrator']) || isset($_SESSION[$OJ_NAME
 echo "<center><h3>"."Edit-".$MSG_PROBLEM."</h3></center>";
 include_once("kindeditor.php") ;
 ?>
+<!--GET获取数据,POST提交数据-->
 
 <body leftmargin="30" >
   <div class="container">
@@ -31,6 +32,10 @@ include_once("kindeditor.php") ;
           $sql = "SELECT * FROM `problem` WHERE `problem_id`=?";
         $result = pdo_query($sql, intval($_GET['id']));
         $row = $result[0];
+        $sql_get_pdiff="select difficulty from jol.problem_difficulty where problem_id=?";
+        $res_get_pdiff=pdo_query($sql_get_pdiff,intval($_GET['id']));
+        $p_diff=$res_get_pdiff[0][0];
+
         ?>
 
       <input type=hidden name=problem_id value='<?php echo $row['problem_id']?>'>
@@ -44,8 +49,10 @@ include_once("kindeditor.php") ;
         <p align=left>
           <?php echo $MSG_Time_Limit?><br>
           <input class="input input-mini" type=number min="0.001" max="300" step="0.001" name=time_limit size=20 value="<?php echo $row['time_limit']?>"> sec<br><br>
-          <?php echo $MSG_Memory_Limit?><br>
-          <input class="input input-mini" type=number min="1" max="1024" step="1" name=memory_limit size=20 value="<?php echo $row['memory_limit']?>"> MiB<br><br>
+            <?php echo $MSG_Memory_Limit?><br>
+            <input class="input input-mini" type=number min="1" max="1024" step="1" name=memory_limit size=20 value="<?php echo $row['memory_limit']?>"> MiB<br><br>
+            <?php echo $MSG_PROBLEM_DIFFICULTY?><br>
+            <input class="input input-mini"  name=problem_difficulty size=20 value="<?php echo $p_diff?>"> <br><br>
         </p>
       <p align=left>
         <?php echo "<h4>".$MSG_Description."</h4>"?>
@@ -115,6 +122,7 @@ include_once("kindeditor.php") ;
         $time_limit = $_POST['time_limit'];
 
         $memory_limit = $_POST['memory_limit'];
+        $problem_difficulty=$_POST['problem_difficulty'];
 
         $description = $_POST['description'];
         // $description = str_replace("<p>", "", $description);
@@ -192,6 +200,8 @@ include_once("kindeditor.php") ;
 
         @pdo_query($sql, $title, $time_limit, $memory_limit, $description, $input, $output, $sample_input, $sample_output, $hint, $source, $spj, $remote_oj, $remote_id, $id);
 
+        $sql_update_pdiff="update jol.problem_difficulty set difficulty=? where problem_id=?";
+        @pdo_query($sql_update_pdiff,$problem_difficulty,$id);
         echo "Edit OK!<br>";
         echo "<a href='../problem.php?id=$id'>See The Problem!</a>";
     }

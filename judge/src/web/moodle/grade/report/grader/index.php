@@ -175,6 +175,7 @@ if (!empty($USER->editing) && ($report->get_pref('showquickfeedback') || $report
     echo '<input type="hidden" value="grader" name="report"/>';
     echo '<input type="hidden" value="'.$page.'" name="page"/>';
     echo $gpr->get_form_fields();
+
     echo $reporthtml;
     echo '<div class="submit"><input type="submit" id="gradersubmit" class="btn btn-primary"
         value="'.s(get_string('savechanges')).'" /></div>';

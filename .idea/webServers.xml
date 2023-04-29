@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="21dadeb3-d7b9-41ae-b3c3-122895c4bbf7" name="ali">
-        <fileTransfer rootFolder="/home/" accessType="SFTP" host="120.26.192.16" port="22" sshConfigId="c4f9b9fa-7628-404e-9c05-fa065470f708" sshConfig="root@120.26.192.16:23" keyPair="true">
+        <fileTransfer rootFolder="/home/" accessType="SFTP" host="120.26.192.16" port="23" sshConfigId="c4f9b9fa-7628-404e-9c05-fa065470f708" sshConfig="root@120.26.192.16:23" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

@@ -109,8 +109,9 @@ if (isset($_GET['cid'])) {
         $view_start_time = $row['start_time'];
         $view_end_time = $row['end_time'];
         if(isset($_SESSION[$OJ_NAME.'_'.'user_id'])){
-            $sql_get_comments="select * from comments where contest_id=? and user_id=?";
-            $res_get_comments=pdo_query($sql_get_comments,array($cid,$_SESSION[$OJ_NAME.'_'.'user_id']))[0]['comments'];
+            $sql_get_comments="select * from moodle.view_assign_comments where assignment_id=3 and grade_id=12";
+            $res_get_comments=pdo_query($sql_get_comments)[0]['commenttext'];
+//            echo $res_get_comments;
         }
 
 
@@ -360,7 +361,7 @@ if (isset($_GET['cid'])) {
             $tmp_ac+=$res_get_count_ac_contest_problem;
         }
 //        alert($tmp_ac);
-        echo $tmp_ac;
+//        echo $tmp_ac;
 
 
         if (trim($row['title'])=="") {
