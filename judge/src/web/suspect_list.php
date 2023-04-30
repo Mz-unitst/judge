@@ -202,10 +202,11 @@ ON t1.user_id = t2.user_id
 join solution as t3
 on t1.solution_id=t3.solution_id
 AND t1.problem_id != t2.problem_id 
-AND t1.result=4 
-AND t1.solution_id not in(select solution_id from suspect_solution where is_verified_by_admin=1)
+AND t2.result=4 
+AND t2.solution_id not in(select solution_id from suspect_solution where is_verified_by_admin=1)
 AND ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) < 60  
 AND t1.contest_id=?
+ANd t2.contest_id=t1.contest_id
 ORDER BY `t1`.`solution_id`  DESC";
 //    echo $sql_get_suspect_solution;
     $res_get_suspect_solution=pdo_query($sql_get_suspect_solution,$contest_id);

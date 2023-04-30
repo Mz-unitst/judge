@@ -112,10 +112,16 @@
      $ok=true;
  }
 
- $sql="SELECT `source` FROM `source_code_user` WHERE `solution_id`=?";
+ $sql="SELECT * FROM `source_code_user` WHERE `solution_id`=?";
  $result=pdo_query($sql, $id);
+ $sid=$result[0]['solution_id'];
  $row=$result[0];
  if ($row) {
+     $sql_get_pid="select problem_id from solution where solution_id=?";
+     $pid=pdo_query($sql_get_pid,$sid)[0]['problem_id'];
+     $sql_get_pdesp="select description from problem where problem_id=?";
+     $description=pdo_query($sql_get_pdesp,$pid)[0]['description'];
+//     echo $description;
      $view_source=$row['source'];
  }
 

@@ -90,9 +90,56 @@ $lock = false;
 $lock_time = date("Y-m-d H:i:s", time());
 
 $sql = "WHERE problem_id>0 ";
-
+$sql_get_suspect_solution="";
+$sidCount=0;
+$suspect_sid=array();
 if (isset($_GET['cid'])) {
     $cid = intval($_GET['cid']);
+    if(isset($_GET['user_id'])){
+        $sql_get_suspect_solution=
+            "SELECT t1.user_id uid, t1.solution_id sid1,t2.solution_id sid2,t1.problem_id AS pid1, t2.problem_id AS pid2, t1.in_date AS t1, t2.in_date AS t2,ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) AS tdiff
+FROM solution AS t1
+JOIN solution AS t2
+ON t1.user_id = t2.user_id
+join solution as t3
+on t1.solution_id=t3.solution_id
+AND t1.problem_id != t2.problem_id 
+AND t2.result=4 
+AND t1.solution_id not in(select solution_id from suspect_solution where is_verified_by_admin=1)
+AND ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) < 60  
+And t1.contest_id=t2.contest_id
+AND t1.contest_id=?
+And t1.user_id=?
+ORDER BY `t1`.`solution_id`  DESC";
+        $res_get_suspect_solution=pdo_query($sql_get_suspect_solution,$cid,$_GET['user_id']);
+    }else{
+    $sql_get_suspect_solution=
+        "SELECT t1.user_id uid, t1.solution_id sid1,t2.solution_id sid2,t1.problem_id AS pid1, t2.problem_id AS pid2, t1.in_date AS t1, t2.in_date AS t2,ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) AS tdiff
+FROM solution AS t1
+JOIN solution AS t2
+ON t1.user_id = t2.user_id
+join solution as t3
+on t1.solution_id=t3.solution_id
+AND t1.problem_id != t2.problem_id 
+AND t2.result=4 
+AND t1.solution_id not in(select solution_id from suspect_solution where is_verified_by_admin=1)
+AND ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) < 60
+And t1.contest_id=t2.contest_id  
+AND t1.contest_id=?
+ORDER BY `t1`.`solution_id`  DESC";
+//    echo $sql_get_suspect_solution;
+    $res_get_suspect_solution=pdo_query($sql_get_suspect_solution,1);
+}
+
+    $sidCount=count($res_get_suspect_solution);
+
+//    echo $sidCount;
+    for($i=0;$i<count($res_get_suspect_solution);$i++){
+        $suspect_sid[$i]=$res_get_suspect_solution[$i]['sid2'];
+//        echo $suspect_sid[$i];
+    }
+
+
     $sql = $sql." AND `contest_id`='$cid' and num>=0 ";
     $str2 = $str2."&cid=$cid";
     $sql_lock = "SELECT *  FROM `contest` WHERE `contest_id`=?";
@@ -291,6 +338,10 @@ $view_status = array();
 $last = 0;
 $avg_delay=0;
 $total_count=0;
+//echo "cnm";
+//for($i=0;$i<$sidCount;$i++){
+//    echo $suspect_sid[$i];
+//}
 for ($i=0; $i<$rows_cnt; $i++) {
     $row = $result[$i];
     //$view_status[$i]=$row;
@@ -310,7 +361,16 @@ for ($i=0; $i<$rows_cnt; $i++) {
 
     $cnt = 1-$cnt;
 
-    $view_status[$i][0] = $row['solution_id'];
+    $sidd=$row['solution_id'];
+//如果是可疑的，则标红+showsource链接
+    //若可疑
+    if(in_array($sidd,$suspect_sid)){
+        $view_status[$i][0] = "<a target=_self  href=showsource.php?id=".$sidd." style='color: red;'>".$sidd."</a>";
+    }
+    else{
+        $view_status[$i][0] = $sidd;
+    }
+
 
     if ($row['contest_id']>0) {
         if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {

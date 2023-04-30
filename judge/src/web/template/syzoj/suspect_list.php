@@ -166,9 +166,12 @@ foreach ($result2 as $row) {
                       echo "<a href='../userinfo.php?user=".$row['uid']."'><sub>".$MSG_USERINFO."</sub></a> <sub>/</sub> ";
                       echo "<a href='../status.php?cid=$contest_id&user_id=".$row['uid']."'><sub>".$MSG_CONTEST." ".$MSG_SUBMIT."</sub></a>";
                       echo "</td>";
-                      echo "<td>".$row['sid1'].",".$row['sid2'];
+                      echo "<td>";
+                      echo "<a href='../showsource.php?id=".$row['sid2']."'>".$row['sid2']."</a>  ";
+                      echo "</td>";
+//                      echo "<td>".$row['sid1'].",".$row['sid2']."</td>";
 //                      echo "<td>".$row['sid2'];
-                      echo "<td>".$row['pid1'].','.$row['pid2'];
+                      echo "<td>".$row['pid1'].','.$row['pid2']."</td>";
 //                      echo "<td>".$row['pid2'];
                       echo "<td>".$row['tdiff']."秒";
 //                      echo "<td>".$row['t2'];

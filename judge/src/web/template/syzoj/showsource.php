@@ -20,8 +20,18 @@ SyntaxHighlighter.config.bloggerMode = false;
 SyntaxHighlighter.config.clipboardSwf = 'highlight/scripts/clipboard.swf';
 SyntaxHighlighter.all();
 </script>
+<div class="row">
+    <div class="column">
+      <h4 class="ui top attached block header"><?php echo $MSG_Description?></h4>
+      <div class="ui bottom attached segment font-content"><?php echo $description; ?></div>
+    </div>
+  </div>
+    <br>
+    <h4 class="ui top attached block header"><?php echo "提交代码"?></h4>
 <?php
 if ($ok==true) {
+    //输出题目，仿照题目页面
+
     $brush=strtolower($language_name[$slanguage]);
     if ($brush=='pascal') {
         $brush='delphi';
@@ -54,11 +64,18 @@ if ($ok==true) {
     $auth=ob_get_contents();
     ob_end_clean();
     echo htmlentities(str_replace("\n\r", "\n", $view_source), ENT_QUOTES, "utf-8")."\n".$auth."</pre>";
+    echo "是否确认为正常代码";
 } else {
     echo "I am sorry, You could not view this code!";
 }
 ?>
-  
+    <form action="a.php" method="post">
+        <input type="radio" id="yes" name="choice" value="是">
+        <label for="yes">是</label><br>
+        <input type="radio" id="no" name="choice" value="否">
+        <label for="no">否</label><br>
+        <input type="submit" value="确认">
+    </form>
 </div>
 
 <?php include("template/$OJ_TEMPLATE/footer.php");?>
