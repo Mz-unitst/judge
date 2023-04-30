@@ -83,7 +83,7 @@ if ($now>$end_time) {
         <table class="table-hover table-striped text-center" align=center width=90% border=0>
           <tr>
             <td>IP address</td>
-            <td>Used ID</td>
+            <td>User ID</td>
             <td>Trace</td>
             <td>Time</td>
             <td>IP address count</td>
@@ -115,7 +115,7 @@ if ($now>$end_time) {
         <?php echo $MSG_CONTEST_SUSPECT2?><br><br>
         <table class="table-hover table-striped text-center" align=center width=90% border=0>
           <tr>
-            <td>Used ID</td>
+            <td>User ID</td>
             <td>Trace</td>
             <td>Used IP address</td>
             <td>Time</td>
@@ -139,6 +139,45 @@ foreach ($result2 as $row) {
         </table>
       </center>
     </div>
+
+      <br><br>
+
+      <div>
+          <center>
+              <?php echo $MSG_CONTEST_SUSPECT3?><br><br>
+              <table class="table-hover table-striped text-center" align=center width=90% border=0>
+                  <tr>
+                      <td>User ID</td>
+                      <td>Trace</td>
+                      <td> 提交编号</td>
+<!--                      <td>Solution B ID</td>-->
+                      <td>题目ID</td>
+<!--                      <td>PROBLEMA B ID</td>-->
+                      <td>提交时间间隔</td>
+<!--                      <td>B 提交时间</td>-->
+
+                  </tr>
+
+                  <?php
+                  foreach ($res_get_suspect_solution as $row) {
+                      echo "<tr>";
+                      echo "<td>".$row['uid']."</td>";
+                      echo "<td>";
+                      echo "<a href='../userinfo.php?user=".$row['uid']."'><sub>".$MSG_USERINFO."</sub></a> <sub>/</sub> ";
+                      echo "<a href='../status.php?cid=$contest_id&user_id=".$row['uid']."'><sub>".$MSG_CONTEST." ".$MSG_SUBMIT."</sub></a>";
+                      echo "</td>";
+                      echo "<td>".$row['sid1'].",".$row['sid2'];
+//                      echo "<td>".$row['sid2'];
+                      echo "<td>".$row['pid1'].','.$row['pid2'];
+//                      echo "<td>".$row['pid2'];
+                      echo "<td>".$row['tdiff']."秒";
+//                      echo "<td>".$row['t2'];
+                      echo "</tr>";
+                  }
+                  ?>
+              </table>
+          </center>
+      </div>
 
   </div>
 

@@ -193,6 +193,22 @@ if (isset($_GET['cid'])) {
     $sql = "select * from (select count(distinct ip) c,user_id from loginlog where time>=? and time<=? group by user_id) suspect inner join (select distinct user_id from solution where contest_id=? ) u on suspect.user_id=u.user_id and suspect.c>1 inner join (select distinct ip, user_id, time from loginlog where time>=? and time<=? ) ips on ips.user_id=u.user_id order by c desc, u.user_id, ips.time, ip";
 
     $result2 = pdo_query($sql, $start, $end, $contest_id, $start, $end);
+
+    $sql_get_suspect_solution=
+        "SELECT t1.user_id uid, t1.solution_id sid1,t2.solution_id sid2,t1.problem_id AS pid1, t2.problem_id AS pid2, t1.in_date AS t1, t2.in_date AS t2,ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) AS tdiff
+FROM solution AS t1
+JOIN solution AS t2
+ON t1.user_id = t2.user_id
+join solution as t3
+on t1.solution_id=t3.solution_id
+AND t1.problem_id != t2.problem_id 
+AND t1.result=4 
+AND t1.solution_id not in(select solution_id from suspect_solution where is_verified_by_admin=1)
+AND ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) < 60  
+AND t1.contest_id=?
+ORDER BY `t1`.`solution_id`  DESC";
+//    echo $sql_get_suspect_solution;
+    $res_get_suspect_solution=pdo_query($sql_get_suspect_solution,$contest_id);
 }
 
 /////////////////////////Template
