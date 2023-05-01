@@ -122,13 +122,13 @@ join solution as t3
 on t1.solution_id=t3.solution_id
 AND t1.problem_id != t2.problem_id 
 AND t2.result=4 
-AND t1.solution_id not in(select solution_id from suspect_solution where is_verified_by_admin=1)
-AND ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) < 60
+AND t2.solution_id  in(select solution_id from suspect_solution where is_verified_by_admin != 1)
+AND ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) < 120
 And t1.contest_id=t2.contest_id  
 AND t1.contest_id=?
 ORDER BY `t1`.`solution_id`  DESC";
 //    echo $sql_get_suspect_solution;
-    $res_get_suspect_solution=pdo_query($sql_get_suspect_solution,1);
+    $res_get_suspect_solution=pdo_query($sql_get_suspect_solution,$cid);
 }
 
     $sidCount=count($res_get_suspect_solution);
@@ -339,9 +339,9 @@ $last = 0;
 $avg_delay=0;
 $total_count=0;
 //echo "cnm";
-//for($i=0;$i<$sidCount;$i++){
-//    echo $suspect_sid[$i];
-//}
+for($i=0;$i<$sidCount;$i++){
+    echo $suspect_sid[$i];
+}
 for ($i=0; $i<$rows_cnt; $i++) {
     $row = $result[$i];
     //$view_status[$i]=$row;
@@ -365,7 +365,7 @@ for ($i=0; $i<$rows_cnt; $i++) {
 //如果是可疑的，则标红+showsource链接
     //若可疑
     if(in_array($sidd,$suspect_sid)){
-        $view_status[$i][0] = "<a target=_self  href=showsource.php?id=".$sidd." style='color: red;'>".$sidd."</a>";
+        $view_status[$i][0] = "<a target=_blank  href=showsource.php?id=".$sidd." style='color: red;'>".$sidd."</a>";
     }
     else{
         $view_status[$i][0] = $sidd;

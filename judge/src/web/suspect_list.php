@@ -203,8 +203,8 @@ join solution as t3
 on t1.solution_id=t3.solution_id
 AND t1.problem_id != t2.problem_id 
 AND t2.result=4 
-AND t2.solution_id not in(select solution_id from suspect_solution where is_verified_by_admin=1)
-AND ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) < 60  
+AND t2.solution_id  in(select solution_id from suspect_solution where is_verified_by_admin != 1)
+AND ABS(TIMESTAMPDIFF(second, t1.in_date, t2.in_date)) < 120  
 AND t1.contest_id=?
 ANd t2.contest_id=t1.contest_id
 ORDER BY `t1`.`solution_id`  DESC";

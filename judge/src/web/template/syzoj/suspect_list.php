@@ -163,11 +163,11 @@ foreach ($result2 as $row) {
                       echo "<tr>";
                       echo "<td>".$row['uid']."</td>";
                       echo "<td>";
-                      echo "<a href='../userinfo.php?user=".$row['uid']."'><sub>".$MSG_USERINFO."</sub></a> <sub>/</sub> ";
-                      echo "<a href='../status.php?cid=$contest_id&user_id=".$row['uid']."'><sub>".$MSG_CONTEST." ".$MSG_SUBMIT."</sub></a>";
+                      echo "<a target='_blank' href='../userinfo.php?user=".$row['uid']."'><sub>".$MSG_USERINFO."</sub> </a> <sub>/</sub> ";
+                      echo "<a target='_blank' href='../status.php?cid=$contest_id&user_id=".$row['uid']."'><sub>".$MSG_CONTEST." ".$MSG_SUBMIT."</sub></a>";
                       echo "</td>";
                       echo "<td>";
-                      echo "<a href='../showsource.php?id=".$row['sid2']."'>".$row['sid2']."</a>  ";
+                      echo "<a target='_blank' href='../showsource.php?id=".$row['sid2']."'>".$row['sid2']."</a>  ";
                       echo "</td>";
 //                      echo "<td>".$row['sid1'].",".$row['sid2']."</td>";
 //                      echo "<td>".$row['sid2'];
