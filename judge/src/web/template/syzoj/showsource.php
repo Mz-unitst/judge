@@ -30,29 +30,31 @@ SyntaxHighlighter.all();
             .btn_add_course:hover{background-position:0 -48px;}
             .btn_add_course:active{background-position:left -96px}
         </style>
-    </head>
-    <body>
-    <script >
-        $(document).ready(function() {
-            $("#form_vertify_suspect_code").submit(function(event) {
-                <?php echo "?"?>
-                event.preventDefault(); // 阻止表单的默认提交行为
-                var radioValue = $('input[name="choice"]:checked').val();
-                $.ajax({
-                    type: "POST",
-                    url: "/utils/vertify_suspect_code.php?sid=162",
-                    //url: "/utils/vertify_suspect_code.php?sid=<?php //echo $_GET['id'];?>//",
-                    data: { choice: radioValue },
-                    success: function(response) {
-                        // $("#result").html(response); // 将服务器返回的结果显示在result div中
-                        alert(response);
-                        location.reload(); // 刷新当前页面
-                    }
+        <script>
+            $(document).ready(function() {
+                //未成功获取单选框的值
+                $('#form_verify_suspect_codee').on('submit', function(e) {
+                    e.preventDefault(); // 阻止表单的默认提交行为
+
+                    // 获取表单数据
+                    var radioValue = $('input[name="choice"]').val();
+                    alert("cnm1",radioValue);
+                    // 发送Ajax请求
+                    $.ajax({
+                        url: '/utils/verify_suspect_code.php?sid=162',
+                        type: 'POST',
+                        data: { choice: radioValue },
+                        success: function(response) {
+                            $('#result').html(response);
+                        },
+                        error: function() {
+                            $('#result').html('Error occurred during the request');
+                        }
+                    });
                 });
             });
-        });
-    </script>
-    </body>
+        </script>
+    </head>
 
 <div class="row">
     <div class="column">
@@ -108,7 +110,7 @@ if ($ok==true) {
     if(isset($_SESSION[$OJ_NAME.'_'.'user_id'] )){
         if($_SESSION[$OJ_NAME.'_'.'user_id']=='admin' ){
             echo "审核意见：";
-            echo '<form id="form_verify_suspect_code" action="/utils/verify_suspect_code.php?sid='.$_GET["id"].' method="post">
+            echo '<form id="form_verify_suspect_code" action="/utils/verify_suspect_code.php?sid=162" method="post">
         <input type="radio" id="yes" name="choice" value="是">
         <label for="yes">确认为正常代码</label><br>
         <input type="radio" id="no" name="choice" value="否">

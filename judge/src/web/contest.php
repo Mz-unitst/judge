@@ -109,7 +109,8 @@ if (isset($_GET['cid'])) {
         $view_start_time = $row['start_time'];
         $view_end_time = $row['end_time'];
         if(isset($_SESSION[$OJ_NAME.'_'.'user_id'])){
-            $sql_get_comments="select * from moodle.view_assign_comments where assignment_id=3 and grade_id=12";
+
+            $sql_get_comments="select * from moodle.view_assign_comments where assignment_id=3 and grade_id=3";
             $res_get_comments=pdo_query($sql_get_comments)[0]['commenttext'];
 //            echo $res_get_comments;
         }
@@ -352,17 +353,19 @@ if (isset($_GET['cid'])) {
         $count_contest_problem=count($res_get_contest_problem);
 //        echo $count_contest_problem;
         $tmp_ac=0;
+//        echo $tmp_ac;
         foreach ($res_get_contest_problem as $item) {
             $cur_problem_id=$item['problem_id'];
-            $sql_get_count_ac_contest_problem="select count(distinct (problem_id)) from solution where user_id='".$user_id."' and problem_id=? and result=4 ";
+//            echo $cur_problem_id." ";
+            $sql_get_count_ac_contest_problem="select count(distinct (problem_id)) from solution where user_id='".$user_id."' and problem_id=? and result=4 and UNIX_TIMESTAMP(in_date)< ? and UNIX_TIMESTAMP(in_date)> ?";
 //            echo $sql_get_count_ac_contest_problem;
 //            echo $cur_problem_id;
-            $res_get_count_ac_contest_problem=pdo_query($sql_get_count_ac_contest_problem,$cur_problem_id)[0][0];
+            $res_get_count_ac_contest_problem=pdo_query($sql_get_count_ac_contest_problem,array($cur_problem_id,$end_time,$start_time))[0][0];
             $tmp_ac+=$res_get_count_ac_contest_problem;
         }
 //        alert($tmp_ac);
-//        echo $tmp_ac;
-
+//        echo $tmp_ac."<br>";
+//echo $end_time;
 
         if (trim($row['title'])=="") {
             $row['title'] = $MSG_CONTEST.$row['contest_id'];

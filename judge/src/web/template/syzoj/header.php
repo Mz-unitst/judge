@@ -119,13 +119,13 @@
     <div id="page-header" class="ui fixed borderless menu" style="position: fixed; height: 49px; z-index:99999">
         <div id="menu" class="ui stackable mobile ui container computer" style="margin-left:calc(10%)!important">
             <a class="header item"  href="/"><span
-                    style="font-family: 'Exo 2'; font-size: 1.5em; font-weight: 600; "><?php echo $domain==$DOMAIN ? $OJ_NAME : ucwords($OJ_NAME)."'s OJ"?></span></a>
+                    style="font-family: 'Exo 2'; font-size: 1.5em; font-weight: 600; "><?php echo "毕设OJ"?></span></a>
             <a class="desktop-only item <?php if ($url=="") {
                 echo "active";
             }?>" href="/"><i class="home icon"></i> <?php echo $MSG_HOME?></a>
           <?php
-            if (file_exists("moodle")) {  // 如果存在moodle目录，自动添加链接
-                echo '<a class="item" href="moodle"><i class="group icon"></i>Moodle</a>';
+            if (file_exists("moodlee")) {  // 如果存在moodle目录，自动添加链接
+                echo '<a class="item" href="moodle"><i class="group icon"></i>课程系统</a>';
             }
             if (!isset($_GET['cid'])) {
                 ?>
@@ -140,10 +140,10 @@
                 href="<?php echo $path_fix?>category.php"><i class="globe icon"></i><?php echo $MSG_SOURCE?></a>
             <a class="item <?php if ($url=="contest.php") {
                 echo "active";
-            }?>" href="<?php echo $path_fix?>contest.php<?php if (isset($_SESSION[$OJ_NAME."_user_id"])) {
-                echo "?my";
+            }?>" href="<?php echo $path_fix?>mycourses.php<?php if (isset($_SESSION[$OJ_NAME."_user_id"])) {
+
             } ?>" ><i
-                    class="trophy icon"></i> <?php echo $MSG_CONTEST?></a>
+                    class="trophy icon"></i> <?php echo "我的课程"?></a>
             <a class="item <?php if ($url=="status.php") {
                 echo "active";
             }?>" href="<?php echo $path_fix?>status.php"><i
@@ -152,10 +152,10 @@
                 echo "active";
             }?> "
                 href="<?php echo $path_fix?>ranklist.php"><i class="signal icon"></i> <?php echo $MSG_RANKLIST?></a>
-            <a class="desktop-only item <?php if ($url=="faqs.php") {
-                echo "active";
-            }?>" href="<?php echo $path_fix?>faqs.php"><i
-                    class="help circle icon"></i> <?php echo $MSG_FAQ?></a>
+<!--            <a class="desktop-only item --><?php //if ($url=="faqs.php") {
+//                echo "active";
+//            }?><!--" href="--><?php //echo $path_fix?><!--faqs.php"><i-->
+<!--                    class="help circle icon"></i> --><?php //echo $MSG_FAQ?><!--</a>-->
 
 
               <?php if (isset($OJ_BBS)&& $OJ_BBS) { ?>

@@ -339,9 +339,9 @@ $last = 0;
 $avg_delay=0;
 $total_count=0;
 //echo "cnm";
-for($i=0;$i<$sidCount;$i++){
-    echo $suspect_sid[$i];
-}
+//for($i=0;$i<$sidCount;$i++){
+//    echo $suspect_sid[$i];
+//}
 for ($i=0; $i<$rows_cnt; $i++) {
     $row = $result[$i];
     //$view_status[$i]=$row;

@@ -11,6 +11,11 @@
         require_once("./include/const.inc.php");
         require_once("./include/my_func.inc.php");
         require_once("./include/memcache.php");
+    $sql_get_oi_score="call get_oi_score( ? , ? )";
+    if(isset($_GET['cid'])){
+     $cidd=$_GET['cid'];
+//            echo $cidd;
+    }
         class TM
         {
             public $solved=0;
@@ -30,6 +35,7 @@
                 $this->p_pass_rate=array(0);
                 $this->total=0;
             }
+
             public function Add($pid, $sec, $res)
             {
 //              echo "Add $pid $sec $res<br>";
@@ -39,13 +45,13 @@
                 if ($res*100<99) {
                     if (isset($this->p_pass_rate[$pid])) {
                         if ($res>$this->p_pass_rate[$pid]) {
-                            $this->total-=$this->p_pass_rate[$pid]*100;
+//                            $this->total-=$this->p_pass_rate[$pid]*100;
                             $this->p_pass_rate[$pid]=$res;
-                            $this->total+=$this->p_pass_rate[$pid]*100;
+//                            $this->total+=$this->p_pass_rate[$pid]*100;
                         }
                     } else {
                         $this->p_pass_rate[$pid]=$res;
-                        $this->total+=$res*100;
+//                        $this->total+=$res*100;
                     }
                     if (isset($this->p_wa_num[$pid])) {
                         $this->p_wa_num[$pid]++;
@@ -59,12 +65,12 @@
                         $this->p_wa_num[$pid]=0;
                     }
                     if (isset($this->p_pass_rate[$pid])) {
-                        $this->total-=$this->p_pass_rate[$pid]*100;
+//                        $this->total-=$this->p_pass_rate[$pid]*100;
                     } else {
                         $this->p_pass_rate[$pid]=$res;
                     }
 
-                    $this->total+=100;
+//                    $this->total+=100;
                     $this->time+=$sec+$this->p_wa_num[$pid]*1200;
 //                      echo "Time:".$this->time."<br>";
 //                      echo "Solved:".$this->solved."<br>";
@@ -231,7 +237,18 @@
 
                 $U[$user_cnt]->user_id=$row['user_id'];
                 $U[$user_cnt]->nick=$row['nick'];
-
+                $sqll="select get_oi_mark('".$row['user_id']."',".$cidd.") ;";
+//                echo $sqll."-----";
+                $res=pdo_query($sqll);
+//                echo $res."<br>";
+                if(count($res[0][0])>0)
+                {
+                    $U[$user_cnt]->total=$res[0][0];
+                }
+                else{
+                    $U[$user_cnt]->total=0.00;
+                }
+//                $U[$user_cnt]->total=100;
                 $user_name=$n_user;
             }
             if ($row['result']!=4 && $row['pass_rate']>=0.99) {

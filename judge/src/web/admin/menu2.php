@@ -114,11 +114,11 @@ if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'
 </center>
 
 <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])) {?>
-  <br><a class='btn btn-block btn-sm' href="https://github.com/zhblue/hustoj/" target="_blank"><b>HUSTOJ</b></a>
+  <br><a class='btn btn-block btn-sm' href="https://github.com/Mz-unitst/judge" target="_blank"><b>毕设OJ</b></a>
   <br><center><a class="btn btn-sm" target='main' href="http://hustoj.com"><?php echo $MSG_ADMIN." ".$MSG_FAQ?></a></center>
-  <br><a class='btn btn-block btn-sm' href="https://github.com/zhblue/freeproblemset/" target="_blank"><b>FreeProblemSet</b></a>
-  <br><a class='btn btn-block btn-sm' href="http://tk.hustoj.com" target="_blank"><b>自助题库</b></a>
-  <br><a class='btn btn-block btn-sm' href="http://shang.qq.com/wpa/qunwpa?idkey=d52c3b12ddaffb43420d308d39118fafe5313e271769277a5ac49a6fae63cf7a" target="_blank">手机QQ加官方<br>群23361372</a>
+<!--  <br><a class='btn btn-block btn-sm' href="https://github.com/zhblue/freeproblemset/" target="_blank"><b>FreeProblemSet</b></a>-->
+<!--  <br><a class='btn btn-block btn-sm' href="http://tk.hustoj.com" target="_blank"><b>自助题库</b></a>-->
+<!--  <br><a class='btn btn-block btn-sm' href="http://shang.qq.com/wpa/qunwpa?idkey=d52c3b12ddaffb43420d308d39118fafe5313e271769277a5ac49a6fae63cf7a" target="_blank">手机QQ加官方<br>群23361372</a>-->
 <?php }?>
 
 <?php if (isset($_SESSION[$OJ_NAME.'_'.'administrator'])&&!$OJ_SAE) {?>
