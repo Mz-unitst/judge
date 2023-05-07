@@ -242,20 +242,27 @@ div[class*=ace_br] {
 
       <div class="row">
           <div class="column">
-              <h4 class="ui top attached block header">相似的题目</h4>
+              <h4 class="ui top attached block header">推荐练习题目</h4>
               <div class="ui bottom attached segment">
                   <script language='javascript'>
                       function p(id,c){
-                          document.write("<a href=problem.php?id="+id+">"+id+" </a>");
+                          document.write("<a href=problem.php?id="+id+">"+c+" </a>");
                       }
-                      <?php $sql="SELECT `problem_id`,count(1) from solution  group by `problem_id` ORDER BY `problem_id` ASC";
-                      if ($result=pdo_query($sql, $user)) {
-                          foreach ($result as $row) {
-                              echo "p($row[0],$row[1]);";
-                          }
-                      }
-                      ?>
                   </script>
+                      <?php $sql="SELECT problem_id,title from  problem  ";
+                      $result=pdo_query($sql);
+                      $countt=0;
+                          foreach ($result as $row) {
+                              $numm=rand(0,4);
+                              if($numm>3 && $countt<4)
+                              {
+                                  $countt++;
+                                  echo ' <a href=problem.php?id='.$row[0].'>'.$row[1] .'</a><br>';
+                              }
+                          }
+
+                      ?>
+
               </div>
           </div>
       </div>
